@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<title>Privacy Policy – VocLock</title>
+<meta name="description" content="Privacy policy of VocLock, the vocabulary lock screen app for Android and iPhone.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+  /* Layout: one readable column; a quiet header with the app's lock badge, an "in short"
+     panel, then plain numbered sections (the order mirrors how the app uses data). */
+  :root {
+    --bg: #f8f3ee;
+    --surface: #fffaf5;
+    --fg: #2b211c;
+    --muted: #6f625a;
+    --line: #e8ddd3;
+    --accent: #b8432a;
+    --accent-soft: #f6e3da;
+    --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --font-body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #16110e; --surface: #221a16; --fg: #f3ebe5; --muted: #b9aaa0; --line: #3a2e28;
+      --accent: #f2a283; --accent-soft: #3a241c;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #16110e; --surface: #221a16; --fg: #f3ebe5; --muted: #b9aaa0; --line: #3a2e28;
+    --accent: #f2a283; --accent-soft: #3a241c;
+    color-scheme: dark;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.6;
+    padding-inline: 20px;
+    padding-block: 32px 64px;
+  }
+  .page { max-width: 42rem; margin: 0 auto; display: grid; gap: 28px; }
+
+  header { display: grid; gap: 14px; }
+  .brand { display: flex; align-items: center; gap: 12px; color: var(--fg); text-decoration: none; width: fit-content; }
+  .badge {
+    width: 44px; height: 44px; border-radius: 12px; flex: none;
+    background: linear-gradient(135deg, #c4532f, #9e3348);
+    display: grid; place-items: center;
+  }
+  .badge svg { width: 24px; height: 24px; fill: #fff; }
+  .app { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; letter-spacing: 0.01em; }
+  h1 {
+    font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 6vw, 2.6rem);
+    line-height: 1.1; margin: 0; text-wrap: balance;
+  }
+  .meta { color: var(--muted); margin: 0; font-size: 0.95rem; }
+
+  .langs { display: flex; gap: 6px; }
+  .langs button {
+    font: 600 0.9rem var(--font-body); color: var(--muted); background: transparent;
+    border: 1px solid var(--line); border-radius: 999px; padding: 4px 14px; cursor: pointer;
+  }
+  .langs button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+  .langs button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .short { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; }
+  .short h2 { margin-top: 0; }
+  .short ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .short li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; }
+  .short li::before {
+    content: ""; width: 22px; height: 22px; border-radius: 50%; margin-top: 2px;
+    background: var(--accent-soft) no-repeat center / 12px
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6.3 4.8 9 10 3.2' fill='none' stroke='%23b8432a' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+
+  section { display: grid; gap: 4px; }
+  h2 {
+    font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; line-height: 1.25;
+    margin: 0 0 6px; text-wrap: balance;
+  }
+  h2 .n { color: var(--accent); font-variant-numeric: tabular-nums; margin-right: 6px; }
+  h3 { font-size: 1rem; font-weight: 600; margin: 10px 0 0; }
+  p, ul { margin: 0 0 10px; }
+  ul { padding-left: 1.2em; }
+  li { margin-bottom: 6px; }
+  a { color: var(--accent); text-underline-offset: 2px; }
+  strong { font-weight: 600; }
+  code { font-size: 0.9em; background: var(--accent-soft); padding: 1px 5px; border-radius: 5px; }
+  footer { color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--line); padding-top: 16px; }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <header>
+    <a class="brand" href="../" aria-label="VocLock home">
+      <div class="badge" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M18 8h-1V6A5 5 0 0 0 7 6v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2Zm-6 9a2 2 0 1 1 0-4 2 2 0 0 1 0 4Zm3.1-9H8.9V6a3.1 3.1 0 0 1 6.2 0v2Z"/></svg>
+      </div>
+      <span class="app">VocLock</span>
+    </a>
+    <div class="langs" role="group" aria-label="Language / Sprache">
+      <button type="button" id="btn-en" data-lang="en" aria-pressed="true">English</button>
+      <button type="button" id="btn-de" data-lang="de" aria-pressed="false">Deutsch</button>
+    </div>
+  </header>
+
+  <!-- ==================== ENGLISH ==================== -->
+  <article lang="en" id="en" class="page">
+    <div>
+      <h1>Privacy Policy</h1>
+      <p class="meta">Effective September 28, 2026 · applies to VocLock for Android and iPhone</p>
+    </div>
+
+    <div class="short">
+      <h2>In short</h2>
+      <ul>
+        <li>No account, no ads, no analytics, no tracking.</li>
+        <li>Your words, answers, streak and settings stay on your phone. We never receive them.</li>
+        <li>The only thing VocLock loads from the internet is today's news from Wikipedia, and only once you've unlocked the News tab.</li>
+        <li>The accessibility service is optional. It only notices which app you open and can't read your screen.</li>
+      </ul>
+    </div>
+
+    <section>
+      <h2><span class="n">1</span>Who we are</h2>
+      <p>VocLock is a vocabulary app that asks you words when you unlock your phone. It's developed by Said Erzhapov. Questions about this policy: <a href="mailto:voclock.app@gmail.com">voclock.app@gmail.com</a>.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">2</span>What's stored on your phone</h2>
+      <p>To work, VocLock keeps this data <strong>only on your device</strong>, in the app's own storage:</p>
+      <ul>
+        <li>Your learning progress: which words you've had, your answers, streak, achievements and when each word is due for review.</li>
+        <li>Words you add yourself.</li>
+        <li>Your settings: language pack, words per day, theme, app language, reminder time, news interests and the apps you picked for the quiz.</li>
+        <li>Your emergency PIN for the lock screen.</li>
+      </ul>
+      <p>We have no server that receives this data. It's deleted when you uninstall VocLock or clear its data.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">3</span>What connects to the internet</h2>
+      <h3>News from Wikipedia</h3>
+      <p>After you've learned enough words to unlock the News tab, opening it loads today's featured articles from Wikipedia (<code>en.wikipedia.org</code> or <code>de.wikipedia.org</code>, depending on your language pack). The request contains the date and the language, and VocLock names itself as the app making it. Like every web request, it also reaches Wikipedia's servers with your IP address and basic device information. The Wikimedia Foundation handles that under its <a href="https://foundation.wikimedia.org/wiki/Policy:Privacy_policy" rel="noopener">privacy policy</a>.</p>
+      <p>Mixing the words you know into the articles happens on your phone. Your vocabulary is never sent to Wikipedia. "Read on Wikipedia" opens the article in your browser.</p>
+      <h3>Pronunciation</h3>
+      <p>The speaker buttons use your phone's built-in text-to-speech: on Android the engine you've chosen (usually Speech Services by Google), on iPhone Apple's voices. VocLock hands the word to that engine and sends it nowhere itself. Some engines can use online voices; in that case the provider of the engine processes the word under its own privacy policy.</p>
+      <h3>Nothing else</h3>
+      <p>VocLock contains no advertising, analytics, crash reporting or other third-party code that collects data.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">4</span>Permissions and why VocLock asks for them</h2>
+      <ul>
+        <li><strong>Display over other apps</strong> (Android): to show the word quiz on your lock screen and the quick quiz over other apps.</li>
+        <li><strong>Accessibility service</strong> (Android, optional, off until you turn it on): only to notice when you open an app, so VocLock can ask a word before you continue, or show the quiz over the social media apps you picked. It receives just the name of the app that comes to the front. It is set up without access to screen content, so it can't see what's on your screen or what you type. VocLock doesn't store or share which apps you use. You can turn it off at any time in your phone's accessibility settings.</li>
+        <li><strong>Notifications</strong>: for the daily reminder with your words, and on Android for the small ongoing notification that keeps the lock screen running.</li>
+        <li><strong>Run at startup, foreground service, keep awake, dismiss the lock screen</strong> (Android): so the word quiz appears when you turn on your screen, also after a restart.</li>
+        <li><strong>Internet</strong>: only for the News tab (section 3).</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="n">5</span>Backups</h2>
+      <p><strong>Export and import.</strong> In Settings you can save a backup file and load it again. You choose where the file goes; it doesn't pass through us. It contains your progress, settings, your own words and your emergency PIN, so keep it private.</p>
+      <p><strong>Phone backups.</strong> If backups are turned on for your phone (for example Google backup on Android or iCloud on iPhone), your phone may include VocLock's data in them. Those backups are managed by Google or Apple under their policies.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">6</span>Children</h2>
+      <p>VocLock doesn't collect personal data from anyone, children included.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">7</span>Your choices</h2>
+      <p>Because your data stays on your phone, you're in control: delete it by clearing VocLock's data or uninstalling the app, and withdraw any permission in your phone's settings. If you have questions or want to exercise a right under data protection law (such as the GDPR), write to <a href="mailto:voclock.app@gmail.com">voclock.app@gmail.com</a>.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">8</span>Changes</h2>
+      <p>If VocLock starts handling data differently, we'll update this page and the date at the top before the change ships.</p>
+    </section>
+  </article>
+
+  <!-- ==================== DEUTSCH ==================== -->
+  <article lang="de" id="de" class="page" hidden>
+    <div>
+      <h1>Datenschutzerklärung</h1>
+      <p class="meta">Gültig ab 28. September 2026 · gilt für VocLock auf Android und iPhone</p>
+    </div>
+
+    <div class="short">
+      <h2>Kurz gesagt</h2>
+      <ul>
+        <li>Kein Konto, keine Werbung, keine Analyse, kein Tracking.</li>
+        <li>Deine Wörter, Antworten, Serie und Einstellungen bleiben auf deinem Handy. Wir bekommen sie nie.</li>
+        <li>Das Einzige, was VocLock aus dem Internet lädt, sind die Nachrichten des Tages von Wikipedia, und das erst, wenn du den News-Tab freigeschaltet hast.</li>
+        <li>Der Bedienungshilfen-Dienst ist freiwillig. Er merkt nur, welche App du öffnest, und kann deinen Bildschirm nicht lesen.</li>
+      </ul>
+    </div>
+
+    <section>
+      <h2><span class="n">1</span>Wer wir sind</h2>
+      <p>VocLock ist eine Vokabel-App, die dich beim Entsperren deines Handys Wörter abfragt. Sie wird entwickelt von Said Erzhapov. Fragen zu dieser Erklärung: <a href="mailto:voclock.app@gmail.com">voclock.app@gmail.com</a>.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">2</span>Was auf deinem Handy gespeichert wird</h2>
+      <p>Damit die App funktioniert, speichert VocLock diese Daten <strong>nur auf deinem Gerät</strong>, im eigenen Speicher der App:</p>
+      <ul>
+        <li>Deinen Lernfortschritt: welche Wörter du hattest, deine Antworten, Serie, Erfolge und wann jedes Wort wiederholt wird.</li>
+        <li>Wörter, die du selbst hinzufügst.</li>
+        <li>Deine Einstellungen: Sprachpaket, Wörter pro Tag, Design, App-Sprache, Erinnerungszeit, News-Interessen und die Apps, die du für das Quiz ausgewählt hast.</li>
+        <li>Deine Notfall-PIN für den Sperrbildschirm.</li>
+      </ul>
+      <p>Wir haben keinen Server, der diese Daten empfängt. Sie werden gelöscht, wenn du VocLock deinstallierst oder die App-Daten löschst.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">3</span>Was sich mit dem Internet verbindet</h2>
+      <h3>Nachrichten von Wikipedia</h3>
+      <p>Sobald du genug Wörter gelernt hast, um den News-Tab freizuschalten, lädt er beim Öffnen die Artikel des Tages von Wikipedia (<code>en.wikipedia.org</code> oder <code>de.wikipedia.org</code>, je nach Sprachpaket). Die Anfrage enthält das Datum und die Sprache, und VocLock gibt sich als anfragende App zu erkennen. Wie jede Anfrage im Internet erreicht sie die Server von Wikipedia mit deiner IP-Adresse und grundlegenden Geräteangaben. Die Wikimedia Foundation behandelt diese nach ihrer <a href="https://foundation.wikimedia.org/wiki/Policy:Privacy_policy/de" rel="noopener">Datenschutzrichtlinie</a>.</p>
+      <p>Das Einflechten deiner bekannten Wörter in die Artikel passiert auf deinem Handy. Dein Wortschatz wird nie an Wikipedia gesendet. „Auf Wikipedia lesen" öffnet den Artikel in deinem Browser.</p>
+      <h3>Aussprache</h3>
+      <p>Die Lautsprecher-Knöpfe nutzen die eingebaute Sprachausgabe deines Handys: auf Android die von dir gewählte Engine (meist Sprachdienste von Google), auf dem iPhone Apples Stimmen. VocLock übergibt das Wort an diese Engine und sendet es selbst nirgendwohin. Manche Engines können Online-Stimmen verwenden; dann verarbeitet der Anbieter der Engine das Wort nach seiner eigenen Datenschutzerklärung.</p>
+      <h3>Sonst nichts</h3>
+      <p>VocLock enthält keine Werbung, keine Analyse, keine Absturzberichte und keinen anderen Fremdcode, der Daten sammelt.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">4</span>Berechtigungen und wofür VocLock sie braucht</h2>
+      <ul>
+        <li><strong>Über anderen Apps einblenden</strong> (Android): um das Wort-Quiz auf dem Sperrbildschirm und das Schnell-Quiz über anderen Apps zu zeigen.</li>
+        <li><strong>Bedienungshilfen-Dienst</strong> (Android, freiwillig, aus, bis du ihn einschaltest): nur um zu merken, wann du eine App öffnest, damit VocLock vorher ein Wort abfragen oder das Quiz über den von dir gewählten Social-Media-Apps zeigen kann. Er erhält nur den Namen der App, die in den Vordergrund kommt. Er ist ohne Zugriff auf Bildschirminhalte eingerichtet, sieht also weder, was auf deinem Bildschirm steht, noch was du tippst. VocLock speichert oder teilt nicht, welche Apps du nutzt. Du kannst ihn jederzeit in den Bedienungshilfen deines Handys ausschalten.</li>
+        <li><strong>Benachrichtigungen</strong>: für die tägliche Erinnerung mit deinen Wörtern und auf Android für die kleine dauerhafte Benachrichtigung, die den Sperrbildschirm am Laufen hält.</li>
+        <li><strong>Beim Start ausführen, Vordergrunddienst, wach halten, Sperrbildschirm schließen</strong> (Android): damit das Wort-Quiz erscheint, wenn du den Bildschirm einschaltest, auch nach einem Neustart.</li>
+        <li><strong>Internet</strong>: nur für den News-Tab (Abschnitt 3).</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="n">5</span>Sicherungen</h2>
+      <p><strong>Exportieren und Importieren.</strong> In den Einstellungen kannst du eine Sicherungsdatei speichern und wieder laden. Du bestimmst, wo die Datei landet; sie geht nicht über uns. Sie enthält deinen Fortschritt, deine Einstellungen, deine eigenen Wörter und deine Notfall-PIN, also bewahre sie privat auf.</p>
+      <p><strong>Handy-Sicherungen.</strong> Wenn Sicherungen auf deinem Handy aktiv sind (zum Beispiel Google-Sicherung auf Android oder iCloud auf dem iPhone), kann dein Handy die Daten von VocLock darin aufnehmen. Diese Sicherungen verwalten Google bzw. Apple nach ihren Richtlinien.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">6</span>Kinder</h2>
+      <p>VocLock erhebt von niemandem personenbezogene Daten, auch nicht von Kindern.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">7</span>Deine Möglichkeiten</h2>
+      <p>Da deine Daten auf deinem Handy bleiben, hast du die Kontrolle: Lösche sie, indem du die App-Daten löschst oder VocLock deinstallierst, und entziehe Berechtigungen jederzeit in den Einstellungen deines Handys. Bei Fragen oder wenn du ein Recht nach der DSGVO geltend machen möchtest, schreib an <a href="mailto:voclock.app@gmail.com">voclock.app@gmail.com</a>.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">8</span>Änderungen</h2>
+      <p>Wenn VocLock Daten anders behandeln sollte, aktualisieren wir diese Seite und das Datum oben, bevor die Änderung erscheint.</p>
+    </section>
+  </article>
+
+  <footer>VocLock · Privacy Policy / Datenschutzerklärung</footer>
+</div>
+
+<script>
+  (function () {
+    var articles = { en: document.getElementById("en"), de: document.getElementById("de") };
+    var buttons = document.querySelectorAll(".langs button");
+    function show(lang) {
+      if (!articles[lang]) lang = "en";
+      Object.keys(articles).forEach(function (k) { articles[k].hidden = k !== lang; });
+      buttons.forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.lang === lang)); });
+      document.documentElement.lang = lang;
+    }
+    buttons.forEach(function (b) {
+      b.addEventListener("click", function () { show(b.dataset.lang); });
+    });
+    // "#de" links straight to the German version; otherwise follow the browser's language.
+    var hash = location.hash.replace("#", "");
+    var browser = (navigator.language || "en").slice(0, 2);
+    show(hash === "de" || hash === "en" ? hash : browser === "de" ? "de" : "en");
+  })();
+</script>
+
+</body>
+</html>

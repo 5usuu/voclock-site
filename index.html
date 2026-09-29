@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VocLock – learn a language every time you unlock your phone</title>
+<meta name="description" content="VocLock asks you a word from the language you're learning when you unlock your phone. French and Spanish for English and German speakers. No account, no ads, no tracking.">
+<meta name="theme-color" content="#b8432a">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+  /* Layout: brand bar, a two-column hero (pitch + lock-screen mock) that stacks on phones,
+     a features grid, languages, and a footer with contact and privacy. */
+  :root {
+    --bg: #f8f3ee;
+    --surface: #fffaf5;
+    --fg: #2b211c;
+    --muted: #6f625a;
+    --line: #e8ddd3;
+    --accent: #b8432a;
+    --accent-soft: #f6e3da;
+    --sunset: #c4532f;
+    --wine: #9e3348;
+    --ember: #1c1310;
+    --highlight: #ffd49a;
+    --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --font-body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16110e; --surface: #221a16; --fg: #f3ebe5; --muted: #b9aaa0; --line: #3a2e28;
+      --accent: #f2a283; --accent-soft: #3a241c;
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.6;
+  }
+  a { color: var(--accent); text-underline-offset: 2px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  .wrap { max-width: 68rem; margin: 0 auto; padding-inline: 20px; }
+
+  /* Brand bar */
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 20px; }
+  .brand { display: flex; align-items: center; gap: 10px; color: var(--fg); text-decoration: none; }
+  .badge {
+    width: 40px; height: 40px; border-radius: 11px; flex: none;
+    background: linear-gradient(135deg, var(--sunset), var(--wine));
+    display: grid; place-items: center;
+  }
+  .badge svg { width: 22px; height: 22px; fill: #fff; }
+  .brand span { font-family: var(--font-display); font-weight: 800; font-size: 1.35rem; letter-spacing: 0.01em; }
+  .bar nav { display: flex; gap: 18px; font-weight: 600; }
+  .bar nav a { color: var(--muted); text-decoration: none; }
+  .bar nav a:hover { color: var(--accent); }
+
+  /* Hero */
+  .hero {
+    display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: 48px; align-items: center; padding-block: 40px 64px;
+  }
+  .eyebrow {
+    display: inline-block; font-weight: 600; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--accent); background: var(--accent-soft); padding: 4px 12px; border-radius: 999px;
+  }
+  h1 {
+    font-family: var(--font-display); font-weight: 800; font-size: clamp(2.4rem, 6vw, 4rem);
+    line-height: 1.02; margin: 18px 0 18px; text-wrap: balance; letter-spacing: -0.01em;
+  }
+  h1 em { font-style: normal; color: var(--accent); }
+  .lead { font-size: 1.2rem; color: var(--muted); max-width: 34rem; margin: 0 0 28px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .soon {
+    display: inline-flex; align-items: center; gap: 10px; padding: 12px 20px; border-radius: 999px;
+    background: var(--fg); color: var(--bg); font-weight: 600;
+  }
+  .soon svg { width: 20px; height: 20px; fill: currentColor; }
+  .ghost { font-weight: 600; padding: 12px 6px; }
+  .facts { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 0; margin: 26px 0 0; color: var(--muted); font-size: 0.95rem; }
+  .facts li::before { content: "✓ "; color: var(--accent); font-weight: 600; }
+
+  /* Lock-screen mock: what the phone shows when it turns on */
+  .phone {
+    width: min(300px, 100%); aspect-ratio: 9 / 18.5; margin-inline: auto; border-radius: 42px; padding: 12px;
+    background: #0e0a08; box-shadow: 0 30px 60px -20px rgba(60, 20, 10, 0.45);
+  }
+  .screen {
+    height: 100%; border-radius: 32px; padding: 26px 20px 20px; color: #fff;
+    background: linear-gradient(180deg, var(--ember), #4a1c14 55%, #8a3a2a);
+    display: flex; flex-direction: column;
+  }
+  .screen .top { display: flex; justify-content: space-between; font-size: 0.8rem; opacity: 0.85; }
+  .screen .label { margin-top: auto; text-align: center; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.75; }
+  .screen .word { text-align: center; font-family: var(--font-display); font-weight: 700; font-size: 2.6rem; line-height: 1.1; margin: 6px 0 4px; }
+  .screen .chip { align-self: center; font-size: 0.75rem; padding: 3px 12px; border-radius: 999px; background: rgba(255, 255, 255, 0.14); }
+  .screen .answer {
+    margin-top: auto; border-radius: 16px; padding: 12px 14px; font-size: 0.95rem;
+    background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.25);
+  }
+  .screen .answer b { color: var(--highlight); font-weight: 600; }
+  .screen .unlock {
+    margin-top: 10px; text-align: center; border-radius: 999px; padding: 11px; font-weight: 600;
+    background: #fff; color: var(--wine);
+  }
+
+  /* Sections */
+  section { padding-block: 56px; border-top: 1px solid var(--line); }
+  h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.7rem, 3.5vw, 2.3rem); line-height: 1.15; margin: 0 0 10px; text-wrap: balance; }
+  .intro { color: var(--muted); max-width: 40rem; margin: 0 0 32px; }
+  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 22px; }
+  .card h3 { margin: 12px 0 6px; font-size: 1.1rem; }
+  .card p { margin: 0; color: var(--muted); font-size: 0.98rem; }
+  .icon { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: var(--accent-soft); }
+  .icon svg { width: 22px; height: 22px; fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  .pairs { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; padding: 0; list-style: none; }
+  .pairs li { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; font-weight: 600; }
+  .pairs li span { color: var(--muted); font-weight: 400; margin-inline: 6px; }
+
+  footer { border-top: 1px solid var(--line); padding-block: 28px 40px; color: var(--muted); font-size: 0.95rem; }
+  footer .row { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+  footer a { color: var(--muted); }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; gap: 40px; padding-block: 16px 48px; }
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 560px) {
+    .grid { grid-template-columns: 1fr; }
+    .bar nav { gap: 14px; font-size: 0.95rem; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="bar">
+      <a class="brand" href="./" aria-label="VocLock home">
+        <span class="badge" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M18 8h-1V6A5 5 0 0 0 7 6v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2Zm-6 9a2 2 0 1 1 0-4 2 2 0 0 1 0 4Zm3.1-9H8.9V6a3.1 3.1 0 0 1 6.2 0v2Z"/></svg>
+        </span>
+        <span>VocLock</span>
+      </a>
+      <nav aria-label="Main">
+        <a href="#features">Features</a>
+        <a href="privacy/">Privacy</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="hero">
+        <div>
+          <span class="eyebrow">The VocLock app</span>
+          <h1>Learn a language every time you <em>unlock your phone</em>.</h1>
+          <p class="lead">You unlock your phone dozens of times a day. VocLock turns each of those moments into a quick word from the language you're learning, so the words stick without setting time aside.</p>
+          <div class="actions">
+            <span class="soon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3.5v17a1 1 0 0 0 1.5.9l14-8.5a1 1 0 0 0 0-1.8l-14-8.5A1 1 0 0 0 4 3.5Z"/></svg>
+              Coming soon to Google Play
+            </span>
+            <a class="ghost" href="privacy/">Privacy policy</a>
+          </div>
+          <ul class="facts">
+            <li>No account</li>
+            <li>No ads</li>
+            <li>No tracking</li>
+            <li>Learning works offline</li>
+          </ul>
+        </div>
+
+        <div class="phone" role="img" aria-label="VocLock's lock screen asking to translate the French word maison">
+          <div class="screen">
+            <div class="top"><span>🔒 VocLock</span><span>🔥 12 days</span></div>
+            <div class="label">Translate to English</div>
+            <div class="word">maison</div>
+            <div class="chip">Home &amp; life</div>
+            <div class="answer">Your answer: <b>house</b></div>
+            <div class="unlock">Unlock</div>
+          </div>
+        </div>
+      </div>
+
+      <section id="features" aria-labelledby="features-title">
+        <h2 id="features-title">Small moments, real progress</h2>
+        <p class="intro">A few new words a day, asked again and again until you know them, with the most common words first.</p>
+        <div class="grid">
+          <article class="card">
+            <div class="icon"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+            <h3>Words on your lock screen</h3>
+            <p>Answer a word to unlock. Stuck? Letter hints help, and your emergency PIN always gets you in.</p>
+          </article>
+          <article class="card">
+            <div class="icon"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg></div>
+            <h3>Smart review</h3>
+            <p>Words come back after 1, 3, 7, 14 days and more, right before you'd forget them.</p>
+          </article>
+          <article class="card">
+            <div class="icon"><svg viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M19 6a8 8 0 0 1 0 12"/></svg></div>
+            <h3>Hear every word</h3>
+            <p>Tap the speaker to hear how a word sounds, using your phone's built-in voice.</p>
+          </article>
+          <article class="card">
+            <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h6M7 16h8"/></svg></div>
+            <h3>News in your new language</h3>
+            <p>Read today's news from Wikipedia with every word you know swapped into the language you're learning.</p>
+          </article>
+          <article class="card">
+            <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="18" height="8" rx="2"/></svg></div>
+            <h3>Home-screen widget</h3>
+            <p>One of today's words, its example sentence and your progress, right on your home screen.</p>
+          </article>
+          <article class="card">
+            <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+            <h3>Private by design</h3>
+            <p>Your words and progress stay on your phone. Read the <a href="privacy/">privacy policy</a>.</p>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="languages-title">
+        <h2 id="languages-title">Languages</h2>
+        <p class="intro">Around 500 to 600 of the most frequently used words per language, each with an example sentence. The app itself is in English and German.</p>
+        <ul class="pairs">
+          <li>French<span>for</span>English speakers</li>
+          <li>Spanish<span>for</span>English speakers</li>
+          <li>French<span>for</span>German speakers</li>
+          <li>Spanish<span>for</span>German speakers</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <div class="row">
+        <span>© 2026 VocLock · Said Erzhapov</span>
+        <span><a href="privacy/">Privacy policy</a> · <a href="mailto:voclock.app@gmail.com">voclock.app@gmail.com</a></span>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
