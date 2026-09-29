@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<title>Delete Account – VocLock</title>
+<meta name="description" content="How to delete your VocLock account and the progress saved in it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+  /* Layout: one readable column; a quiet header with the app's lock badge, an "in short"
+     panel, then plain numbered sections (the order mirrors how the app uses data). */
+  :root {
+    --bg: #f8f3ee;
+    --surface: #fffaf5;
+    --fg: #2b211c;
+    --muted: #6f625a;
+    --line: #e8ddd3;
+    --accent: #b8432a;
+    --accent-soft: #f6e3da;
+    --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --font-body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #16110e; --surface: #221a16; --fg: #f3ebe5; --muted: #b9aaa0; --line: #3a2e28;
+      --accent: #f2a283; --accent-soft: #3a241c;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #16110e; --surface: #221a16; --fg: #f3ebe5; --muted: #b9aaa0; --line: #3a2e28;
+    --accent: #f2a283; --accent-soft: #3a241c;
+    color-scheme: dark;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.6;
+    padding-inline: 20px;
+    padding-block: 32px 64px;
+  }
+  .page { max-width: 42rem; margin: 0 auto; display: grid; gap: 28px; }
+
+  header { display: grid; gap: 14px; }
+  .brand { display: flex; align-items: center; gap: 12px; color: var(--fg); text-decoration: none; width: fit-content; }
+  .badge {
+    width: 44px; height: 44px; border-radius: 12px; flex: none;
+    background: linear-gradient(135deg, #c4532f, #9e3348);
+    display: grid; place-items: center;
+  }
+  .badge svg { width: 24px; height: 24px; fill: #fff; }
+  .app { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; letter-spacing: 0.01em; }
+  h1 {
+    font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 6vw, 2.6rem);
+    line-height: 1.1; margin: 0; text-wrap: balance;
+  }
+  .meta { color: var(--muted); margin: 0; font-size: 0.95rem; }
+
+  .langs { display: flex; gap: 6px; }
+  .langs button {
+    font: 600 0.9rem var(--font-body); color: var(--muted); background: transparent;
+    border: 1px solid var(--line); border-radius: 999px; padding: 4px 14px; cursor: pointer;
+  }
+  .langs button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+  .langs button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .short { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; }
+  .short h2 { margin-top: 0; }
+  .short ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .short li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; }
+  .short li::before {
+    content: ""; width: 22px; height: 22px; border-radius: 50%; margin-top: 2px;
+    background: var(--accent-soft) no-repeat center / 12px
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6.3 4.8 9 10 3.2' fill='none' stroke='%23b8432a' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+
+  section { display: grid; gap: 4px; }
+  h2 {
+    font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; line-height: 1.25;
+    margin: 0 0 6px; text-wrap: balance;
+  }
+  h2 .n { color: var(--accent); font-variant-numeric: tabular-nums; margin-right: 6px; }
+  h3 { font-size: 1rem; font-weight: 600; margin: 10px 0 0; }
+  p, ul { margin: 0 0 10px; }
+  ul { padding-left: 1.2em; }
+  li { margin-bottom: 6px; }
+  a { color: var(--accent); text-underline-offset: 2px; }
+  strong { font-weight: 600; }
+  code { font-size: 0.9em; background: var(--accent-soft); padding: 1px 5px; border-radius: 5px; }
+  footer { color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--line); padding-top: 16px; }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <header>
+    <a class="brand" href="../" aria-label="VocLock home">
+      <div class="badge" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M18 8h-1V6A5 5 0 0 0 7 6v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2Zm-6 9a2 2 0 1 1 0-4 2 2 0 0 1 0 4Zm3.1-9H8.9V6a3.1 3.1 0 0 1 6.2 0v2Z"/></svg>
+      </div>
+      <span class="app">VocLock</span>
+    </a>
+    <div class="langs" role="group" aria-label="Language / Sprache">
+      <button type="button" id="btn-en" data-lang="en" aria-pressed="true">English</button>
+      <button type="button" id="btn-de" data-lang="de" aria-pressed="false">Deutsch</button>
+    </div>
+  </header>
+
+  <!-- ==================== ENGLISH ==================== -->
+  <article lang="en" id="en" class="page">
+    <div>
+      <h1>Delete your VocLock account</h1>
+      <p class="meta">For VocLock on Android and iPhone</p>
+    </div>
+
+    <div class="short">
+      <h2>In the app (fastest)</h2>
+      <ul>
+        <li><span>Open VocLock and go to <strong>Settings → Account</strong>.</span></li>
+        <li><span>Tap <strong>Delete account</strong> and confirm with your password (or your Google account).</span></li>
+        <li><span>Done: your account and the progress saved in it are deleted right away.</span></li>
+      </ul>
+    </div>
+
+    <section>
+      <h2>Without the app</h2>
+      <p>Write to <a href="mailto:voclock.app@gmail.com?subject=Delete%20my%20VocLock%20account">voclock.app@gmail.com</a> from the email address of your account and ask us to delete it. We delete it within 30 days and let you know.</p>
+    </section>
+
+    <section>
+      <h2>What gets deleted</h2>
+      <ul>
+        <li>Your account: email address, user ID and (with Google sign-in) your name and profile picture link.</li>
+        <li>The copy of your learning progress: words and how well you know them, streak and history, statistics, achievements, your own words and settings.</li>
+      </ul>
+      <p>Nothing is kept afterwards. What's stored on your phone itself stays until you uninstall VocLock or clear its data. More in the <a href="../privacy/">privacy policy</a>.</p>
+    </section>
+  </article>
+
+  <!-- ==================== DEUTSCH ==================== -->
+  <article lang="de" id="de" class="page" hidden>
+    <div>
+      <h1>VocLock-Konto löschen</h1>
+      <p class="meta">Für VocLock auf Android und iPhone</p>
+    </div>
+
+    <div class="short">
+      <h2>In der App (am schnellsten)</h2>
+      <ul>
+        <li><span>Öffne VocLock und geh auf <strong>Einstellungen → Konto</strong>.</span></li>
+        <li><span>Tippe auf <strong>Konto löschen</strong> und bestätige mit deinem Passwort (oder deinem Google-Konto).</span></li>
+        <li><span>Fertig: Dein Konto und der darin gespeicherte Fortschritt werden sofort gelöscht.</span></li>
+      </ul>
+    </div>
+
+    <section>
+      <h2>Ohne die App</h2>
+      <p>Schreib von der E-Mail-Adresse deines Kontos an <a href="mailto:voclock.app@gmail.com?subject=VocLock-Konto%20l%C3%B6schen">voclock.app@gmail.com</a> und bitte um die Löschung. Wir löschen es innerhalb von 30 Tagen und geben dir Bescheid.</p>
+    </section>
+
+    <section>
+      <h2>Was gelöscht wird</h2>
+      <ul>
+        <li>Dein Konto: E-Mail-Adresse, Nutzer-ID und (bei Anmeldung mit Google) dein Name und der Link zu deinem Profilbild.</li>
+        <li>Die Kopie deines Lernfortschritts: Wörter und wie gut du sie kannst, Serie und Verlauf, Statistiken, Erfolge, deine eigenen Wörter und Einstellungen.</li>
+      </ul>
+      <p>Danach wird nichts aufbewahrt. Was auf deinem Handy selbst gespeichert ist, bleibt, bis du VocLock deinstallierst oder die App-Daten löschst. Mehr in der <a href="../privacy/">Datenschutzerklärung</a>.</p>
+    </section>
+  </article>
+
+  <footer>VocLock · Delete account / Konto löschen</footer>
+</div>
+
+<script>
+  (function () {
+    var articles = { en: document.getElementById("en"), de: document.getElementById("de") };
+    var buttons = document.querySelectorAll(".langs button");
+    function show(lang) {
+      if (!articles[lang]) lang = "en";
+      Object.keys(articles).forEach(function (k) { articles[k].hidden = k !== lang; });
+      buttons.forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.lang === lang)); });
+      document.documentElement.lang = lang;
+    }
+    buttons.forEach(function (b) {
+      b.addEventListener("click", function () { show(b.dataset.lang); });
+    });
+    // "#de" links straight to the German version; otherwise follow the browser's language.
+    var hash = location.hash.replace("#", "");
+    var browser = (navigator.language || "en").slice(0, 2);
+    show(hash === "de" || hash === "en" ? hash : browser === "de" ? "de" : "en");
+  })();
+</script>
+
+</body>
+</html>

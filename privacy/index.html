@@ -123,10 +123,10 @@
     <div class="short">
       <h2>In short</h2>
       <ul>
-        <li>No account needed.</li>
-        <li>Your words, answers, streak and settings stay on your phone. We never receive them.</li>
+        <li>An account is optional. If you create one, your progress is saved in it, so you get it back on a new phone. You can delete it in the app at any time.</li>
+        <li>Without an account, your words, answers, streak and settings stay on your phone only.</li>
         <li>The free version shows ads from Google (never on your lock screen). VocLock Pro has no ads.</li>
-        <li>Besides ads, VocLock only loads today's news from Wikipedia, once you've unlocked the News tab.</li>
+        <li>Besides your account and the ads, VocLock only loads today's news from Wikipedia, once you've unlocked the News tab.</li>
         <li>The accessibility service is optional. It only notices which app you open and can't read your screen.</li>
       </ul>
     </div>
@@ -138,18 +138,34 @@
 
     <section>
       <h2><span class="n">2</span>What's stored on your phone</h2>
-      <p>To work, VocLock keeps this data <strong>only on your device</strong>, in the app's own storage:</p>
+      <p>To work, VocLock keeps this data <strong>on your device</strong>, in the app's own storage:</p>
       <ul>
         <li>Your learning progress: which words you've had, your answers, streak, achievements and when each word is due for review.</li>
         <li>Words you add yourself.</li>
         <li>Your settings: language pack, words per day, theme, app language, reminder time, news interests and the apps you picked for the quiz.</li>
         <li>Your emergency PIN for the lock screen.</li>
       </ul>
-      <p>We have no server that receives this data. It's deleted when you uninstall VocLock or clear its data.</p>
+      <p>Without an account this data never leaves your phone (apart from phone backups, section 6). It's deleted from your phone when you uninstall VocLock or clear its data.</p>
     </section>
 
     <section>
-      <h2><span class="n">3</span>What connects to the internet</h2>
+      <h2><span class="n">3</span>Your account (optional)</h2>
+      <p>You can use VocLock without an account. If you create one (with your email address and a password, or with your Google account), your progress is copied to it so you can sign in on another phone and continue where you left off.</p>
+      <h3>What the account holds</h3>
+      <ul>
+        <li>Your email address and a random user ID. With "Continue with Google" also the name and profile picture link of your Google account. Your password is stored only in encrypted (hashed) form; we can't see it.</li>
+        <li>A copy of your learning progress: the words you've studied and how well you know them, when each is due for review, your streak and its history, your statistics and achievements.</li>
+        <li>Words you added yourself, and your settings (including the apps you picked for the quiz).</li>
+      </ul>
+      <p>Your emergency PIN is never uploaded. VocLock copies your progress to the account when you leave the app and fetches it when you open it or sign in.</p>
+      <h3>Who stores it</h3>
+      <p>Accounts and the copy of your progress are stored with Google Firebase (Firebase Authentication and Cloud Firestore), which processes the data on our behalf under its <a href="https://firebase.google.com/terms/data-processing-terms" rel="noopener">data processing terms</a>. Only you can read or change your data after signing in. Google may process it on servers outside the EU; it uses the EU standard contractual clauses for that. We use the data only to run your account and sync your progress, never for advertising, and don't sell or share it.</p>
+      <h3>Deleting your account</h3>
+      <p>In the app, go to Settings → Account → Delete account. That deletes your account and the copy of your progress right away (your phone keeps its own data until you uninstall VocLock). You can also ask us to delete it by writing to <a href="mailto:voclock.app@gmail.com">voclock.app@gmail.com</a> from the account's email address. Signing out keeps the account; it only stops syncing on that phone.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">4</span>What else connects to the internet</h2>
       <h3>News from Wikipedia</h3>
       <p>After you've learned enough words to unlock the News tab, opening it loads today's featured articles from Wikipedia (<code>en.wikipedia.org</code> or <code>de.wikipedia.org</code>, depending on your language pack). The request contains the date and the language, and VocLock names itself as the app making it. Like every web request, it also reaches Wikipedia's servers with your IP address and basic device information. The Wikimedia Foundation handles that under its <a href="https://foundation.wikimedia.org/wiki/Policy:Privacy_policy" rel="noopener">privacy policy</a>.</p>
       <p>Mixing the words you know into the articles happens on your phone. Your vocabulary is never sent to Wikipedia. "Read on Wikipedia" opens the article in your browser.</p>
@@ -159,39 +175,39 @@
       <h3>Pronunciation</h3>
       <p>The speaker buttons use your phone's built-in text-to-speech: on Android the engine you've chosen (usually Speech Services by Google), on iPhone Apple's voices. VocLock hands the word to that engine and sends it nowhere itself. Some engines can use online voices; in that case the provider of the engine processes the word under its own privacy policy.</p>
       <h3>Nothing else</h3>
-      <p>Apart from Wikipedia and Google's ads, VocLock contains no analytics, crash reporting or other third-party code that collects data.</p>
+      <p>Apart from your account, Wikipedia and Google's ads, VocLock contains no analytics, crash reporting or other third-party code that collects data.</p>
     </section>
 
     <section>
-      <h2><span class="n">4</span>Permissions and why VocLock asks for them</h2>
+      <h2><span class="n">5</span>Permissions and why VocLock asks for them</h2>
       <ul>
         <li><strong>Display over other apps</strong> (Android): to show the word quiz on your lock screen and the quick quiz over other apps.</li>
         <li><strong>Accessibility service</strong> (Android, optional, off until you turn it on): only to notice when you open an app, so VocLock can ask a word before you continue, or show the quiz over the social media apps you picked. It receives just the name of the app that comes to the front. It is set up without access to screen content, so it can't see what's on your screen or what you type. VocLock doesn't store or share which apps you use. You can turn it off at any time in your phone's accessibility settings.</li>
         <li><strong>Notifications</strong>: for the daily reminder with your words, and on Android for the small ongoing notification that keeps the lock screen running.</li>
         <li><strong>Run at startup, foreground service, keep awake, dismiss the lock screen</strong> (Android): so the word quiz appears when you turn on your screen, also after a restart.</li>
-        <li><strong>Internet</strong>: for the News tab and the ads in the free version (section 3).</li>
+        <li><strong>Internet</strong>: for your account, the News tab and the ads in the free version (sections 3 and 4).</li>
         <li><strong>Advertising ID</strong> (Android, free version): lets Google show and measure ads. You can reset or delete it in your phone's settings.</li>
       </ul>
     </section>
 
     <section>
-      <h2><span class="n">5</span>Backups</h2>
+      <h2><span class="n">6</span>Backups</h2>
       <p><strong>Export and import.</strong> In Settings you can save a backup file and load it again. You choose where the file goes; it doesn't pass through us. It contains your progress, settings, your own words and your emergency PIN, so keep it private.</p>
       <p><strong>Phone backups.</strong> If backups are turned on for your phone (for example Google backup on Android or iCloud on iPhone), your phone may include VocLock's data in them. Those backups are managed by Google or Apple under their policies.</p>
     </section>
 
     <section>
-      <h2><span class="n">6</span>Children</h2>
-      <p>VocLock isn't directed at children under 13. VocLock itself doesn't collect personal data from anyone; the ads in the free version are handled by Google as described in section 3.</p>
+      <h2><span class="n">7</span>Children</h2>
+      <p>VocLock isn't directed at children under 13, and children under 13 shouldn't create an account. Apart from the optional account (section 3), VocLock doesn't collect personal data; the ads in the free version are handled by Google as described in section 4.</p>
     </section>
 
     <section>
-      <h2><span class="n">7</span>Your choices</h2>
-      <p>Because your data stays on your phone, you're in control: delete it by clearing VocLock's data or uninstalling the app, withdraw any permission in your phone's settings, and change your ad choices under Settings → Ad privacy choices. If you have questions or want to exercise a right under data protection law (such as the GDPR), write to <a href="mailto:voclock.app@gmail.com">voclock.app@gmail.com</a>.</p>
+      <h2><span class="n">8</span>Your choices</h2>
+      <p>You're in control: use VocLock without an account, sign out or delete your account under Settings → Account, delete the data on your phone by clearing VocLock's data or uninstalling it, withdraw any permission in your phone's settings, and change your ad choices under Settings → Ad privacy choices. You have the right to access, correct, export and delete your data. For that, questions, or any other right under data protection law (such as the GDPR), write to <a href="mailto:voclock.app@gmail.com">voclock.app@gmail.com</a>. You can also complain to a data protection authority.</p>
     </section>
 
     <section>
-      <h2><span class="n">8</span>Changes</h2>
+      <h2><span class="n">9</span>Changes</h2>
       <p>If VocLock starts handling data differently, we'll update this page and the date at the top before the change ships.</p>
     </section>
   </article>
@@ -206,10 +222,10 @@
     <div class="short">
       <h2>Kurz gesagt</h2>
       <ul>
-        <li>Kein Konto nötig.</li>
-        <li>Deine Wörter, Antworten, Serie und Einstellungen bleiben auf deinem Handy. Wir bekommen sie nie.</li>
+        <li>Ein Konto ist freiwillig. Wenn du eins erstellst, wird dein Fortschritt darin gespeichert, damit du ihn auf einem neuen Handy zurückbekommst. Du kannst es jederzeit in der App löschen.</li>
+        <li>Ohne Konto bleiben deine Wörter, Antworten, Serie und Einstellungen nur auf deinem Handy.</li>
         <li>Die kostenlose Version zeigt Werbung von Google (nie auf dem Sperrbildschirm). VocLock Pro ist werbefrei.</li>
-        <li>Außer der Werbung lädt VocLock nur die Nachrichten des Tages von Wikipedia, sobald du den News-Tab freigeschaltet hast.</li>
+        <li>Außer deinem Konto und der Werbung lädt VocLock nur die Nachrichten des Tages von Wikipedia, sobald du den News-Tab freigeschaltet hast.</li>
         <li>Der Bedienungshilfen-Dienst ist freiwillig. Er merkt nur, welche App du öffnest, und kann deinen Bildschirm nicht lesen.</li>
       </ul>
     </div>
@@ -221,18 +237,34 @@
 
     <section>
       <h2><span class="n">2</span>Was auf deinem Handy gespeichert wird</h2>
-      <p>Damit die App funktioniert, speichert VocLock diese Daten <strong>nur auf deinem Gerät</strong>, im eigenen Speicher der App:</p>
+      <p>Damit die App funktioniert, speichert VocLock diese Daten <strong>auf deinem Gerät</strong>, im eigenen Speicher der App:</p>
       <ul>
         <li>Deinen Lernfortschritt: welche Wörter du hattest, deine Antworten, Serie, Erfolge und wann jedes Wort wiederholt wird.</li>
         <li>Wörter, die du selbst hinzufügst.</li>
         <li>Deine Einstellungen: Sprachpaket, Wörter pro Tag, Design, App-Sprache, Erinnerungszeit, News-Interessen und die Apps, die du für das Quiz ausgewählt hast.</li>
         <li>Deine Notfall-PIN für den Sperrbildschirm.</li>
       </ul>
-      <p>Wir haben keinen Server, der diese Daten empfängt. Sie werden gelöscht, wenn du VocLock deinstallierst oder die App-Daten löschst.</p>
+      <p>Ohne Konto verlassen diese Daten dein Handy nie (außer in Handy-Sicherungen, Abschnitt 6). Sie werden von deinem Handy gelöscht, wenn du VocLock deinstallierst oder die App-Daten löschst.</p>
     </section>
 
     <section>
-      <h2><span class="n">3</span>Was sich mit dem Internet verbindet</h2>
+      <h2><span class="n">3</span>Dein Konto (freiwillig)</h2>
+      <p>Du kannst VocLock ohne Konto nutzen. Wenn du eins erstellst (mit deiner E-Mail-Adresse und einem Passwort oder mit deinem Google-Konto), wird dein Fortschritt darin gespeichert, damit du dich auf einem anderen Handy anmelden und dort weitermachen kannst.</p>
+      <h3>Was im Konto gespeichert wird</h3>
+      <ul>
+        <li>Deine E-Mail-Adresse und eine zufällige Nutzer-ID. Bei „Weiter mit Google" auch der Name und der Link zum Profilbild deines Google-Kontos. Dein Passwort wird nur verschlüsselt (gehasht) gespeichert; wir können es nicht sehen.</li>
+        <li>Eine Kopie deines Lernfortschritts: welche Wörter du gelernt hast und wie gut du sie kannst, wann jedes wiederholt wird, deine Serie und ihr Verlauf, deine Statistiken und Erfolge.</li>
+        <li>Wörter, die du selbst hinzugefügt hast, und deine Einstellungen (auch die Apps, die du für das Quiz ausgewählt hast).</li>
+      </ul>
+      <p>Deine Notfall-PIN wird nie hochgeladen. VocLock kopiert deinen Fortschritt ins Konto, wenn du die App verlässt, und holt ihn, wenn du sie öffnest oder dich anmeldest.</p>
+      <h3>Wer die Daten speichert</h3>
+      <p>Konten und die Kopie deines Fortschritts werden bei Google Firebase gespeichert (Firebase Authentication und Cloud Firestore), das die Daten in unserem Auftrag nach seinen <a href="https://firebase.google.com/terms/data-processing-terms" rel="noopener">Bedingungen zur Auftragsverarbeitung</a> verarbeitet. Nur du kannst deine Daten nach der Anmeldung lesen oder ändern. Google kann sie auf Servern außerhalb der EU verarbeiten und nutzt dafür die Standardvertragsklauseln der EU. Wir nutzen die Daten nur, um dein Konto zu betreiben und deinen Fortschritt zu synchronisieren, nie für Werbung, und verkaufen oder teilen sie nicht.</p>
+      <h3>Konto löschen</h3>
+      <p>Geh in der App auf Einstellungen → Konto → Konto löschen. Damit werden dein Konto und die Kopie deines Fortschritts sofort gelöscht (dein Handy behält seine eigenen Daten, bis du VocLock deinstallierst). Du kannst die Löschung auch per E-Mail an <a href="mailto:voclock.app@gmail.com">voclock.app@gmail.com</a> von der E-Mail-Adresse des Kontos verlangen. Abmelden behält das Konto; es beendet nur die Synchronisierung auf diesem Handy.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">4</span>Was sich sonst mit dem Internet verbindet</h2>
       <h3>Nachrichten von Wikipedia</h3>
       <p>Sobald du genug Wörter gelernt hast, um den News-Tab freizuschalten, lädt er beim Öffnen die Artikel des Tages von Wikipedia (<code>en.wikipedia.org</code> oder <code>de.wikipedia.org</code>, je nach Sprachpaket). Die Anfrage enthält das Datum und die Sprache, und VocLock gibt sich als anfragende App zu erkennen. Wie jede Anfrage im Internet erreicht sie die Server von Wikipedia mit deiner IP-Adresse und grundlegenden Geräteangaben. Die Wikimedia Foundation behandelt diese nach ihrer <a href="https://foundation.wikimedia.org/wiki/Policy:Privacy_policy/de" rel="noopener">Datenschutzrichtlinie</a>.</p>
       <p>Das Einflechten deiner bekannten Wörter in die Artikel passiert auf deinem Handy. Dein Wortschatz wird nie an Wikipedia gesendet. „Auf Wikipedia lesen" öffnet den Artikel in deinem Browser.</p>
@@ -242,39 +274,39 @@
       <h3>Aussprache</h3>
       <p>Die Lautsprecher-Knöpfe nutzen die eingebaute Sprachausgabe deines Handys: auf Android die von dir gewählte Engine (meist Sprachdienste von Google), auf dem iPhone Apples Stimmen. VocLock übergibt das Wort an diese Engine und sendet es selbst nirgendwohin. Manche Engines können Online-Stimmen verwenden; dann verarbeitet der Anbieter der Engine das Wort nach seiner eigenen Datenschutzerklärung.</p>
       <h3>Sonst nichts</h3>
-      <p>Außer Wikipedia und der Werbung von Google enthält VocLock keine Analyse, keine Absturzberichte und keinen anderen Fremdcode, der Daten sammelt.</p>
+      <p>Außer deinem Konto, Wikipedia und der Werbung von Google enthält VocLock keine Analyse, keine Absturzberichte und keinen anderen Fremdcode, der Daten sammelt.</p>
     </section>
 
     <section>
-      <h2><span class="n">4</span>Berechtigungen und wofür VocLock sie braucht</h2>
+      <h2><span class="n">5</span>Berechtigungen und wofür VocLock sie braucht</h2>
       <ul>
         <li><strong>Über anderen Apps einblenden</strong> (Android): um das Wort-Quiz auf dem Sperrbildschirm und das Schnell-Quiz über anderen Apps zu zeigen.</li>
         <li><strong>Bedienungshilfen-Dienst</strong> (Android, freiwillig, aus, bis du ihn einschaltest): nur um zu merken, wann du eine App öffnest, damit VocLock vorher ein Wort abfragen oder das Quiz über den von dir gewählten Social-Media-Apps zeigen kann. Er erhält nur den Namen der App, die in den Vordergrund kommt. Er ist ohne Zugriff auf Bildschirminhalte eingerichtet, sieht also weder, was auf deinem Bildschirm steht, noch was du tippst. VocLock speichert oder teilt nicht, welche Apps du nutzt. Du kannst ihn jederzeit in den Bedienungshilfen deines Handys ausschalten.</li>
         <li><strong>Benachrichtigungen</strong>: für die tägliche Erinnerung mit deinen Wörtern und auf Android für die kleine dauerhafte Benachrichtigung, die den Sperrbildschirm am Laufen hält.</li>
         <li><strong>Beim Start ausführen, Vordergrunddienst, wach halten, Sperrbildschirm schließen</strong> (Android): damit das Wort-Quiz erscheint, wenn du den Bildschirm einschaltest, auch nach einem Neustart.</li>
-        <li><strong>Internet</strong>: für den News-Tab und die Werbung in der kostenlosen Version (Abschnitt 3).</li>
+        <li><strong>Internet</strong>: für dein Konto, den News-Tab und die Werbung in der kostenlosen Version (Abschnitte 3 und 4).</li>
         <li><strong>Werbe-ID</strong> (Android, kostenlose Version): damit Google Werbung anzeigen und messen kann. Du kannst sie in den Einstellungen deines Handys zurücksetzen oder löschen.</li>
       </ul>
     </section>
 
     <section>
-      <h2><span class="n">5</span>Sicherungen</h2>
+      <h2><span class="n">6</span>Sicherungen</h2>
       <p><strong>Exportieren und Importieren.</strong> In den Einstellungen kannst du eine Sicherungsdatei speichern und wieder laden. Du bestimmst, wo die Datei landet; sie geht nicht über uns. Sie enthält deinen Fortschritt, deine Einstellungen, deine eigenen Wörter und deine Notfall-PIN, also bewahre sie privat auf.</p>
       <p><strong>Handy-Sicherungen.</strong> Wenn Sicherungen auf deinem Handy aktiv sind (zum Beispiel Google-Sicherung auf Android oder iCloud auf dem iPhone), kann dein Handy die Daten von VocLock darin aufnehmen. Diese Sicherungen verwalten Google bzw. Apple nach ihren Richtlinien.</p>
     </section>
 
     <section>
-      <h2><span class="n">6</span>Kinder</h2>
-      <p>VocLock richtet sich nicht an Kinder unter 13 Jahren. VocLock selbst erhebt von niemandem personenbezogene Daten; die Werbung in der kostenlosen Version wird von Google wie in Abschnitt 3 beschrieben abgewickelt.</p>
+      <h2><span class="n">7</span>Kinder</h2>
+      <p>VocLock richtet sich nicht an Kinder unter 13 Jahren, und Kinder unter 13 sollten kein Konto erstellen. Außer dem freiwilligen Konto (Abschnitt 3) erhebt VocLock keine personenbezogenen Daten; die Werbung in der kostenlosen Version wird von Google wie in Abschnitt 4 beschrieben abgewickelt.</p>
     </section>
 
     <section>
-      <h2><span class="n">7</span>Deine Möglichkeiten</h2>
-      <p>Da deine Daten auf deinem Handy bleiben, hast du die Kontrolle: Lösche sie, indem du die App-Daten löschst oder VocLock deinstallierst, entziehe Berechtigungen jederzeit in den Einstellungen deines Handys und ändere deine Werbe-Einwilligung unter Einstellungen → Werbe-Einstellungen (Datenschutz). Bei Fragen oder wenn du ein Recht nach der DSGVO geltend machen möchtest, schreib an <a href="mailto:voclock.app@gmail.com">voclock.app@gmail.com</a>.</p>
+      <h2><span class="n">8</span>Deine Möglichkeiten</h2>
+      <p>Du hast die Kontrolle: Nutze VocLock ohne Konto, melde dich ab oder lösche dein Konto unter Einstellungen → Konto, lösche die Daten auf deinem Handy, indem du die App-Daten löschst oder VocLock deinstallierst, entziehe Berechtigungen jederzeit in den Einstellungen deines Handys und ändere deine Werbe-Einwilligung unter Einstellungen → Werbe-Einstellungen (Datenschutz). Du hast das Recht auf Auskunft, Berichtigung, Datenübertragbarkeit und Löschung deiner Daten. Dafür, bei Fragen oder für jedes andere Recht nach der DSGVO schreib an <a href="mailto:voclock.app@gmail.com">voclock.app@gmail.com</a>. Du kannst dich auch bei einer Datenschutz-Aufsichtsbehörde beschweren.</p>
     </section>
 
     <section>
-      <h2><span class="n">8</span>Änderungen</h2>
+      <h2><span class="n">9</span>Änderungen</h2>
       <p>Wenn VocLock Daten anders behandeln sollte, aktualisieren wir diese Seite und das Datum oben, bevor die Änderung erscheint.</p>
     </section>
   </article>
