@@ -47,6 +47,8 @@
     padding-block: 32px 64px;
   }
   .page { max-width: 42rem; margin: 0 auto; display: grid; gap: 28px; }
+  /* The language not shown; without this, .page's display: grid would show it anyway. */
+  [hidden] { display: none !important; }
 
   header { display: grid; gap: 14px; }
   .brand { display: flex; align-items: center; gap: 12px; color: var(--fg); text-decoration: none; width: fit-content; }
@@ -133,7 +135,7 @@
 
     <section>
       <h2><span class="n">1</span>Who we are</h2>
-      <p>VocLock is a vocabulary app that asks you words when you unlock your phone. It's developed by Said Erzhapov. Questions about this policy: <a href="mailto:voclock.app@gmail.com">voclock.app@gmail.com</a>.</p>
+      <p>VocLock is a vocabulary app that asks you words when you unlock your phone. It's developed by Said Erzhapov, who is responsible for the processing of your data (the controller under the GDPR): Said Erzhapov, Dr.-Moritz-Mitzenheim-Straße 24, 98646 Hildburghausen, Germany. Questions about this policy: <a href="mailto:voclock.app@gmail.com">voclock.app@gmail.com</a>. More contact details are in the <a href="../impressum/">Impressum</a>.</p>
     </section>
 
     <section>
@@ -253,7 +255,7 @@
 
     <section>
       <h2><span class="n">1</span>Wer wir sind</h2>
-      <p>VocLock ist eine Vokabel-App, die dich beim Entsperren deines Handys Wörter abfragt. Sie wird entwickelt von Said Erzhapov. Fragen zu dieser Erklärung: <a href="mailto:voclock.app@gmail.com">voclock.app@gmail.com</a>.</p>
+      <p>VocLock ist eine Vokabel-App, die dich beim Entsperren deines Handys Wörter abfragt. Sie wird entwickelt von Said Erzhapov, der für die Verarbeitung deiner Daten verantwortlich ist (Verantwortlicher im Sinne der DSGVO): Said Erzhapov, Dr.-Moritz-Mitzenheim-Straße 24, 98646 Hildburghausen, Deutschland. Fragen zu dieser Erklärung: <a href="mailto:voclock.app@gmail.com">voclock.app@gmail.com</a>. Weitere Kontaktdaten stehen im <a href="../impressum/">Impressum</a>.</p>
     </section>
 
     <section>
@@ -353,7 +355,7 @@
     </section>
   </article>
 
-  <footer>VocLock · Privacy Policy / Datenschutzerklärung · <a href="../licenses/">Licenses &amp; Credits</a></footer>
+  <footer>VocLock · Privacy Policy / Datenschutzerklärung · <a href="../licenses/">Licenses &amp; Credits</a> · <a href="../impressum/">Impressum</a></footer>
 </div>
 
 <script>

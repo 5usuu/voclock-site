@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<title>Impressum – VocLock</title>
+<meta name="description" content="Impressum / Legal notice of VocLock.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+  /* Same look as the privacy policy: one readable column, plain sections. */
+  :root {
+    --bg: #f8f3ee;
+    --surface: #fffaf5;
+    --fg: #2b211c;
+    --muted: #6f625a;
+    --line: #e8ddd3;
+    --accent: #b8432a;
+    --accent-soft: #f6e3da;
+    --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --font-body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #16110e; --surface: #221a16; --fg: #f3ebe5; --muted: #b9aaa0; --line: #3a2e28;
+      --accent: #f2a283; --accent-soft: #3a241c;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #16110e; --surface: #221a16; --fg: #f3ebe5; --muted: #b9aaa0; --line: #3a2e28;
+    --accent: #f2a283; --accent-soft: #3a241c;
+    color-scheme: dark;
+  }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font-family: var(--font-body); font-size: 17px; line-height: 1.6;
+    padding-inline: 20px; padding-block: 32px 64px;
+  }
+  .page { max-width: 42rem; margin: 0 auto; display: grid; gap: 28px; }
+  header { display: grid; gap: 14px; }
+  .brand { display: flex; align-items: center; gap: 12px; color: var(--fg); text-decoration: none; width: fit-content; }
+  .badge {
+    width: 44px; height: 44px; border-radius: 12px; flex: none;
+    background: linear-gradient(135deg, #c4532f, #9e3348); display: grid; place-items: center;
+  }
+  .badge svg { width: 24px; height: 24px; }
+  .app { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; letter-spacing: 0.01em; }
+  h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 6vw, 2.6rem); line-height: 1.1; margin: 0; }
+  .meta { color: var(--muted); margin: 0; font-size: 0.95rem; }
+  section { display: grid; gap: 4px; }
+  h2 { font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; line-height: 1.25; margin: 0 0 6px; }
+  p { margin: 0 0 10px; }
+  address { font-style: normal; }
+  a { color: var(--accent); text-underline-offset: 2px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; }
+  footer { color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--line); padding-top: 16px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <a class="brand" href="../" aria-label="VocLock home">
+      <div class="badge" aria-hidden="true">
+        <svg viewBox="21 20.5 66 66"><path d="M36 50 54 80 72 50" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M52 38 64 27" stroke="#ffd166" stroke-width="8" stroke-linecap="round"/></svg>
+      </div>
+      <span class="app">VocLock</span>
+    </a>
+    <div>
+      <h1>Impressum</h1>
+      <p class="meta">Legal notice · Angaben gemäß § 5 DDG</p>
+    </div>
+  </header>
+
+  <section class="card">
+    <h2>Anbieter / Provider</h2>
+    <address>
+      Said Erzhapov<br>
+      Dr.-Moritz-Mitzenheim-Straße 24<br>
+      98646 Hildburghausen<br>
+      Deutschland / Germany
+    </address>
+  </section>
+
+  <section>
+    <h2>Kontakt / Contact</h2>
+    <p>
+      E-Mail: <a href="mailto:voclock.app@gmail.com">voclock.app@gmail.com</a><br>
+      Telefon / Phone: <a href="tel:+4915773650096">+49 1577 3650096</a>
+    </p>
+  </section>
+
+  <section>
+    <h2>Verantwortlich für den Inhalt / Responsible for the content</h2>
+    <p>Said Erzhapov, Anschrift wie oben / address as above.</p>
+  </section>
+
+  <section>
+    <h2>Verbraucherstreitbeilegung / Consumer disputes</h2>
+    <p>Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+    <p>We are neither willing nor obliged to take part in dispute resolution proceedings before a consumer arbitration board.</p>
+  </section>
+
+  <footer>VocLock · <a href="../privacy/">Datenschutz / Privacy</a> · <a href="../licenses/">Lizenzen / Licenses</a></footer>
+</div>
+</body>
+</html>

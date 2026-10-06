@@ -47,6 +47,8 @@
     padding-block: 32px 64px;
   }
   .page { max-width: 42rem; margin: 0 auto; display: grid; gap: 28px; }
+  /* The language not shown; without this, .page's display: grid would show it anyway. */
+  [hidden] { display: none !important; }
 
   header { display: grid; gap: 14px; }
   .brand { display: flex; align-items: center; gap: 12px; color: var(--fg); text-decoration: none; width: fit-content; }
