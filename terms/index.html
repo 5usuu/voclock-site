@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<title>Terms of Use – VocLock</title>
+<meta name="description" content="Terms of use of VocLock, the vocabulary lock screen app for Android and iPhone.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+  /* Same look as the privacy policy: one readable column, an "in short" panel, numbered sections. */
+  :root {
+    --bg: #f8f3ee;
+    --surface: #fffaf5;
+    --fg: #2b211c;
+    --muted: #6f625a;
+    --line: #e8ddd3;
+    --accent: #b8432a;
+    --accent-soft: #f6e3da;
+    --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --font-body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #16110e; --surface: #221a16; --fg: #f3ebe5; --muted: #b9aaa0; --line: #3a2e28;
+      --accent: #f2a283; --accent-soft: #3a241c;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #16110e; --surface: #221a16; --fg: #f3ebe5; --muted: #b9aaa0; --line: #3a2e28;
+    --accent: #f2a283; --accent-soft: #3a241c;
+    color-scheme: dark;
+  }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font-family: var(--font-body); font-size: 17px; line-height: 1.6;
+    padding-inline: 20px; padding-block: 32px 64px;
+  }
+  .page { max-width: 42rem; margin: 0 auto; display: grid; gap: 28px; }
+  /* The language not shown; without this, .page's display: grid would show it anyway. */
+  [hidden] { display: none !important; }
+  header { display: grid; gap: 14px; }
+  .brand { display: flex; align-items: center; gap: 12px; color: var(--fg); text-decoration: none; width: fit-content; }
+  .badge {
+    width: 44px; height: 44px; border-radius: 12px; flex: none;
+    background: linear-gradient(135deg, #c4532f, #9e3348); display: grid; place-items: center;
+  }
+  .badge svg { width: 24px; height: 24px; }
+  .app { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; letter-spacing: 0.01em; }
+  h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 6vw, 2.6rem); line-height: 1.1; margin: 0; text-wrap: balance; }
+  .meta { color: var(--muted); margin: 0; font-size: 0.95rem; }
+  .langs { display: flex; gap: 6px; }
+  .langs button {
+    font: 600 0.9rem var(--font-body); color: var(--muted); background: transparent;
+    border: 1px solid var(--line); border-radius: 999px; padding: 4px 14px; cursor: pointer;
+  }
+  .langs button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+  .langs button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .short { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; }
+  .short h2 { margin-top: 0; }
+  section { display: grid; gap: 4px; }
+  h2 { font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; line-height: 1.25; margin: 0 0 6px; text-wrap: balance; }
+  h2 .n { color: var(--accent); font-variant-numeric: tabular-nums; margin-right: 6px; }
+  p, ul { margin: 0 0 10px; }
+  ul { padding-left: 1.2em; }
+  li { margin-bottom: 6px; }
+  a { color: var(--accent); text-underline-offset: 2px; }
+  strong { font-weight: 600; }
+  footer { color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--line); padding-top: 16px; }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <header>
+    <a class="brand" href="../" aria-label="VocLock home">
+      <div class="badge" aria-hidden="true">
+        <svg viewBox="21 20.5 66 66"><path d="M36 50 54 80 72 50" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M52 38 64 27" stroke="#ffd166" stroke-width="8" stroke-linecap="round"/></svg>
+      </div>
+      <span class="app">VocLock</span>
+    </a>
+    <div class="langs" role="group" aria-label="Language / Sprache">
+      <button type="button" id="btn-en" data-lang="en" aria-pressed="true">English</button>
+      <button type="button" id="btn-de" data-lang="de" aria-pressed="false">Deutsch</button>
+    </div>
+  </header>
+
+  <!-- ==================== ENGLISH ==================== -->
+  <article lang="en" id="en" class="page">
+    <div>
+      <h1>Terms of Use</h1>
+      <p class="meta">Effective October 6, 2026 · apply to VocLock for Android and iPhone</p>
+    </div>
+
+    <div class="short">
+      <h2>In short</h2>
+      <ul>
+        <li>VocLock is free with ads; VocLock Pro is a subscription you buy and cancel in your app store.</li>
+        <li>Be kind to the people you connect with. We can remove names or accounts that break these rules.</li>
+        <li>The chat partner is an AI. It can be wrong; it's for practice, not a teacher.</li>
+        <li>Ideas and bug reports you send us, however you send them, we may use without paying or crediting you.</li>
+        <li>Your rights under consumer law always stay as they are.</li>
+      </ul>
+    </div>
+
+    <section>
+      <h2><span class="n">1</span>Who we are and what these terms cover</h2>
+      <p>VocLock is provided by Said Erzhapov (contact details in the <a href="../impressum/">Impressum</a>). These terms apply to using the VocLock app and its online features: the account, friends and partner, and the chat partner. How we handle your data is described in the <a href="../privacy/">privacy policy</a>. By using VocLock you agree to these terms.</p>
+      <p>VocLock isn't directed at children under 13.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">2</span>The app</h2>
+      <p>VocLock helps you learn words: on your lock screen, when you open apps, and in the app itself. The free version shows ads (never on the lock screen). We keep improving VocLock, so features can change; we may also change or end free features, for example if running them becomes too expensive. We won't take away a central part of Pro during a period you've paid for without letting you cancel.</p>
+      <p>VocLock's lock screen asks a question before you get to your phone. Your emergency PIN skips it right away, and you can stop the lock screen at any time by turning off VocLock's "Display over other apps" permission in your phone's settings or by uninstalling VocLock. Don't rely on VocLock where you need instant access to your phone.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">3</span>Your account</h2>
+      <p>An account is optional. If you create one, use your own email address, keep your password to yourself and don't share the account. You can delete it in the app at any time (Settings → Account).</p>
+    </section>
+
+    <section>
+      <h2><span class="n">4</span>VocLock Pro</h2>
+      <ul>
+        <li>Pro is a subscription sold through Google Play or the App Store. The price, any free trial and the billing period are shown there before you buy.</li>
+        <li>It renews automatically until you cancel it in your store account. Cancelling stops the next renewal; Pro stays active until the end of the period you've paid for.</li>
+        <li>Payment and refunds are handled by Google or Apple under their terms. Your statutory rights, including any right of withdrawal, are not affected.</li>
+        <li>We sometimes give Pro away for free for a set time. A gift ends on the date it was given for and gives no right to an extension; we can end it early if it's misused.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="n">5</span>Friends, partner and behaviour</h2>
+      <p>People you connect with see your name, rank, streak and learning days. So please:</p>
+      <ul>
+        <li>Use a name that isn't insulting, hateful, sexual or pretending to be someone else.</li>
+        <li>Don't harass anyone, and don't use nudges or requests to spam.</li>
+        <li>Don't try to get at other people's data, overload VocLock's servers or use VocLock in an automated way.</li>
+      </ul>
+      <p>If someone breaks these rules, we can remove their name or connections, and in serious or repeated cases suspend or delete their account. Where it's reasonable, we warn first. You can always remove a connection yourself under Friends &amp; partner.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">6</span>The AI chat partner (Pro)</h2>
+      <ul>
+        <li>Its messages are written by an AI model, not by a person. They can contain mistakes, odd sentences or wrong corrections. Use it to practise, not as your only source for how the language works, and not for advice of any kind.</li>
+        <li>Don't write personal details into the chat, and don't try to make it produce harmful or illegal content or anything other than everyday conversation.</li>
+        <li>There's a daily limit of messages. We may change the limit or the AI model behind the chat.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="n">7</span>Ideas, suggestions and bug reports</h2>
+      <p>We love hearing from you. If you send us ideas, suggestions, feedback or bug reports, <strong>no matter how</strong> (in the app, by email, on social media or any other way), we may use, change and build them into VocLock freely and for good. You don't get any payment, share, reward or other compensation for it, and we don't have to name or credit you, also if we build exactly what you suggested. We don't have to use or answer every idea. Please only send ideas that you're allowed to share.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">8</span>Content</h2>
+      <p>The news articles come from Wikipedia under <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>; other credits are listed under <a href="../licenses/">Licenses &amp; Credits</a>. Everything else in VocLock (word lists, example sentences, Tea episodes, design) belongs to VocLock. You may use it within the app for your own learning, but not copy or publish it elsewhere.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">9</span>Liability</h2>
+      <p>We're liable without limit for intent and gross negligence, for injury to life, body or health, and under the German Product Liability Act. For slight negligence we're only liable if we breach an obligation that is essential for VocLock to work and that you can normally rely on, and then only for the damage typically foreseeable in such a case. For the free version, we're only liable for intent and gross negligence, as the law provides for things given for free. VocLock can't guarantee that the app or its online features are always available.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">10</span>Ending</h2>
+      <p>You can stop using VocLock at any time: delete your account in the app and uninstall it. Cancel a Pro subscription in your store account; deleting the app or account doesn't cancel it.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">11</span>Changes and applicable law</h2>
+      <p>If we change these terms, we'll update this page and the date at the top, and tell you about important changes in the app before they apply. German law applies. If you live in another country as a consumer, the protective rules of your country's law still apply to you.</p>
+    </section>
+  </article>
+
+  <!-- ==================== DEUTSCH ==================== -->
+  <article lang="de" id="de" class="page" hidden>
+    <div>
+      <h1>Nutzungsbedingungen</h1>
+      <p class="meta">Gültig ab 6. Oktober 2026 · gelten für VocLock auf Android und iPhone</p>
+    </div>
+
+    <div class="short">
+      <h2>Kurz gesagt</h2>
+      <ul>
+        <li>VocLock ist kostenlos mit Werbung; VocLock Pro ist ein Abo, das du in deinem App-Store kaufst und kündigst.</li>
+        <li>Sei freundlich zu den Leuten, mit denen du dich verbindest. Namen oder Konten, die gegen diese Regeln verstoßen, können wir entfernen.</li>
+        <li>Der Chatpartner ist eine KI. Er kann sich irren; er ist zum Üben da, nicht als Lehrer.</li>
+        <li>Ideen und Fehlermeldungen, die du uns schickst, egal auf welchem Weg, dürfen wir nutzen, ohne dich zu bezahlen oder zu nennen.</li>
+        <li>Deine gesetzlichen Verbraucherrechte bleiben immer unberührt.</li>
+      </ul>
+    </div>
+
+    <section>
+      <h2><span class="n">1</span>Wer wir sind und wofür diese Bedingungen gelten</h2>
+      <p>VocLock wird angeboten von Said Erzhapov (Kontaktdaten im <a href="../impressum/">Impressum</a>). Diese Bedingungen gelten für die Nutzung der VocLock-App und ihrer Online-Funktionen: Konto, Freunde und Partner sowie Chatpartner. Wie wir mit deinen Daten umgehen, steht in der <a href="../privacy/#de">Datenschutzerklärung</a>. Mit der Nutzung von VocLock stimmst du diesen Bedingungen zu.</p>
+      <p>VocLock richtet sich nicht an Kinder unter 13 Jahren.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">2</span>Die App</h2>
+      <p>VocLock hilft dir, Wörter zu lernen: auf dem Sperrbildschirm, beim Öffnen von Apps und in der App selbst. Die kostenlose Version zeigt Werbung (nie auf dem Sperrbildschirm). Wir entwickeln VocLock ständig weiter, deshalb können sich Funktionen ändern; kostenlose Funktionen können wir auch ändern oder einstellen, zum Beispiel wenn ihr Betrieb zu teuer wird. Einen zentralen Teil von Pro nehmen wir dir während eines bezahlten Zeitraums nicht weg, ohne dass du kündigen kannst.</p>
+      <p>Der Sperrbildschirm von VocLock stellt eine Frage, bevor du an dein Handy kommst. Deine Notfall-PIN überspringt sie sofort, und du kannst den Sperrbildschirm jederzeit beenden, indem du VocLock in den Einstellungen deines Handys die Berechtigung „Über anderen Apps einblenden" entziehst oder VocLock deinstallierst. Verlass dich nicht auf VocLock, wenn du sofort an dein Handy musst.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">3</span>Dein Konto</h2>
+      <p>Ein Konto ist freiwillig. Wenn du eins erstellst, nutze deine eigene E-Mail-Adresse, behalte dein Passwort für dich und teile das Konto nicht mit anderen. Du kannst es jederzeit in der App löschen (Einstellungen → Konto).</p>
+    </section>
+
+    <section>
+      <h2><span class="n">4</span>VocLock Pro</h2>
+      <ul>
+        <li>Pro ist ein Abo, das über Google Play oder den App Store verkauft wird. Preis, eine eventuelle Testphase und der Abrechnungszeitraum werden dort vor dem Kauf angezeigt.</li>
+        <li>Es verlängert sich automatisch, bis du es in deinem Store-Konto kündigst. Die Kündigung stoppt die nächste Verlängerung; Pro bleibt bis zum Ende des bezahlten Zeitraums aktiv.</li>
+        <li>Zahlung und Erstattungen wickeln Google bzw. Apple nach ihren Bedingungen ab. Deine gesetzlichen Rechte, auch ein Widerrufsrecht, bleiben unberührt.</li>
+        <li>Manchmal verschenken wir Pro für eine bestimmte Zeit. Ein Geschenk endet zum genannten Datum und gibt keinen Anspruch auf Verlängerung; bei Missbrauch können wir es vorzeitig beenden.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="n">5</span>Freunde, Partner und Verhalten</h2>
+      <p>Leute, mit denen du verbunden bist, sehen deinen Namen, Rang, deine Serie und Lerntage. Deshalb bitte:</p>
+      <ul>
+        <li>Nutze keinen Namen, der beleidigend, hasserfüllt oder sexuell ist oder vorgibt, jemand anderes zu sein.</li>
+        <li>Belästige niemanden und nutze Anstupser oder Anfragen nicht für Spam.</li>
+        <li>Versuche nicht, an Daten anderer zu kommen, die Server von VocLock zu überlasten oder VocLock automatisiert zu nutzen.</li>
+      </ul>
+      <p>Wer gegen diese Regeln verstößt, dessen Namen oder Verbindungen können wir entfernen und in schweren oder wiederholten Fällen das Konto sperren oder löschen. Wo es zumutbar ist, warnen wir vorher. Du kannst eine Verbindung jederzeit selbst unter Freunde &amp; Partner entfernen.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">6</span>Der KI-Chatpartner (Pro)</h2>
+      <ul>
+        <li>Seine Nachrichten schreibt ein KI-Modell, kein Mensch. Sie können Fehler, seltsame Sätze oder falsche Korrekturen enthalten. Nutze ihn zum Üben, nicht als einzige Quelle dafür, wie die Sprache funktioniert, und nicht für Ratschläge jeder Art.</li>
+        <li>Schreib keine persönlichen Daten in den Chat und versuche nicht, ihn zu schädlichen oder rechtswidrigen Inhalten oder zu etwas anderem als Alltagsgesprächen zu bringen.</li>
+        <li>Es gibt ein tägliches Nachrichtenlimit. Das Limit und das KI-Modell hinter dem Chat können wir ändern.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="n">7</span>Ideen, Vorschläge und Fehlermeldungen</h2>
+      <p>Wir freuen uns über deine Rückmeldungen. Wenn du uns Ideen, Vorschläge, Feedback oder Fehlermeldungen schickst, <strong>egal auf welchem Weg</strong> (in der App, per E-Mail, über soziale Medien oder anders), dürfen wir sie frei und dauerhaft nutzen, ändern und in VocLock einbauen. Du erhältst dafür keine Bezahlung, Beteiligung, Belohnung oder sonstige Vergütung, und wir müssen dich nicht nennen oder als Urheber angeben, auch wenn wir genau das umsetzen, was du vorgeschlagen hast. Wir müssen nicht jede Idee nutzen oder beantworten. Schick uns bitte nur Ideen, die du teilen darfst.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">8</span>Inhalte</h2>
+      <p>Die Nachrichtenartikel stammen von Wikipedia unter <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de" rel="noopener">CC BY-SA 4.0</a>; weitere Quellen stehen unter <a href="../licenses/">Lizenzen &amp; Quellen</a>. Alles andere in VocLock (Wortlisten, Beispielsätze, Tea-Folgen, Design) gehört VocLock. Du darfst es in der App für dein eigenes Lernen nutzen, aber nicht anderswo kopieren oder veröffentlichen.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">9</span>Haftung</h2>
+      <p>Wir haften unbeschränkt bei Vorsatz und grober Fahrlässigkeit, bei Verletzung von Leben, Körper oder Gesundheit und nach dem Produkthaftungsgesetz. Bei leichter Fahrlässigkeit haften wir nur, wenn wir eine Pflicht verletzen, die für das Funktionieren von VocLock wesentlich ist und auf deren Einhaltung du regelmäßig vertrauen darfst, und dann nur für den typischerweise vorhersehbaren Schaden. Für die kostenlose Version haften wir, wie es das Gesetz für unentgeltliche Leistungen vorsieht, nur für Vorsatz und grobe Fahrlässigkeit. VocLock kann nicht garantieren, dass die App oder ihre Online-Funktionen immer verfügbar sind.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">10</span>Beenden</h2>
+      <p>Du kannst VocLock jederzeit nicht mehr nutzen: Lösche dein Konto in der App und deinstalliere sie. Ein Pro-Abo kündigst du in deinem Store-Konto; das Löschen der App oder des Kontos kündigt es nicht.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">11</span>Änderungen und anwendbares Recht</h2>
+      <p>Wenn wir diese Bedingungen ändern, aktualisieren wir diese Seite und das Datum oben und informieren dich in der App über wichtige Änderungen, bevor sie gelten. Es gilt deutsches Recht. Wenn du als Verbraucher in einem anderen Land lebst, gelten für dich zusätzlich die zwingenden Schutzvorschriften deines Landes.</p>
+    </section>
+  </article>
+
+  <footer>VocLock · Terms of Use / Nutzungsbedingungen · <a href="../privacy/">Privacy</a> · <a href="../licenses/">Licenses</a> · <a href="../impressum/">Impressum</a></footer>
+</div>
+
+<script>
+  (function () {
+    var articles = { en: document.getElementById("en"), de: document.getElementById("de") };
+    var buttons = document.querySelectorAll(".langs button");
+    function show(lang) {
+      if (!articles[lang]) lang = "en";
+      Object.keys(articles).forEach(function (k) { articles[k].hidden = k !== lang; });
+      buttons.forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.lang === lang)); });
+      document.documentElement.lang = lang;
+    }
+    buttons.forEach(function (b) {
+      b.addEventListener("click", function () { show(b.dataset.lang); });
+    });
+    // "#de" links straight to the German version; otherwise follow the browser's language.
+    var hash = location.hash.replace("#", "");
+    var browser = (navigator.language || "en").slice(0, 2);
+    show(hash === "de" || hash === "en" ? hash : browser === "de" ? "de" : "en");
+  })();
+</script>
+
+</body>
+</html>
