@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<title>Licenses &amp; Credits – VocLock</title>
+<meta name="description" content="Open source licenses and content credits for VocLock.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+  /* Same look as the privacy policy: one readable column, plain sections. */
+  :root {
+    --bg: #f8f3ee;
+    --surface: #fffaf5;
+    --fg: #2b211c;
+    --muted: #6f625a;
+    --line: #e8ddd3;
+    --accent: #b8432a;
+    --accent-soft: #f6e3da;
+    --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --font-body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #16110e; --surface: #221a16; --fg: #f3ebe5; --muted: #b9aaa0; --line: #3a2e28;
+      --accent: #f2a283; --accent-soft: #3a241c;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #16110e; --surface: #221a16; --fg: #f3ebe5; --muted: #b9aaa0; --line: #3a2e28;
+    --accent: #f2a283; --accent-soft: #3a241c;
+    color-scheme: dark;
+  }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font-family: var(--font-body); font-size: 17px; line-height: 1.6;
+    padding-inline: 20px; padding-block: 32px 64px;
+  }
+  .page { max-width: 42rem; margin: 0 auto; display: grid; gap: 28px; }
+  header { display: grid; gap: 14px; }
+  .brand { display: flex; align-items: center; gap: 12px; color: var(--fg); text-decoration: none; width: fit-content; }
+  .badge {
+    width: 44px; height: 44px; border-radius: 12px; flex: none;
+    background: linear-gradient(135deg, #c4532f, #9e3348); display: grid; place-items: center;
+  }
+  .badge svg { width: 24px; height: 24px; }
+  .app { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; letter-spacing: 0.01em; }
+  h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 6vw, 2.6rem); line-height: 1.1; margin: 0; text-wrap: balance; }
+  .meta { color: var(--muted); margin: 0; font-size: 0.95rem; }
+  section { display: grid; gap: 4px; }
+  h2 { font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; line-height: 1.25; margin: 0 0 6px; }
+  p, ul { margin: 0 0 10px; }
+  ul { padding-left: 1.2em; }
+  li { margin-bottom: 6px; }
+  a { color: var(--accent); text-underline-offset: 2px; overflow-wrap: anywhere; }
+  .lib { color: var(--muted); }
+  details { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; }
+  summary { cursor: pointer; font-weight: 600; }
+  pre { white-space: pre-wrap; font-size: 0.8rem; line-height: 1.45; margin: 12px 0 0; overflow-wrap: anywhere; }
+  footer { color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--line); padding-top: 16px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <a class="brand" href="../" aria-label="VocLock home">
+      <div class="badge" aria-hidden="true">
+        <svg viewBox="21 20.5 66 66"><path d="M36 50 54 80 72 50" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M52 38 64 27" stroke="#ffd166" stroke-width="8" stroke-linecap="round"/></svg>
+      </div>
+      <span class="app">VocLock</span>
+    </a>
+    <div>
+      <h1>Licenses &amp; Credits</h1>
+      <p class="meta">What VocLock is built with, and whose work it shows. · Lizenzen und Quellen</p>
+    </div>
+  </header>
+
+  <section>
+    <h2>Content</h2>
+    <ul>
+      <li><strong>News articles:</strong> texts from <a href="https://www.wikipedia.org/" rel="noopener">Wikipedia</a>, licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>. VocLock changes them by swapping in words you know. Every article links to its original on Wikipedia, where its authors are listed.</li>
+      <li><strong>Word order:</strong> the order in which new words come is based on the frequency lists of <a href="https://github.com/hermitdave/FrequencyWords" rel="noopener">FrequencyWords</a> by Hermit Dave (built from OpenSubtitles), licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener">CC BY-SA 4.0</a>.</li>
+      <li><strong>Chat partner:</strong> its messages are written by an AI model (through <a href="https://openrouter.ai/" rel="noopener">OpenRouter</a>), not by a person.</li>
+      <li>Word lists, example sentences, Tea episodes and the app's design are VocLock's own.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Open source libraries</h2>
+    <p>VocLock uses these libraries under the <strong>Apache License 2.0</strong> (full text below):</p>
+    <ul>
+      <li>Kotlin, kotlinx.coroutines, kotlinx.serialization, kotlinx-datetime <span class="lib">– JetBrains</span></li>
+      <li>Compose Multiplatform, Compose Material 3, Material Icons <span class="lib">– JetBrains, Google</span></li>
+      <li>Ktor client <span class="lib">– JetBrains</span>, with OkHttp <span class="lib">– Square</span></li>
+      <li>AndroidX: Core, AppCompat, Activity, Lifecycle, Room, SQLite, Credentials <span class="lib">– Google</span></li>
+      <li>Material Components for Android <span class="lib">– Google</span></li>
+      <li>Firebase Android SDK: Authentication, Cloud Firestore <span class="lib">– Google</span></li>
+      <li>kotlinx-coroutines-play-services <span class="lib">– JetBrains</span></li>
+      <li>Haze <span class="lib">– Chris Banes</span></li>
+    </ul>
+    <p>The Google Mobile Ads SDK, the User Messaging Platform and Sign in with Google are used under <a href="https://developers.google.com/terms" rel="noopener">Google's terms</a>.</p>
+    <details>
+      <summary>Apache License 2.0</summary>
+      <pre>Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+   1. Definitions.
+
+      &quot;License&quot; shall mean the terms and conditions for use, reproduction,
+      and distribution as defined by Sections 1 through 9 of this document.
+
+      &quot;Licensor&quot; shall mean the copyright owner or entity authorized by
+      the copyright owner that is granting the License.
+
+      &quot;Legal Entity&quot; shall mean the union of the acting entity and all
+      other entities that control, are controlled by, or are under common
+      control with that entity. For the purposes of this definition,
+      &quot;control&quot; means (i) the power, direct or indirect, to cause the
+      direction or management of such entity, whether by contract or
+      otherwise, or (ii) ownership of fifty percent (50%) or more of the
+      outstanding shares, or (iii) beneficial ownership of such entity.
+
+      &quot;You&quot; (or &quot;Your&quot;) shall mean an individual or Legal Entity
+      exercising permissions granted by this License.
+
+      &quot;Source&quot; form shall mean the preferred form for making modifications,
+      including but not limited to software source code, documentation
+      source, and configuration files.
+
+      &quot;Object&quot; form shall mean any form resulting from mechanical
+      transformation or translation of a Source form, including but
+      not limited to compiled object code, generated documentation,
+      and conversions to other media types.
+
+      &quot;Work&quot; shall mean the work of authorship, whether in Source or
+      Object form, made available under the License, as indicated by a
+      copyright notice that is included in or attached to the work
+      (an example is provided in the Appendix below).
+
+      &quot;Derivative Works&quot; shall mean any work, whether in Source or Object
+      form, that is based on (or derived from) the Work and for which the
+      editorial revisions, annotations, elaborations, or other modifications
+      represent, as a whole, an original work of authorship. For the purposes
+      of this License, Derivative Works shall not include works that remain
+      separable from, or merely link (or bind by name) to the interfaces of,
+      the Work and Derivative Works thereof.
+
+      &quot;Contribution&quot; shall mean any work of authorship, including
+      the original version of the Work and any modifications or additions
+      to that Work or Derivative Works thereof, that is intentionally
+      submitted to Licensor for inclusion in the Work by the copyright owner
+      or by an individual or Legal Entity authorized to submit on behalf of
+      the copyright owner. For the purposes of this definition, &quot;submitted&quot;
+      means any form of electronic, verbal, or written communication sent
+      to the Licensor or its representatives, including but not limited to
+      communication on electronic mailing lists, source code control systems,
+      and issue tracking systems that are managed by, or on behalf of, the
+      Licensor for the purpose of discussing and improving the Work, but
+      excluding communication that is conspicuously marked or otherwise
+      designated in writing by the copyright owner as &quot;Not a Contribution.&quot;
+
+      &quot;Contributor&quot; shall mean Licensor and any individual or Legal Entity
+      on behalf of whom a Contribution has been received by Licensor and
+      subsequently incorporated within the Work.
+
+   2. Grant of Copyright License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      copyright license to reproduce, prepare Derivative Works of,
+      publicly display, publicly perform, sublicense, and distribute the
+      Work and such Derivative Works in Source or Object form.
+
+   3. Grant of Patent License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      (except as stated in this section) patent license to make, have made,
+      use, offer to sell, sell, import, and otherwise transfer the Work,
+      where such license applies only to those patent claims licensable
+      by such Contributor that are necessarily infringed by their
+      Contribution(s) alone or by combination of their Contribution(s)
+      with the Work to which such Contribution(s) was submitted. If You
+      institute patent litigation against any entity (including a
+      cross-claim or counterclaim in a lawsuit) alleging that the Work
+      or a Contribution incorporated within the Work constitutes direct
+      or contributory patent infringement, then any patent licenses
+      granted to You under this License for that Work shall terminate
+      as of the date such litigation is filed.
+
+   4. Redistribution. You may reproduce and distribute copies of the
+      Work or Derivative Works thereof in any medium, with or without
+      modifications, and in Source or Object form, provided that You
+      meet the following conditions:
+
+      (a) You must give any other recipients of the Work or
+          Derivative Works a copy of this License; and
+
+      (b) You must cause any modified files to carry prominent notices
+          stating that You changed the files; and
+
+      (c) You must retain, in the Source form of any Derivative Works
+          that You distribute, all copyright, patent, trademark, and
+          attribution notices from the Source form of the Work,
+          excluding those notices that do not pertain to any part of
+          the Derivative Works; and
+
+      (d) If the Work includes a &quot;NOTICE&quot; text file as part of its
+          distribution, then any Derivative Works that You distribute must
+          include a readable copy of the attribution notices contained
+          within such NOTICE file, excluding those notices that do not
+          pertain to any part of the Derivative Works, in at least one
+          of the following places: within a NOTICE text file distributed
+          as part of the Derivative Works; within the Source form or
+          documentation, if provided along with the Derivative Works; or,
+          within a display generated by the Derivative Works, if and
+          wherever such third-party notices normally appear. The contents
+          of the NOTICE file are for informational purposes only and
+          do not modify the License. You may add Your own attribution
+          notices within Derivative Works that You distribute, alongside
+          or as an addendum to the NOTICE text from the Work, provided
+          that such additional attribution notices cannot be construed
+          as modifying the License.
+
+      You may add Your own copyright statement to Your modifications and
+      may provide additional or different license terms and conditions
+      for use, reproduction, or distribution of Your modifications, or
+      for any such Derivative Works as a whole, provided Your use,
+      reproduction, and distribution of the Work otherwise complies with
+      the conditions stated in this License.
+
+   5. Submission of Contributions. Unless You explicitly state otherwise,
+      any Contribution intentionally submitted for inclusion in the Work
+      by You to the Licensor shall be under the terms and conditions of
+      this License, without any additional terms or conditions.
+      Notwithstanding the above, nothing herein shall supersede or modify
+      the terms of any separate license agreement you may have executed
+      with Licensor regarding such Contributions.
+
+   6. Trademarks. This License does not grant permission to use the trade
+      names, trademarks, service marks, or product names of the Licensor,
+      except as required for reasonable and customary use in describing the
+      origin of the Work and reproducing the content of the NOTICE file.
+
+   7. Disclaimer of Warranty. Unless required by applicable law or
+      agreed to in writing, Licensor provides the Work (and each
+      Contributor provides its Contributions) on an &quot;AS IS&quot; BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+      implied, including, without limitation, any warranties or conditions
+      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+      PARTICULAR PURPOSE. You are solely responsible for determining the
+      appropriateness of using or redistributing the Work and assume any
+      risks associated with Your exercise of permissions under this License.
+
+   8. Limitation of Liability. In no event and under no legal theory,
+      whether in tort (including negligence), contract, or otherwise,
+      unless required by applicable law (such as deliberate and grossly
+      negligent acts) or agreed to in writing, shall any Contributor be
+      liable to You for damages, including any direct, indirect, special,
+      incidental, or consequential damages of any character arising as a
+      result of this License or out of the use or inability to use the
+      Work (including but not limited to damages for loss of goodwill,
+      work stoppage, computer failure or malfunction, or any and all
+      other commercial damages or losses), even if such Contributor
+      has been advised of the possibility of such damages.
+
+   9. Accepting Warranty or Additional Liability. While redistributing
+      the Work or Derivative Works thereof, You may choose to offer,
+      and charge a fee for, acceptance of support, warranty, indemnity,
+      or other liability obligations and/or rights consistent with this
+      License. However, in accepting such obligations, You may act only
+      on Your own behalf and on Your sole responsibility, not on behalf
+      of any other Contributor, and only if You agree to indemnify,
+      defend, and hold each Contributor harmless for any liability
+      incurred by, or claims asserted against, such Contributor by reason
+      of your accepting any such warranty or additional liability.
+
+   END OF TERMS AND CONDITIONS</pre>
+    </details>
+  </section>
+
+  <footer>VocLock · <a href="../privacy/">Privacy Policy</a></footer>
+</div>
+</body>
+</html>
