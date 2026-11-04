@@ -5,4 +5,4 @@ The public website of **VocLock**, the app that asks you a word from the languag
 - Home: https://5usuu.github.io/voclock-site/
 - Privacy policy: https://5usuu.github.io/voclock-site/privacy/
 
-Contact: voclock.app@gmail.com
+Contact: support@littlelockstudio.app
