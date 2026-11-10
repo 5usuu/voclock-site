@@ -112,27 +112,36 @@
 
   /* Lock-screen mock: what the phone shows when it turns on */
   .phone {
-    width: min(300px, 100%); aspect-ratio: 9 / 18.5; margin-inline: auto; border-radius: 42px; padding: 12px;
+    width: min(300px, 100%); margin-inline: auto; border-radius: 42px; padding: 12px;
     background: #050d17; box-shadow: 0 30px 60px -20px rgba(11, 26, 44, 0.45);
   }
-  .screen {
-    height: 100%; border-radius: 32px; padding: 26px 20px 20px; color: #fff;
-    background: linear-gradient(180deg, var(--ember), #13283f 55%, #23405f);
-    display: flex; flex-direction: column;
+  /* A real screenshot of the app's lock screen (img/lock-screen.jpg, 9:16). The answer field
+     and the Unlock button lie exactly over the ones in the picture, so the visitor can try it. */
+  .screen { position: relative; margin: 0; border-radius: 32px; overflow: hidden; container-type: inline-size; background: #0c1b2e; }
+  .screen img { display: block; width: 100%; height: auto; }
+  .try-field, .try-unlock, .try-hint { position: absolute; left: 5.8%; width: 88.3%; border-radius: 999px; font: inherit; }
+  .try-field {
+    top: 67.5%; height: 7.6%; padding: 0 0 0 4.6cqw; border: 0.35cqw solid transparent;
+    background: transparent; color: #fff; font-size: 4.3cqw; font-weight: 600; caret-color: #fff;
   }
-  .screen .top { display: flex; justify-content: space-between; font-size: 0.8rem; opacity: 0.85; }
-  .screen .label { margin-top: auto; text-align: center; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.75; }
-  .screen .word { text-align: center; font-family: var(--font-display); font-weight: 700; font-size: 2.6rem; line-height: 1.1; margin: 6px 0 4px; }
-  .screen .chip { align-self: center; font-size: 0.75rem; padding: 3px 12px; border-radius: 999px; background: rgba(255, 255, 255, 0.14); }
-  .screen .answer {
-    margin-top: auto; border-radius: 16px; padding: 12px 14px; font-size: 0.95rem;
-    background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.25);
+  .try-field::placeholder { color: transparent; }
+  .try-field:focus, .try-field:not(:placeholder-shown) { background: #34506b; outline: none; border-color: #dfe5ec; }
+  .try-field.wrong { animation: shake 0.35s; border-color: #e8a0a0; }
+  .try-unlock { top: 77.4%; height: 7.1%; border: 0; background: transparent; color: transparent; cursor: pointer; }
+  .try-unlock:focus-visible, .try-hint:focus-visible, .try-again:focus-visible { outline: 3px solid #7fa8d1; outline-offset: 2px; }
+  .try-hint { top: 86.2%; height: 4.6%; left: 30%; width: 40%; border: 0; background: transparent; cursor: pointer; }
+  .try-done {
+    position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2.5cqw;
+    color: #fff; text-align: center; font-size: 5cqw; background: linear-gradient(180deg, rgba(11, 26, 44, 0.92), rgba(31, 78, 121, 0.94));
+    animation: unlocked 0.45s ease-out;
   }
-  .screen .answer b { color: var(--highlight); font-weight: 600; }
-  .screen .unlock {
-    margin-top: 10px; text-align: center; border-radius: 999px; padding: 11px; font-weight: 600;
-    background: #fff; color: var(--wine);
-  }
+  .try-done[hidden] { display: none; }
+  .try-done strong { font-family: var(--font-display); font-size: 9cqw; }
+  .try-done .check { display: grid; place-items: center; width: 22cqw; height: 22cqw; border-radius: 50%; background: #3fb984; font-size: 12cqw; }
+  .try-again { margin-top: 4cqw; padding: 2.6cqw 7cqw; border: 0; border-radius: 999px; background: #fff; color: #163a5c; font: inherit; font-weight: 600; cursor: pointer; }
+  @keyframes shake { 25% { transform: translateX(-2.5%); } 75% { transform: translateX(2.5%); } }
+  @keyframes unlocked { from { opacity: 0; transform: scale(1.06); } }
+  @media (prefers-reduced-motion: reduce) { .try-field.wrong, .try-done { animation: none; } }
 
   /* Sections */
   section { padding-block: 56px; border-top: 1px solid var(--line); }
@@ -199,15 +208,19 @@
           </ul>
         </div>
 
-        <div class="phone" role="img" aria-label="VocLock's lock screen asking to translate the French word maison">
-          <div class="screen">
-            <div class="top"><span>🔒 VocLock</span><span>🔥 12 days</span></div>
-            <div class="label">Translate to English</div>
-            <div class="word">maison</div>
-            <div class="chip">Home &amp; life</div>
-            <div class="answer">Your answer: <b>house</b></div>
-            <div class="unlock">Unlock</div>
-          </div>
+        <div class="phone">
+          <form class="screen" id="try" autocomplete="off" novalidate>
+            <img src="img/lock-screen.jpg" width="720" height="1280" alt="VocLock's real lock screen asking to translate the French word l'homme to English">
+            <input class="try-field" id="try-answer" aria-label="Try it: translate l'homme to English" placeholder="Your answer or PIN" spellcheck="false" autocapitalize="off" enterkeyhint="go">
+            <button class="try-unlock" type="submit">Unlock</button>
+            <button class="try-hint" type="button" aria-label="Need a hint?"></button>
+            <div class="try-done" role="status" aria-live="polite" hidden>
+              <span class="check" aria-hidden="true">✓</span>
+              <strong>Unlocked</strong>
+              <span>l'homme = the man</span>
+              <button class="try-again" type="button">Try again</button>
+            </div>
+          </form>
         </div>
       </div>
 
@@ -279,5 +292,30 @@
       </div>
     </footer>
   </div>
+<script>
+  // The hero lock screen: answer like in the app, the hint gives one more letter each tap.
+  (function () {
+    var form = document.getElementById("try"), field = document.getElementById("try-answer");
+    var done = form.querySelector(".try-done"), answer = "the man", shown = 0;
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var v = field.value.trim().toLowerCase().replace(/\s+/g, " ");
+      if (v === answer || v === "man" || v === "a man") {
+        done.hidden = false; field.blur();
+        done.querySelector(".try-again").focus({ preventScroll: true });
+      } else {
+        field.classList.remove("wrong"); void field.offsetWidth; field.classList.add("wrong");
+        field.focus();
+      }
+    });
+    form.querySelector(".try-hint").addEventListener("click", function () {
+      shown = Math.min(shown + 1, answer.length);
+      field.value = answer.slice(0, shown); field.focus();
+    });
+    form.querySelector(".try-again").addEventListener("click", function () {
+      done.hidden = true; field.value = ""; shown = 0; field.classList.remove("wrong");
+    });
+  })();
+</script>
 </body>
 </html>
