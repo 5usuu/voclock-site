@@ -119,15 +119,16 @@
      and the Unlock button lie exactly over the ones in the picture, so the visitor can try it. */
   .screen { position: relative; margin: 0; border-radius: 32px; overflow: hidden; container-type: inline-size; background: #0c1b2e; }
   .screen img { display: block; width: 100%; height: auto; }
-  .try-field, .try-unlock, .try-hint { position: absolute; left: 5.8%; width: 88.3%; border-radius: 999px; font: inherit; }
+  /* Measured on the 720x1280 picture: field 42..677 x 865..962, Unlock 42..677 x 992..1081. */
+  .try-field, .try-unlock, .try-hint { position: absolute; box-sizing: border-box; margin: 0; left: 5.83%; width: 88.33%; border-radius: 999px; font: inherit; }
   .try-field {
-    top: 67.5%; height: 7.6%; padding: 0 0 0 4.6cqw; border: 0.35cqw solid transparent;
+    top: 67.58%; height: 7.66%; padding: 0 0 0 4.6cqw; border: 0.35cqw solid transparent;
     background: transparent; color: #fff; font-size: 4.3cqw; font-weight: 600; caret-color: #fff;
   }
   .try-field::placeholder { color: transparent; }
-  .try-field:focus, .try-field:not(:placeholder-shown) { background: #34506b; outline: none; border-color: #dfe5ec; }
+  .try-field:focus, .try-field:not(:placeholder-shown) { background: #35506d; outline: none; border-color: #dfe5ec; }
   .try-field.wrong { animation: shake 0.35s; border-color: #e8a0a0; }
-  .try-unlock { top: 77.4%; height: 7.1%; border: 0; background: transparent; color: transparent; cursor: pointer; }
+  .try-unlock { top: 77.5%; height: 7.03%; border: 0; background: transparent; color: transparent; cursor: pointer; }
   .try-unlock:focus-visible, .try-hint:focus-visible, .try-again:focus-visible { outline: 3px solid #7fa8d1; outline-offset: 2px; }
   .try-hint { top: 86.2%; height: 4.6%; left: 30%; width: 40%; border: 0; background: transparent; cursor: pointer; }
   .try-done {
