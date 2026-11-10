@@ -139,11 +139,18 @@
   }
   .try-done[hidden] { display: none; }
   .try-done strong { font-family: var(--font-display); font-size: 9cqw; }
-  .try-done .check { display: grid; place-items: center; width: 22cqw; height: 22cqw; border-radius: 50%; background: #3fb984; font-size: 12cqw; }
+  /* The app's cheering otter (tools/otter/svg/cheer.svg) with a small check badge. */
+  .try-done .otter { position: relative; width: 42cqw; animation: cheer 0.9s ease-out 0.15s both; }
+  .try-done .otter img { display: block; width: 100%; height: auto; }
+  .try-done .check {
+    position: absolute; right: -2cqw; top: 4cqw; display: grid; place-items: center; width: 11cqw; height: 11cqw;
+    border-radius: 50%; background: #3fb984; font-size: 6.5cqw; box-shadow: 0 0 0 1cqw rgba(11, 26, 44, 0.6);
+  }
+  @keyframes cheer { 0% { transform: translateY(12%) scale(0.85); opacity: 0; } 45% { transform: translateY(-6%) scale(1.04); opacity: 1; } 70% { transform: translateY(2%); } 100% { transform: none; } }
   .try-again { margin-top: 4cqw; padding: 2.6cqw 7cqw; border: 0; border-radius: 999px; background: #fff; color: #163a5c; font: inherit; font-weight: 600; cursor: pointer; }
   @keyframes shake { 25% { transform: translateX(-2.5%); } 75% { transform: translateX(2.5%); } }
   @keyframes unlocked { from { opacity: 0; transform: scale(1.06); } }
-  @media (prefers-reduced-motion: reduce) { .try-field.wrong, .try-done { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .try-field.wrong, .try-done, .try-done .otter { animation: none; } }
 
   /* Sections */
   section { padding-block: 56px; border-top: 1px solid var(--line); }
@@ -217,7 +224,7 @@
             <button class="try-unlock" type="submit">Unlock</button>
             <button class="try-hint" type="button" aria-label="Need a hint?"></button>
             <div class="try-done" role="status" aria-live="polite" hidden>
-              <span class="check" aria-hidden="true">✓</span>
+              <span class="otter" aria-hidden="true"><img src="img/otter-cheer.svg" width="200" height="200" alt=""><span class="check">✓</span></span>
               <strong>Unlocked</strong>
               <span>l'homme = the man</span>
               <button class="try-again" type="button">Try again</button>
