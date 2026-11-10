@@ -127,7 +127,8 @@
   }
   .try-field::placeholder { color: transparent; }
   .try-field:focus, .try-field:not(:placeholder-shown) { background: #35506d; outline: none; border-color: #dfe5ec; }
-  .try-field.wrong { animation: shake 0.35s; border-color: #e8a0a0; }
+  /* Only while it shakes; afterwards the field looks like the app's again. */
+  .try-field.wrong { animation: shake 0.35s; }
   .try-unlock { top: 77.5%; height: 7.03%; border: 0; background: transparent; color: transparent; cursor: pointer; }
   .try-unlock:focus-visible, .try-hint:focus-visible, .try-again:focus-visible { outline: 3px solid #7fa8d1; outline-offset: 2px; }
   .try-hint { top: 86.2%; height: 4.6%; left: 30%; width: 40%; border: 0; background: transparent; cursor: pointer; }
@@ -309,6 +310,7 @@
         field.focus();
       }
     });
+    field.addEventListener("animationend", function () { field.classList.remove("wrong"); });
     form.querySelector(".try-hint").addEventListener("click", function () {
       shown = Math.min(shown + 1, answer.length);
       field.value = answer.slice(0, shown); field.focus();
