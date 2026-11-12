@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://littlelockstudio.app/compare/">
+<title>VocLock compared to Duolingo and Anki</title>
+<meta name="description" content="An honest comparison: what VocLock does differently from Duolingo and Anki, where each one is stronger, and who VocLock is for.">
+<style>
+  /* Same look as the terms page: one readable column, an "in short" panel, then sections and one table. */
+  :root {
+    --bg: #efe6d2;
+    --surface: #f7f1e3;
+    --fg: #0e2a47;
+    --muted: #4a5a6a;
+    --line: #d8c9a8;
+    --accent: #1f4e79;
+    --accent-soft: #c9d6e3;
+    --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --font-body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0b1a2c; --surface: #13283f; --fg: #efe6d2; --muted: #a9b6c4; --line: #1c3552;
+      --accent: #7fa8d1; --accent-soft: #23405f;
+      color-scheme: dark;
+    }
+  }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font-family: var(--font-body); font-size: 17px; line-height: 1.6;
+    padding-inline: 20px; padding-block: 32px 64px;
+  }
+  .page { max-width: 46rem; margin: 0 auto; display: grid; gap: 28px; }
+  header { display: grid; gap: 14px; }
+  .brand { display: flex; align-items: center; gap: 12px; color: var(--fg); text-decoration: none; width: fit-content; }
+  .badge {
+    width: 44px; height: 44px; border-radius: 12px; flex: none;
+    background: linear-gradient(135deg, #2f6a9e, #163a5c); display: grid; place-items: center;
+  }
+  .badge svg { width: 24px; height: 24px; }
+  .app { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; letter-spacing: 0.01em; }
+  h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 6vw, 2.6rem); line-height: 1.1; margin: 0; text-wrap: balance; }
+  .meta { color: var(--muted); margin: 0; font-size: 0.95rem; }
+  .short { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; }
+  h2 { font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; line-height: 1.25; margin: 0 0 6px; text-wrap: balance; }
+  p, ul { margin: 0 0 10px; }
+  ul { padding-left: 1.2em; }
+  li { margin-bottom: 6px; }
+  a { color: var(--accent); text-underline-offset: 2px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  strong { font-weight: 600; }
+  /* The table scrolls sideways inside its own box on narrow phones; the page itself never does. */
+  .scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; min-width: 34rem; font-size: 0.95rem; }
+  th, td { text-align: left; vertical-align: top; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+  tr:last-child td { border-bottom: 0; }
+  thead th { font-family: var(--font-display); font-weight: 600; }
+  tbody th { font-weight: 600; width: 24%; }
+  td:nth-child(2) { background: color-mix(in srgb, var(--accent-soft) 45%, transparent); }
+  footer { border-top: 1px solid var(--line); padding-top: 20px; color: var(--muted); font-size: 0.95rem; }
+  footer a { color: var(--muted); }
+</style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <a class="brand" href="../" aria-label="VocLock home">
+        <span class="badge" aria-hidden="true">
+          <svg viewBox="21 20.5 66 66"><path d="M36 50 54 80 72 50" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M52 38 64 27" stroke="#ffd166" stroke-width="8" stroke-linecap="round"/></svg>
+        </span>
+        <span class="app">VocLock</span>
+      </a>
+      <h1>VocLock compared to Duolingo and Anki</h1>
+      <p class="meta">Written by the maker of VocLock, as fairly as he can. Last updated November 2026.</p>
+    </header>
+
+    <div class="short">
+      <h2>In short</h2>
+      <ul>
+        <li><strong>VocLock</strong> brings the words to you: one word when you unlock your phone. You don't need to open an app or find time. Best for building and keeping vocabulary without a study routine.</li>
+        <li><strong>Duolingo</strong> is a full course you sit down for: lessons with grammar, listening and speaking, in many languages. Best if you want to be led through a language from zero.</li>
+        <li><strong>Anki</strong> is a flashcard tool you build yourself: any subject, any card layout, very fine control over review. Best if you like to set things up your own way.</li>
+      </ul>
+    </div>
+
+    <section>
+      <h2>Side by side</h2>
+      <div class="scroll">
+        <table>
+          <thead>
+            <tr><th scope="col"></th><th scope="col">VocLock</th><th scope="col">Duolingo</th><th scope="col">Anki</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">How you learn</th><td>A word as you unlock your phone, at most one every ten minutes; plus practice, games and a daily challenge in the app</td><td>Lessons you open and work through</td><td>Flashcard sessions you open and work through</td></tr>
+            <tr><th scope="row">Time you set aside</th><td>None needed; a few seconds per unlock</td><td>A few minutes or more per day</td><td>As long as your due cards take</td></tr>
+            <tr><th scope="row">Words</th><td>The most common 1,400 to 2,800 words per course, ready to go, each with an example sentence; add your own or paste lists</td><td>Words come with the course units</td><td>You make cards or download shared decks</td></tr>
+            <tr><th scope="row">Review</th><td>Spaced repetition at growing intervals, automatic</td><td>Practice chosen by the course</td><td>Spaced repetition with many settings</td></tr>
+            <tr><th scope="row">Grammar</th><td>Mini courses with grammar, so far for French (for German speakers)</td><td>Built into the courses</td><td>Only if you make cards for it</td></tr>
+            <tr><th scope="row">Listening and speaking</th><td>Hear every word; a chat partner to write with (Pro)</td><td>Listening and speaking exercises</td><td>Audio if the deck has it</td></tr>
+            <tr><th scope="row">Languages</th><td>Eleven, explained in English or German</td><td>Many more</td><td>Anything you have cards for</td></tr>
+            <tr><th scope="row">Motivation</th><td>Otter, streaks, ranks with exams, friends, a learning partner, widgets</td><td>Streaks, leagues, friends</td><td>Statistics</td></tr>
+            <tr><th scope="row">Works offline</th><td>Yes, learning needs no internet</td><td>Mostly needs internet</td><td>Yes</td></tr>
+            <tr><th scope="row">Account</th><td>Optional</td><td>Needed to keep progress</td><td>Optional, for syncing</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="meta" style="margin-top:10px">Duolingo and Anki change over time; this table describes them in general terms. Check their own websites for the details.</p>
+    </section>
+
+    <section>
+      <h2>Where VocLock is stronger</h2>
+      <ul>
+        <li><strong>You can't forget to study.</strong> The word shows up when you pick up your phone. No reminder to ignore, no app to open.</li>
+        <li><strong>It asks little of you.</strong> One word, a few seconds, and an emergency PIN when you're in a hurry.</li>
+        <li><strong>Ready from the first minute.</strong> The word lists are already there, sorted by how often words are used, with example sentences and pictures.</li>
+        <li><strong>It doesn't need an account or a connection.</strong> Without an account, everything stays on your phone.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Where the others are stronger</h2>
+      <ul>
+        <li><strong>Duolingo</strong> teaches whole sentences, grammar, listening and speaking in long, guided courses, and offers far more languages. VocLock's grammar courses are only beginning.</li>
+        <li><strong>Anki</strong> can hold anything, from medicine to music theory, with your own card layouts, images and audio, and review settings you can tune in detail. VocLock is made for words of a language and keeps the settings simple.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Can VocLock replace them?</h2>
+      <p>For <strong>vocabulary</strong>: yes. VocLock introduces new words, repeats them until they stick, takes your own words and lists, and adds games, a weekly quiz and news to read. You don't need a second app for words.</p>
+      <p>For a <strong>whole language</strong>, with grammar and speaking practice: not yet in every course. VocLock is growing in that direction, with more mini courses and listening and speaking exercises on the way. Until then it works well next to a course, a class or a tutor: they explain, VocLock makes sure the words are there when you need them.</p>
+    </section>
+
+    <section>
+      <h2>Who VocLock is for</h2>
+      <ul>
+        <li>You've tried learning apps and stopped opening them after a few weeks.</li>
+        <li>You're in a class or with a tutor and the vocabulary doesn't stick.</li>
+        <li>You want to pick up a language slowly, in the background, without a study plan.</li>
+        <li>You want to spend less time scrolling and get something out of picking up your phone.</li>
+      </ul>
+      <p><a href="../">Back to the VocLock page</a></p>
+    </section>
+
+    <footer>
+      <p>VocLock is not affiliated with Duolingo or Anki. Duolingo is a trademark of Duolingo, Inc.; Anki is a trademark of Ankitects Pty Ltd. · <a href="../privacy/">Privacy policy</a> · <a href="../impressum/">Impressum</a></p>
+    </footer>
+  </div>
+</body>
+</html>

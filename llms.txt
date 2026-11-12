@@ -1,0 +1,53 @@
+# VocLock
+
+> VocLock is a vocabulary app by Little Lock Studio. When you unlock your phone, it asks you one word from the language you are learning (at most one every ten minutes). Around that lock screen there is a full learning app with practice, games, ranks, friends, stories and news.
+
+Website: https://littlelockstudio.app/
+Maker: Said Erzhapov (Little Lock Studio), Germany
+Contact: support@littlelockstudio.app
+Platforms: Android (Google Play, in closed testing in November 2026, public release planned); an iPhone version is in development.
+App languages: English and German.
+Price: free with ads; VocLock Pro (optional) removes ads and adds extras. Everyone gets one free Pro test week that ends by itself.
+
+## What it does
+
+- Lock screen: one word as you unlock, at most one every ten minutes. Letter hints help; an emergency PIN always gets you in. Quiet during Do Not Disturb. Can be switched off; the rest of the app keeps working.
+- Reel brake (Android, optional): one word after every few TikToks, Reels or Shorts.
+- New words: a few each day, the most frequently used words first, each with an example sentence.
+- Review: spaced repetition at growing intervals (1, 3, 7, 14 days and more).
+- Practice: daily challenge, free practice, weekly quiz with example sentences. Words with several meanings ask for all of them. Hints about similar words in languages you already speak, and warnings about false friends.
+- Games: match pairs, crossword, word search, sentence builder, letter shuffle and an otter catch game, in three difficulty levels.
+- Pictures: hundreds of words come with a small picture drawn for VocLock.
+- Scripts: Japanese starts with hiragana and katakana and has kanji practice; Russian and Korean start with their alphabets; Chinese shows pinyin.
+- Own words: add words yourself or paste lists copied from Quizlet, Anki or a spreadsheet.
+- Pronunciation: hear each word with the phone's built-in voice.
+- Mini courses with grammar: short units; the first course is French for German speakers.
+- Reading: news from Wikipedia with the words you know swapped into the language you are learning; "Tea", a chat story with one episode a day.
+- Chat partner (Pro): text with the otter in the language you are learning. It is an AI and answers at your level.
+- Motivation: an otter companion with outfits, daily streaks, ranks with an exam for each rank, more than 50 achievements.
+- Social: friends who see each other's progress; one learning partner with a shared streak and nudges.
+- Widgets (Pro): today's words, streak, rank and partner on the home screen.
+- Offline: learning needs no internet.
+- Account: optional. Without one, everything stays on the phone. With one, progress moves with you to a new phone. The account can be deleted at any time.
+
+## Languages
+
+French, Spanish, Italian, Portuguese (Brazil), Turkish, Russian, Japanese, Korean and Chinese (Mandarin), each for English and for German speakers. Also English for German speakers and German for English speakers. Each course has around 1,400 to 2,800 words.
+
+## VocLock Pro
+
+More new words a day, no ads, every Tea episode, widgets, streak freezes and the chat partner.
+
+## How it differs from Duolingo and Anki
+
+VocLock brings words to the moment you unlock your phone, so no study time has to be set aside. Duolingo is a guided course with grammar, listening and speaking in many more languages. Anki is a flashcard tool for any subject with detailed settings. VocLock covers vocabulary on its own; its grammar courses are still growing. Details: https://littlelockstudio.app/compare/
+
+## Pages
+
+- [Home](https://littlelockstudio.app/): what the app does
+- [Compare](https://littlelockstudio.app/compare/): VocLock, Duolingo and Anki side by side
+- [Privacy policy](https://littlelockstudio.app/privacy/)
+- [Terms of use](https://littlelockstudio.app/terms/)
+- [Delete account](https://littlelockstudio.app/delete-account/)
+- [Licenses](https://littlelockstudio.app/licenses/)
+- [Impressum](https://littlelockstudio.app/impressum/)
