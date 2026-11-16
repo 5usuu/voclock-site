@@ -25,13 +25,13 @@
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       --bg: #0b1a2c; --surface: #13283f; --fg: #efe6d2; --muted: #a9b6c4; --line: #1c3552;
-      --accent: #7fa8d1; --accent-soft: #23405f;
+      --accent: #7fa8d1; --accent-soft: #1c3552;
       color-scheme: dark;
     }
   }
   :root[data-theme="dark"] {
     --bg: #0b1a2c; --surface: #13283f; --fg: #efe6d2; --muted: #a9b6c4; --line: #1c3552;
-    --accent: #7fa8d1; --accent-soft: #23405f;
+    --accent: #7fa8d1; --accent-soft: #1c3552;
     color-scheme: dark;
   }
 
@@ -79,7 +79,7 @@
   .short li::before {
     content: ""; width: 22px; height: 22px; border-radius: 50%; margin-top: 2px;
     background: var(--accent-soft) no-repeat center / 12px
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6.3 4.8 9 10 3.2' fill='none' stroke='%23b8432a' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6.3 4.8 9 10 3.2' fill='none' stroke='%231f4e79' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   }
 
   section { display: grid; gap: 4px; }
@@ -96,9 +96,26 @@
   strong { font-weight: 600; }
   code { font-size: 0.9em; background: var(--accent-soft); padding: 1px 5px; border-radius: 5px; }
   footer { color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--line); padding-top: 16px; }
+
+  /* Shared polish (ui-ux-pro-max checklist): skip link, visible focus, 44px controls, soft cards. */
+  a, button { touch-action: manipulation; }
+  :where(a, button):focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+  .skip { position: absolute; left: 12px; top: -60px; z-index: 100; padding: 10px 16px; border-radius: 10px; background: var(--fg); color: var(--bg); font-weight: 600; text-decoration: none; }
+  .skip:focus { top: 12px; }
+  .page-main { display: grid; gap: 28px; }
+  /* Columns never grow past the screen; wide tables scroll inside their own box. */
+  .page, .page-main { grid-template-columns: minmax(0, 1fr); }
+  .brand { min-height: 44px; }
+  .langs button { min-height: 44px; padding-inline: 18px; transition: background-color 0.2s ease, color 0.2s ease; }
+  .langs button:hover { color: var(--accent); }
+  .short, .card { border-radius: 20px; box-shadow: 0 10px 24px -14px rgba(14, 42, 71, 0.35); }
+  @media (prefers-reduced-motion: reduce) { .langs button { transition: none; } }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .short li::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6.3 4.8 9 10 3.2' fill='none' stroke='%237fa8d1' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); } }
+  :root[data-theme="dark"] .short li::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6.3 4.8 9 10 3.2' fill='none' stroke='%237fa8d1' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
 </style>
 </head>
 <body>
+<a class="skip" href="#content">Skip to content</a>
 
 <div class="page">
   <header>
@@ -113,6 +130,7 @@
       <button type="button" id="btn-de" data-lang="de" aria-pressed="false">Deutsch</button>
     </div>
   </header>
+  <main id="content" class="page-main">
 
   <!-- ==================== ENGLISH ==================== -->
   <article lang="en" id="en" class="page">
@@ -390,6 +408,7 @@
     </section>
   </article>
 
+  </main>
   <footer>VocLock · Privacy Policy / Datenschutzerklärung · <a href="../terms/">Terms of Use</a> · <a href="../licenses/">Licenses &amp; Credits</a> · <a href="../impressum/">Impressum</a></footer>
 </div>
 
