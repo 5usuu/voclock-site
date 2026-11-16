@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src https://voclock-chat.voclock.workers.dev; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<title>Launch email – VocLock</title>
+<meta name="robots" content="noindex">
+<style>
+  /* Same look as the privacy policy: one readable column, plain sections. */
+  :root {
+    --bg: #efe6d2;
+    --surface: #f7f1e3;
+    --fg: #0e2a47;
+    --muted: #4a5a6a;
+    --line: #d8c9a8;
+    --accent: #1f4e79;
+    --accent-soft: #c9d6e3;
+    --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --font-body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0b1a2c; --surface: #13283f; --fg: #efe6d2; --muted: #a9b6c4; --line: #1c3552;
+      --accent: #7fa8d1; --accent-soft: #1c3552;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0b1a2c; --surface: #13283f; --fg: #efe6d2; --muted: #a9b6c4; --line: #1c3552;
+    --accent: #7fa8d1; --accent-soft: #1c3552;
+    color-scheme: dark;
+  }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font-family: var(--font-body); font-size: 17px; line-height: 1.6;
+    padding-inline: 20px; padding-block: 32px 64px;
+  }
+  .page { max-width: 42rem; margin: 0 auto; display: grid; gap: 28px; }
+  header { display: grid; gap: 14px; }
+  .brand { display: flex; align-items: center; gap: 12px; color: var(--fg); text-decoration: none; width: fit-content; }
+  .badge {
+    width: 44px; height: 44px; border-radius: 12px; flex: none;
+    background: linear-gradient(135deg, #2f6a9e, #163a5c); display: grid; place-items: center;
+  }
+  .badge svg { width: 24px; height: 24px; }
+  .app { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; letter-spacing: 0.01em; }
+  h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 6vw, 2.6rem); line-height: 1.1; margin: 0; }
+  .meta { color: var(--muted); margin: 0; font-size: 0.95rem; }
+  section { display: grid; gap: 4px; }
+  h2 { font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; line-height: 1.25; margin: 0 0 6px; }
+  p { margin: 0 0 10px; }
+  address { font-style: normal; }
+  a { color: var(--accent); text-underline-offset: 2px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; }
+  footer { color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--line); padding-top: 16px; }
+
+  /* Shared polish (ui-ux-pro-max checklist): skip link, visible focus, 44px controls, soft cards. */
+  a, button { touch-action: manipulation; }
+  :where(a, button):focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+  .skip { position: absolute; left: 12px; top: -60px; z-index: 100; padding: 10px 16px; border-radius: 10px; background: var(--fg); color: var(--bg); font-weight: 600; text-decoration: none; }
+  .skip:focus { top: 12px; }
+  .page-main { display: grid; gap: 28px; }
+  /* Columns never grow past the screen; wide tables scroll inside their own box. */
+  .page, .page-main { grid-template-columns: minmax(0, 1fr); }
+  .brand { min-height: 44px; }
+  .langs button { min-height: 44px; padding-inline: 18px; transition: background-color 0.2s ease, color 0.2s ease; }
+  .langs button:hover { color: var(--accent); }
+  .short, .card { border-radius: 20px; box-shadow: 0 10px 24px -14px rgba(14, 42, 71, 0.35); }
+  @media (prefers-reduced-motion: reduce) { .langs button { transition: none; } }
+  /* The confirm / leave page for the launch email. */
+  .box { display: grid; gap: 14px; justify-items: start; }
+  .box p { margin: 0; }
+  .btn { display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; border: 0; border-radius: 999px; background: var(--fg); color: var(--bg); font: inherit; font-weight: 600; cursor: pointer; text-decoration: none; }
+  .btn:hover { background: var(--accent); }
+  .btn[disabled] { opacity: 0.7; cursor: progress; }
+  .link { background: none; border: 0; padding: 10px 0; color: var(--accent); font: inherit; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+  .msg:empty { display: none; }
+  .error { color: #a8221a; }
+  @media (prefers-color-scheme: dark) { .error { color: #ffb4ab; } }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<div class="page">
+  <header>
+    <a class="brand" href="../" aria-label="VocLock home">
+      <div class="badge" aria-hidden="true">
+        <svg viewBox="21 20.5 66 66"><path d="M36 50 54 80 72 50" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M52 38 64 27" stroke="#ffd166" stroke-width="8" stroke-linecap="round"/></svg>
+      </div>
+      <span class="app">VocLock</span>
+    </a>
+    <div>
+      <h1 id="title">Launch email</h1>
+      <p class="meta">One email when VocLock is out on Google Play · Eine E-Mail zum Start bei Google Play</p>
+    </div>
+  </header>
+  <main id="content" class="page-main">
+  <section class="card box" aria-labelledby="title">
+    <!-- Nothing happens on load: mail scanners open links, so a person has to press the button. -->
+    <div id="ask-confirm" class="box" hidden>
+      <p><strong>Tell me when VocLock is out.</strong> Press the button to confirm your email address.<br><span lang="de">Drück den Knopf, um deine E-Mail-Adresse zu bestätigen.</span></p>
+      <button class="btn" type="button" id="confirm">Yes, confirm / Ja, bestätigen</button>
+    </div>
+    <div id="ask-leave" class="box" hidden>
+      <p><strong>Take me off the list.</strong> Your address is deleted right away and you get no launch email.<br><span lang="de">Deine Adresse wird sofort gelöscht, du bekommst keine Start-Mail.</span></p>
+      <button class="btn" type="button" id="leave">Remove me / Austragen</button>
+    </div>
+    <div id="done-confirm" class="box" hidden>
+      <p><strong>You're on the list.</strong> We'll write once, when VocLock is out. That's all.<br><span lang="de">Du stehst auf der Liste. Wir schreiben dir einmal, wenn VocLock da ist.</span></p>
+      <button class="link" type="button" id="undo">Changed your mind? Remove me / Doch austragen</button>
+    </div>
+    <div id="done-leave" class="box" hidden>
+      <p><strong>Removed.</strong> Your address is deleted.<br><span lang="de">Ausgetragen. Deine Adresse ist gelöscht.</span></p>
+    </div>
+    <div id="nothing" class="box">
+      <p>This page opens from the link in our email. To sign up, use the form on the <a href="../#notify">home page</a>.<br><span lang="de">Diese Seite öffnet sich über den Link in unserer Mail. Eintragen kannst du dich auf der <a href="../#notify">Startseite</a>.</span></p>
+    </div>
+    <p class="msg" id="msg" role="status" aria-live="polite"></p>
+  </section>
+  </main>
+  <footer>VocLock · <a href="../privacy/#waitlist">Privacy / Datenschutz</a> · <a href="../impressum/">Impressum</a></footer>
+</div>
+<script>
+  (function () {
+    var api = "https://voclock-chat.voclock.workers.dev/waitlist/";
+    var m = /^#(confirm|leave)=([0-9a-f]{48})$/.exec(location.hash);
+    // Read the token once, then take it out of the address bar and the history.
+    if (location.hash) history.replaceState(null, "", location.pathname);
+    if (!m) return;
+    var token = m[2], msg = document.getElementById("msg");
+    function show(id) {
+      ["ask-confirm", "ask-leave", "done-confirm", "done-leave", "nothing"].forEach(function (x) { document.getElementById(x).hidden = x !== id; });
+    }
+    function send(action, button, doneId) {
+      button.disabled = true; msg.className = "msg"; msg.textContent = "…";
+      fetch(api + action, { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify({ token: token }) })
+        .then(function (r) { return r.json(); })
+        .then(function (b) {
+          button.disabled = false; msg.textContent = "";
+          if (b.status === "confirmed" || b.status === "removed") { show(doneId); return; }
+          if (b.status === "unknown") {
+            msg.className = "msg error";
+            msg.textContent = action === "confirm"
+              ? "This link has expired (after 7 days) or was used to leave. Please sign up again on the home page. / Der Link ist abgelaufen; bitte trag dich auf der Startseite neu ein."
+              : "This address isn't on the list (any more). / Diese Adresse steht nicht (mehr) auf der Liste.";
+            return;
+          }
+          msg.className = "msg error"; msg.textContent = "That didn't work. Please try again in a minute. / Das hat nicht geklappt, bitte gleich noch mal.";
+        })
+        .catch(function () { button.disabled = false; msg.className = "msg error"; msg.textContent = "No connection. / Keine Verbindung."; });
+    }
+    show(m[1] === "confirm" ? "ask-confirm" : "ask-leave");
+    document.getElementById("confirm").addEventListener("click", function () { send("confirm", this, "done-confirm"); });
+    document.getElementById("leave").addEventListener("click", function () { send("leave", this, "done-leave"); });
+    document.getElementById("undo").addEventListener("click", function () { send("leave", this, "done-leave"); });
+  })();
+</script>
+</body>
+</html>
