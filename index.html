@@ -19,6 +19,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://littlelockstudio.app/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/bricolage-grotesque-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
 <!-- Structured data, so search engines and AI answers can tell what VocLock is. -->
 <script type="application/ld+json">
 {
@@ -54,6 +55,8 @@
 }
 </script>
 <style>
+  /* Headline font, served from this site (SIL Open Font License, see /licenses/). */
+  @font-face { font-family: "Bricolage Grotesque"; src: url("/fonts/bricolage-grotesque-latin-wght.woff2") format("woff2"); font-weight: 200 800; font-style: normal; font-display: swap; }
   /* Layout: brand bar, a two-column hero (pitch + lock-screen mock) that stacks on phones,
      a features grid, languages, and a footer with contact and privacy. */
   :root {
