@@ -70,11 +70,15 @@
     --highlight: #ffd49a;
     --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
     --font-body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+    /* Soft, rounded cards (ui-ux-pro-max: soft 3D, 16-24px radius, double shadow). */
+    --shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset, 0 10px 24px -14px rgba(14, 42, 71, 0.35);
+    --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   }
   @media (prefers-color-scheme: dark) {
     :root {
       --bg: #0b1a2c; --surface: #13283f; --fg: #efe6d2; --muted: #a9b6c4; --line: #1c3552;
-      --accent: #7fa8d1; --accent-soft: #23405f;
+      --accent: #7fa8d1; --accent-soft: #1c3552;
+      --shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 10px 24px -14px rgba(0, 0, 0, 0.7);
       color-scheme: dark;
     }
   }
@@ -88,8 +92,12 @@
     line-height: 1.6;
   }
   a { color: var(--accent); text-underline-offset: 2px; }
-  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  a, button { touch-action: manipulation; }
+  :where(a, button, input):focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
   .wrap { max-width: 68rem; margin: 0 auto; padding-inline: 20px; }
+  /* Keyboard users can jump past the header. */
+  .skip { position: absolute; left: 12px; top: -60px; z-index: 100; padding: 10px 16px; border-radius: 10px; background: var(--fg); color: var(--bg); font-weight: 600; }
+  .skip:focus { top: 12px; }
 
   /* Brand bar */
   .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 20px; }
@@ -101,9 +109,10 @@
   }
   .badge svg { width: 22px; height: 22px; fill: #fff; }
   .brand span { font-family: var(--font-display); font-weight: 800; font-size: 1.35rem; letter-spacing: 0.01em; }
-  .bar nav { display: flex; gap: 18px; font-weight: 600; }
-  .bar nav a { color: var(--muted); text-decoration: none; }
-  .bar nav a:hover { color: var(--accent); }
+  .bar nav { display: flex; gap: 6px; font-weight: 600; }
+  /* 44px tall tap targets. */
+  .bar nav a { display: inline-flex; align-items: center; min-height: 44px; padding-inline: 8px; color: var(--muted); text-decoration: none; border-radius: 10px; transition: color 0.2s var(--ease), background-color 0.2s var(--ease); }
+  .bar nav a:hover { color: var(--accent); background: var(--surface); }
 
   /* Hero */
   .hero {
@@ -122,13 +131,17 @@
   .lead { font-size: 1.2rem; color: var(--muted); max-width: 34rem; margin: 0 0 28px; }
   .actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
   .soon {
-    display: inline-flex; align-items: center; gap: 10px; padding: 12px 20px; border-radius: 999px;
+    display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 12px 22px; border-radius: 999px;
     background: var(--fg); color: var(--bg); font-weight: 600; text-decoration: none;
+    box-shadow: 0 10px 20px -12px rgba(14, 42, 71, 0.6);
+    transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
   }
-  .soon svg { width: 20px; height: 20px; fill: currentColor; }
-  .ghost { font-weight: 600; padding: 12px 6px; }
+  .soon:hover { transform: translateY(-1px); box-shadow: 0 14px 24px -12px rgba(14, 42, 71, 0.7); }
+  .soon:active { transform: scale(0.98); }
+  .soon svg { width: 20px; height: 20px; fill: currentColor; flex: none; }
+  .ghost { display: inline-flex; align-items: center; min-height: 48px; font-weight: 600; padding: 0 8px; }
   .facts { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 0; margin: 26px 0 0; color: var(--muted); font-size: 0.95rem; }
-  .facts li::before { content: "✓ "; color: var(--accent); font-weight: 600; }
+  .facts li::before { content: "✓ "; content: "✓ " / ""; color: var(--accent); font-weight: 600; }
 
   /* Lock-screen mock: what the phone shows when it turns on */
   .phone {
@@ -177,9 +190,32 @@
   h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.7rem, 3.5vw, 2.3rem); line-height: 1.15; margin: 0 0 10px; text-wrap: balance; }
   .intro { color: var(--muted); max-width: 40rem; margin: 0 0 32px; }
   .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 22px; }
-  .card h3 { margin: 12px 0 6px; font-size: 1.1rem; }
+  /* In feature groups a short last row stretches to the full width instead of leaving a gap. */
+  .group .grid { display: flex; flex-wrap: wrap; }
+  .group .card { flex: 1 1 calc((100% - 32px) / 3); min-width: 0; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 22px; box-shadow: var(--shadow); }
+  .card h3, .card h4 { margin: 12px 0 6px; font-size: 1.1rem; line-height: 1.3; }
   .card p { margin: 0; color: var(--muted); font-size: 0.98rem; }
+
+  /* How it works: three numbered steps. */
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; counter-reset: step; }
+  .steps li { counter-increment: step; position: relative; padding-top: 62px; }
+  .steps li::before {
+    content: counter(step); position: absolute; left: 22px; top: 20px; width: 34px; height: 34px; border-radius: 50%;
+    display: grid; place-items: center; background: var(--accent); color: var(--bg);
+    font-family: var(--font-display); font-weight: 800; font-size: 1.05rem;
+  }
+
+  /* Feature groups: a short heading, then its cards. */
+  .group + .group { margin-top: 44px; }
+  .group-title { font-family: var(--font-display); font-weight: 700; font-size: 1.3rem; margin: 0 0 16px; display: flex; align-items: center; gap: 12px; }
+  .group-title::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  /* Closing call to action. */
+  .cta { text-align: center; border-radius: 28px; padding: 48px 24px; margin-block: 56px; background: var(--accent-soft); border: 1px solid var(--line); box-shadow: var(--shadow); }
+  .cta h2 { margin-bottom: 10px; }
+  .cta p { color: var(--muted); max-width: 34rem; margin: 0 auto 24px; }
+  .cta .actions { justify-content: center; }
   .icon { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: var(--accent-soft); }
   .icon svg { width: 22px; height: 22px; fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
@@ -194,14 +230,32 @@
   @media (max-width: 860px) {
     .hero { grid-template-columns: 1fr; gap: 40px; padding-block: 16px 48px; }
     .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .group .card { flex-basis: calc((100% - 16px) / 2); }
+  }
+  @media (max-width: 680px) {
+    .steps { grid-template-columns: 1fr; }
   }
   @media (max-width: 560px) {
     .grid { grid-template-columns: 1fr; }
-    .bar nav { gap: 14px; font-size: 0.95rem; }
+    .group .card { flex-basis: 100%; }
+    .bar { gap: 8px; }
+    .bar nav { gap: 0; font-size: 0.95rem; }
+    .bar nav a { padding-inline: 6px; }
+    .brand span { font-size: 1.2rem; }
+    .cta { padding: 36px 18px; }
+  }
+  /* Narrow phones: the logo alone, so the three menu links fit. */
+  @media (max-width: 400px) {
+    .brand span:not(.badge) { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .soon, .bar nav a { transition: none; }
+    .soon:hover, .soon:active { transform: none; }
   }
 </style>
 </head>
 <body>
+  <a class="skip" href="#main">Skip to content</a>
   <div class="wrap">
     <header class="bar">
       <a class="brand" href="./" aria-label="VocLock home">
@@ -212,23 +266,23 @@
       </a>
       <nav aria-label="Main">
         <a href="#features">Features</a>
+        <a href="#languages">Languages</a>
         <a href="compare/">Compare</a>
-        <a href="privacy/">Privacy</a>
       </nav>
     </header>
 
-    <main>
+    <main id="main">
       <div class="hero">
         <div>
-          <span class="eyebrow">The VocLock app</span>
+          <span class="eyebrow">Coming soon to Google Play</span>
           <h1>Learn new words when you <em>unlock your phone</em>.</h1>
           <p class="lead">You unlock your phone dozens of times a day. VocLock turns some of those moments into a quick word from the language you're learning (at most one every ten minutes), so the words stick without setting time aside.</p>
           <div class="actions">
             <a class="soon" href="mailto:support@littlelockstudio.app?subject=Tell%20me%20when%20VocLock%20is%20on%20Google%20Play">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3.5v17a1 1 0 0 0 1.5.9l14-8.5a1 1 0 0 0 0-1.8l-14-8.5A1 1 0 0 0 4 3.5Z"/></svg>
-              Coming soon to Google Play – get an email when it's out
+              Get an email when it's out
             </a>
-            <a class="ghost" href="privacy/">Privacy policy</a>
+            <a class="ghost" href="#how">How it works</a>
           </div>
           <ul class="facts">
             <li>Free account keeps your progress</li>
@@ -240,7 +294,7 @@
 
         <div class="phone">
           <form class="screen" id="try" autocomplete="off" novalidate>
-            <img src="img/lock-screen.jpg" width="720" height="1280" alt="VocLock's real lock screen asking to translate the French word l'homme to English">
+            <img src="img/lock-screen.jpg" width="720" height="1280" fetchpriority="high" alt="VocLock's real lock screen asking to translate the French word l'homme to English">
             <input class="try-field" id="try-answer" aria-label="Try it: translate l'homme to English" placeholder="Your answer or PIN" spellcheck="false" autocapitalize="off" enterkeyhint="go">
             <button class="try-unlock" type="submit">Unlock</button>
             <button class="try-hint" type="button" aria-label="Need a hint?"></button>
@@ -254,109 +308,151 @@
         </div>
       </div>
 
+      <section id="how" aria-labelledby="how-title">
+        <h2 id="how-title">How it works</h2>
+        <p class="intro">Learning a language usually needs time you don't have. VocLock uses the seconds you already spend on your phone.</p>
+        <ol class="steps">
+          <li class="card">
+            <h3>Unlock your phone</h3>
+            <p>A word from your course shows up, at most one every ten minutes and never on Do Not Disturb.</p>
+          </li>
+          <li class="card">
+            <h3>Answer in a few seconds</h3>
+            <p>Type the word, or take a letter hint. Your emergency PIN always gets you in.</p>
+          </li>
+          <li class="card">
+            <h3>It comes back at the right time</h3>
+            <p>Words you know wait longer, words you missed come back sooner, until they stick.</p>
+          </li>
+        </ol>
+      </section>
+
       <section id="features" aria-labelledby="features-title">
         <h2 id="features-title">Small moments, real progress</h2>
         <p class="intro">A few new words a day, asked again and again until you know them, with the most common words first. Around the lock screen there is a whole app: games, ranks, friends, stories and more. <a href="compare/">How VocLock compares to Duolingo and Anki</a>.</p>
-        <div class="grid">
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-            <h3>Words on your lock screen</h3>
-            <p>Answer a word to unlock. Stuck? Letter hints help, and your emergency PIN always gets you in.</p>
-          </article>
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
-            <h3>You stay in control</h3>
-            <p>At most one word every ten minutes, and none on Do Not Disturb. In a hurry? Your emergency PIN skips the word. Lock-screen words can be switched off in Settings any time; the rest of the app keeps working.</p>
-          </article>
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg></div>
-            <h3>Smart review</h3>
-            <p>Words come back at adaptive intervals (FSRS), timed to when you're about to forget them. Tell the app if an answer was easy or hard and the next date follows.</p>
-          </article>
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M19 6a8 8 0 0 1 0 12"/></svg></div>
-            <h3>Hear every word</h3>
-            <p>Tap the speaker to hear how a word sounds, using your phone's built-in voice.</p>
-          </article>
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h6M7 16h8"/></svg></div>
-            <h3>News in your new language</h3>
-            <p>Read today's news from Wikipedia with every word you know swapped into the language you're learning.</p>
-          </article>
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="18" height="8" rx="2"/></svg></div>
-            <h3>Home-screen widgets</h3>
-            <p>Flip through today's words right on your home screen, with example sentences and a new word each time you come back to your phone. There are also widgets for your streak, your rank and your learning partner. Part of VocLock Pro.</p>
-          </article>
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><circle cx="7" cy="6.5" r="2"/><circle cx="17" cy="6.5" r="2"/><path d="M9.5 12h.01M14.5 12h.01M10 15.5c1.2 1 2.8 1 4 0"/></svg></div>
-            <h3>An otter that learns with you</h3>
-            <p>A little otter with a cup of tea cheers when you get a word right and gets grumpy when you skip. Dress it up with a bow, a top hat, glasses or a sun hat.</p>
-          </article>
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0V4Z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7M10 17h4"/></svg></div>
-            <h3>Streaks, ranks and exams</h3>
-            <p>Keep a daily streak, climb through ranks by passing a short exam for each one, and collect more than 50 achievements along the way.</p>
-          </article>
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9.5" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.700 6 6M15.500 14.200c3 0 5.500 2.300 5.500 5.300"/></svg></div>
-            <h3>Friends and a learning partner</h3>
-            <p>Add friends to see each other's progress. Pair up with one partner for a shared streak, and send a nudge when the other one hasn't learned yet today.</p>
-          </article>
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.500"/><rect x="14" y="3" width="7" height="7" rx="1.500"/><rect x="3" y="14" width="7" height="7" rx="1.500"/><path d="M17.500 14v7M14 17.500h7"/></svg></div>
-            <h3>Six word games</h3>
-            <p>Match pairs, a crossword, a word search, building sentences, shuffled letters and an otter catch game, all played with the words you have already met, in three difficulty levels.</p>
-          </article>
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H4z"/><path d="m4 13 4-4 4 4 3-3 5 5M9 20h6"/></svg></div>
-            <h3>Daily challenge and weekly quiz</h3>
-            <p>A short challenge every day, free practice whenever you like, and a weekly quiz with example sentences that shows what really stuck.</p>
-          </article>
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.500" cy="9.500" r="1.800"/><path d="m4 18 5-5 3 3 3-4 5 6"/></svg></div>
-            <h3>A picture for the word</h3>
-            <p>Hundreds of everyday words come with a small picture drawn for VocLock, so you link the new word to the thing itself and not only to its translation.</p>
-          </article>
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24"><path d="M5 7h14M12 4v3M8 7c0 5 3 9 9 11M16 7c0 5-4 9-10 11"/></svg></div>
-            <h3>New alphabets, step by step</h3>
-            <p>Japanese starts with hiragana and katakana and has its own kanji practice. Russian and Korean begin with their alphabets, and Chinese shows pinyin.</p>
-          </article>
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"/><path d="M12 10v6M9 13h6"/></svg></div>
-            <h3>Your own words</h3>
-            <p>Add any word yourself, or paste a whole list copied from Quizlet, Anki or a spreadsheet, or import a file (CSV or an Anki .apkg deck). Your words are asked and repeated like all the others.</p>
-          </article>
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4V5Z"/><path d="M8 9h8M8 12h5"/></svg></div>
-            <h3>Stories and a chat partner</h3>
-            <p>"Tea" is a chat story to read along, one episode a day. With Pro you can text with the otter in the language you're learning; it answers at your level. The chat partner is an AI.</p>
-          </article>
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 6h10a3 3 0 0 1 3 3v9H7a3 3 0 0 1-3-3V6Z"/><path d="M17 10h3v8h-3M8 10h5M8 13.500h5"/></svg></div>
-            <h3>Mini courses with grammar</h3>
-            <p>Short units that explain a bit of grammar and practise it right away. There are 20 A1 and 20 A2 courses, one for every language and speaker pair. Japanese, Korean and Chinese courses can show the reading (kana, romanization or pinyin) as an optional aid.</p>
-          </article>
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="2.500"/><path d="m10.500 9.500 4 2.500-4 2.500z"/></svg></div>
-            <h3>Reel brake</h3>
-            <p>Optional on Android: after every few TikToks, Reels or Shorts, VocLock asks one word before you scroll on.</p>
-          </article>
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24"><path d="m12 3 2.600 5.600 6 .700-4.400 4.200 1.100 6-5.300-3-5.300 3 1.100-6L3.400 9.300l6-.700L12 3Z"/></svg></div>
-            <h3>Free, or VocLock Pro</h3>
-            <p>Learning is free, with ads. Pro removes the ads and adds more new words a day, every Tea episode, the widgets, streak freezes and the chat partner. Everyone gets a free Pro test week that ends by itself.</p>
-          </article>
-          <article class="card">
-            <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></div>
-            <h3>Private by design</h3>
-            <p>No account needed to learn. If you make one, only your progress goes into it (plus what you choose to share with friends), and you can <a href="delete-account/">delete it</a> any time. Read the <a href="privacy/">privacy policy</a>.</p>
-          </article>
+        <div class="group" role="group" aria-labelledby="group-1">
+          <h3 class="group-title" id="group-1">Learn while you unlock</h3>
+          <div class="grid">
+            <article class="card">
+              <div class="icon"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+              <h4>Words on your lock screen</h4>
+              <p>Answer a word to unlock. Stuck? Letter hints help, and your emergency PIN always gets you in.</p>
+            </article>
+            <article class="card">
+              <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+              <h4>You stay in control</h4>
+              <p>At most one word every ten minutes, and none on Do Not Disturb. In a hurry? Your emergency PIN skips the word. Lock-screen words can be switched off in Settings any time; the rest of the app keeps working.</p>
+            </article>
+            <article class="card">
+              <div class="icon"><svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="2.500"/><path d="m10.500 9.500 4 2.500-4 2.500z"/></svg></div>
+              <h4>Reel brake</h4>
+              <p>Optional on Android: after every few TikToks, Reels or Shorts, VocLock asks one word before you scroll on.</p>
+            </article>
+          </div>
+        </div>
+        <div class="group" role="group" aria-labelledby="group-2">
+          <h3 class="group-title" id="group-2">Remember what you learn</h3>
+          <div class="grid">
+            <article class="card">
+              <div class="icon"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg></div>
+              <h4>Smart review</h4>
+              <p>Words come back at adaptive intervals (FSRS), timed to when you're about to forget them. Tell the app if an answer was easy or hard and the next date follows.</p>
+            </article>
+            <article class="card">
+              <div class="icon"><svg viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M19 6a8 8 0 0 1 0 12"/></svg></div>
+              <h4>Hear every word</h4>
+              <p>Tap the speaker to hear how a word sounds, using your phone's built-in voice.</p>
+            </article>
+            <article class="card">
+              <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.500" cy="9.500" r="1.800"/><path d="m4 18 5-5 3 3 3-4 5 6"/></svg></div>
+              <h4>A picture for the word</h4>
+              <p>Hundreds of everyday words come with a small picture drawn for VocLock, so you link the new word to the thing itself and not only to its translation.</p>
+            </article>
+            <article class="card">
+              <div class="icon"><svg viewBox="0 0 24 24"><path d="M5 7h14M12 4v3M8 7c0 5 3 9 9 11M16 7c0 5-4 9-10 11"/></svg></div>
+              <h4>New alphabets, step by step</h4>
+              <p>Japanese starts with hiragana and katakana and has its own kanji practice. Russian and Korean begin with their alphabets, and Chinese shows pinyin.</p>
+            </article>
+            <article class="card">
+              <div class="icon"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"/><path d="M12 10v6M9 13h6"/></svg></div>
+              <h4>Your own words</h4>
+              <p>Add any word yourself, or paste a whole list copied from Quizlet, Anki or a spreadsheet, or import a file (CSV or an Anki .apkg deck). Your words are asked and repeated like all the others.</p>
+            </article>
+            <article class="card">
+              <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="18" height="8" rx="2"/></svg></div>
+              <h4>Home-screen widgets</h4>
+              <p>Flip through today's words right on your home screen, with example sentences and a new word each time you come back to your phone. There are also widgets for your streak, your rank and your learning partner. Part of VocLock Pro.</p>
+            </article>
+          </div>
+        </div>
+        <div class="group" role="group" aria-labelledby="group-3">
+          <h3 class="group-title" id="group-3">Read, play and talk</h3>
+          <div class="grid">
+            <article class="card">
+              <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 6h10a3 3 0 0 1 3 3v9H7a3 3 0 0 1-3-3V6Z"/><path d="M17 10h3v8h-3M8 10h5M8 13.500h5"/></svg></div>
+              <h4>Mini courses with grammar</h4>
+              <p>Short units that explain a bit of grammar and practise it right away. There are 20 A1 and 20 A2 courses, one for every language and speaker pair. Japanese, Korean and Chinese courses can show the reading (kana, romanization or pinyin) as an optional aid.</p>
+            </article>
+            <article class="card">
+              <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h6M7 16h8"/></svg></div>
+              <h4>News in your new language</h4>
+              <p>Read today's news from Wikipedia with every word you know swapped into the language you're learning.</p>
+            </article>
+            <article class="card">
+              <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4V5Z"/><path d="M8 9h8M8 12h5"/></svg></div>
+              <h4>Stories and a chat partner</h4>
+              <p>"Tea" is a chat story to read along, one episode a day. With Pro you can text with the otter in the language you're learning; it answers at your level. The chat partner is an AI.</p>
+            </article>
+            <article class="card">
+              <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.500"/><rect x="14" y="3" width="7" height="7" rx="1.500"/><rect x="3" y="14" width="7" height="7" rx="1.500"/><path d="M17.500 14v7M14 17.500h7"/></svg></div>
+              <h4>Six word games</h4>
+              <p>Match pairs, a crossword, a word search, building sentences, shuffled letters and an otter catch game, all played with the words you have already met, in three difficulty levels.</p>
+            </article>
+            <article class="card">
+              <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H4z"/><path d="m4 13 4-4 4 4 3-3 5 5M9 20h6"/></svg></div>
+              <h4>Daily challenge and weekly quiz</h4>
+              <p>A short challenge every day, free practice whenever you like, and a weekly quiz with example sentences that shows what really stuck.</p>
+            </article>
+          </div>
+        </div>
+        <div class="group" role="group" aria-labelledby="group-4">
+          <h3 class="group-title" id="group-4">Keep going</h3>
+          <div class="grid">
+            <article class="card">
+              <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><circle cx="7" cy="6.5" r="2"/><circle cx="17" cy="6.5" r="2"/><path d="M9.5 12h.01M14.5 12h.01M10 15.5c1.2 1 2.8 1 4 0"/></svg></div>
+              <h4>An otter that learns with you</h4>
+              <p>A little otter with a cup of tea cheers when you get a word right and gets grumpy when you skip. Dress it up with a bow, a top hat, glasses or a sun hat.</p>
+            </article>
+            <article class="card">
+              <div class="icon"><svg viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0V4Z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7M10 17h4"/></svg></div>
+              <h4>Streaks, ranks and exams</h4>
+              <p>Keep a daily streak, climb through ranks by passing a short exam for each one, and collect more than 50 achievements along the way.</p>
+            </article>
+            <article class="card">
+              <div class="icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9.5" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.700 6 6M15.500 14.200c3 0 5.500 2.300 5.500 5.300"/></svg></div>
+              <h4>Friends and a learning partner</h4>
+              <p>Add friends to see each other's progress. Pair up with one partner for a shared streak, and send a nudge when the other one hasn't learned yet today.</p>
+            </article>
+          </div>
+        </div>
+        <div class="group" role="group" aria-labelledby="group-5">
+          <h3 class="group-title" id="group-5">Fair and private</h3>
+          <div class="grid">
+            <article class="card">
+              <div class="icon"><svg viewBox="0 0 24 24"><path d="m12 3 2.600 5.600 6 .700-4.400 4.200 1.100 6-5.300-3-5.300 3 1.100-6L3.400 9.300l6-.700L12 3Z"/></svg></div>
+              <h4>Free, or VocLock Pro</h4>
+              <p>Learning is free, with ads. Pro removes the ads and adds more new words a day, every Tea episode, the widgets, streak freezes and the chat partner. Everyone gets a free Pro test week that ends by itself.</p>
+            </article>
+            <article class="card">
+              <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+              <h4>Private by design</h4>
+              <p>No account needed to learn. If you make one, only your progress goes into it (plus what you choose to share with friends), and you can <a href="delete-account/">delete it</a> any time. Read the <a href="privacy/">privacy policy</a>.</p>
+            </article>
+          </div>
         </div>
       </section>
 
-      <section aria-labelledby="languages-title">
+      <section id="languages" aria-labelledby="languages-title">
         <h2 id="languages-title">Languages</h2>
         <p class="intro">The most frequently used words of each language, each with an example sentence: around 2,000 to 2,800 depending on the course, and growing. Japanese, Russian and Korean start with their alphabets; Chinese comes with pinyin. The app itself is in English and German.</p>
         <ul class="pairs">
@@ -373,6 +469,17 @@
           <li>German<span>for</span>English speakers</li>
         </ul>
       </section>
+
+      <aside class="cta" aria-labelledby="cta-title">
+        <h2 id="cta-title">Be there when VocLock launches</h2>
+        <p>VocLock is being tested on Google Play right now. Send us a short email and we'll write back once it's out.</p>
+        <div class="actions">
+          <a class="soon" href="mailto:support@littlelockstudio.app?subject=Tell%20me%20when%20VocLock%20is%20on%20Google%20Play">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3.5v17a1 1 0 0 0 1.5.9l14-8.5a1 1 0 0 0 0-1.8l-14-8.5A1 1 0 0 0 4 3.5Z"/></svg>
+            Get an email when it's out
+          </a>
+        </div>
+      </aside>
     </main>
 
     <footer>
