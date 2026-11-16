@@ -20,8 +20,10 @@
     --line: #d8c9a8;
     --accent: #1f4e79;
     --accent-soft: #c9d6e3;
-    --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
-    --font-body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+    /* Apple-style system fonts (SF on Apple, Segoe UI Variable on Windows, Roboto on Android); Bricolage only for the wordmark. */
+    --font-brand: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI Variable Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
@@ -48,8 +50,8 @@
     background: linear-gradient(135deg, #2f6a9e, #163a5c); display: grid; place-items: center;
   }
   .badge svg { width: 24px; height: 24px; }
-  .app { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; letter-spacing: 0.01em; }
-  h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 6vw, 2.6rem); line-height: 1.1; margin: 0; }
+  .app { font-family: var(--font-brand); font-weight: 700; font-size: 1.15rem; letter-spacing: 0.01em; }
+  h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 6vw, 2.6rem); line-height: 1.1; letter-spacing: -0.025em; margin: 0; }
   .meta { color: var(--muted); margin: 0; font-size: 0.95rem; }
   section { display: grid; gap: 4px; }
   h2 { font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; line-height: 1.25; margin: 0 0 6px; }
