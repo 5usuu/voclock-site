@@ -107,7 +107,17 @@
   .skip:focus { top: 12px; }
 
   /* Brand bar */
-  .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 20px; }
+  /* Sticks to the top with frosted glass; the hairline shows once the page has scrolled. */
+  .top {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg); background: color-mix(in srgb, var(--bg) 78%, transparent);
+    -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid transparent; transition: border-color 0.3s var(--ease);
+  }
+  .top.scrolled { border-bottom-color: var(--line); }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+  html { scroll-padding-top: 84px; }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
   .brand { display: flex; align-items: center; gap: 10px; color: var(--fg); text-decoration: none; }
   .badge {
     width: 40px; height: 40px; border-radius: 11px; flex: none;
@@ -253,9 +263,20 @@
   .icon { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: var(--accent-soft); }
   .icon svg { width: 22px; height: 22px; fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-  .pairs { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; padding: 0; list-style: none; }
-  .pairs li { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; font-weight: 600; }
-  .pairs li span { color: var(--muted); font-weight: 400; margin-inline: 6px; }
+  /* Languages: "hello" in each one, big, with the language's name underneath. */
+  /* Six to a row on wide screens; each row stretches, so no tile is left alone at the end. */
+  .hellos { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 12px; }
+  .hellos li { flex: 1 1 150px; min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 22px 20px 18px; }
+  .hellos b { display: block; white-space: nowrap; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.5rem, 2.6vw, 1.85rem); line-height: 1.15; letter-spacing: -0.02em; }
+  /* CJK glyphs fill their box, so the same size looks bigger; a step down keeps them even. */
+  .hellos b:is([lang="ja"], [lang="ko"], [lang="zh-Hans"]) { font-size: clamp(1.25rem, 2.1vw, 1.5rem); letter-spacing: 0; }
+  .hellos span { display: block; margin-top: 6px; color: var(--muted); font-size: 0.95rem; }
+
+  /* Sections ease in once as they scroll into view; only with JavaScript and without reduced motion. */
+  @media (prefers-reduced-motion: no-preference) {
+    .js .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); transition-delay: var(--d, 0s); }
+    .js .reveal.in { opacity: 1; transform: none; }
+  }
 
   footer { border-top: 1px solid var(--line); padding-block: 28px 40px; color: var(--muted); font-size: 0.95rem; }
   footer .row { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
@@ -317,9 +338,11 @@
     .bar nav a { padding-inline: 6px; }
     .brand span { font-size: 1.2rem; }
     .cta { padding: 36px 18px; }
-    .bar nav a.nav-cta { display: none; }
+    /* Phones: Languages makes room for the sign-up button, which stays in reach while scrolling. */
+    .bar nav a.nav-lang { display: none; }
+    .bar nav a.nav-cta { padding-inline: 14px; margin-left: 4px; }
   }
-  /* Narrow phones: the logo alone, so the three menu links fit. */
+  /* Narrow phones: the logo alone, so the menu fits. */
   @media (max-width: 400px) {
     .brand span:not(.badge) { display: none; }
   }
@@ -331,8 +354,8 @@
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
-  <div class="wrap">
-    <header class="bar">
+  <header class="top">
+    <div class="wrap bar">
       <a class="brand" href="./" aria-label="VocLock home">
         <span class="badge" aria-hidden="true">
           <svg viewBox="21 20.5 66 66"><path d="M36 50 54 80 72 50" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M52 38 64 27" stroke="#ffd166" stroke-width="8" stroke-linecap="round"/></svg>
@@ -341,11 +364,13 @@
       </a>
       <nav aria-label="Main">
         <a href="#features">Features</a>
-        <a href="#languages">Languages</a>
+        <a class="nav-lang" href="#languages">Languages</a>
         <a href="compare/">Compare</a>
         <a class="nav-cta" href="#notify">Get notified</a>
       </nav>
-    </header>
+    </div>
+  </header>
+  <div class="wrap">
 
     <main id="main">
       <div class="hero">
@@ -494,20 +519,20 @@
       </section>
 
       <section id="languages" aria-labelledby="languages-title">
-        <h2 id="languages-title">Languages</h2>
+        <h2 id="languages-title">Eleven languages. Say hello.</h2>
         <p class="intro">Each course has the 2,000 to 2,800 most used words of its language, each with an example sentence, and is there for English and for German speakers (English is for German speakers, German for English speakers). Japanese, Russian and Korean start with their alphabets; Chinese comes with pinyin. The app itself is in English and German.</p>
-        <ul class="pairs">
-          <li>French</li>
-          <li>Spanish</li>
-          <li>Italian</li>
-          <li>Portuguese (Brazil)</li>
-          <li>Turkish</li>
-          <li>Russian</li>
-          <li>Japanese</li>
-          <li>Korean</li>
-          <li>Chinese (Mandarin)</li>
-          <li>English</li>
-          <li>German</li>
+        <ul class="hellos">
+          <li><b lang="fr">Bonjour</b><span>French</span></li>
+          <li><b lang="es">Hola</b><span>Spanish</span></li>
+          <li><b lang="it">Ciao</b><span>Italian</span></li>
+          <li><b lang="pt-BR">Olá</b><span>Portuguese (Brazil)</span></li>
+          <li><b lang="tr">Merhaba</b><span>Turkish</span></li>
+          <li><b lang="ru">Привет</b><span>Russian</span></li>
+          <li><b lang="ja">こんにちは</b><span>Japanese</span></li>
+          <li><b lang="ko">안녕하세요</b><span>Korean</span></li>
+          <li><b lang="zh-Hans">你好</b><span>Chinese (Mandarin)</span></li>
+          <li><b lang="en">Hello</b><span>English</span></li>
+          <li><b lang="de">Hallo</b><span>German</span></li>
         </ul>
       </section>
 
@@ -541,6 +566,34 @@
     </footer>
   </div>
 <script>
+  // Menu bar hairline after scrolling, and a soft fade-in for sections below the hero.
+  (function () {
+    var bar = document.querySelector(".top");
+    function onScroll() { bar.classList.toggle("scrolled", window.scrollY > 8); }
+    window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+    if (!window.matchMedia || !window.matchMedia("(prefers-reduced-motion: no-preference)").matches) return;
+    var pending = Array.prototype.slice.call(document.querySelectorAll(".steps li, .spot-text, .spot-media, .stats li, .more li, .hellos li, .cta"));
+    pending.forEach(function (el) {
+      // Siblings in a row arrive one after another.
+      var i = Array.prototype.indexOf.call(el.parentNode.children, el);
+      el.style.setProperty("--d", (i % 4) * 0.08 + "s");
+      el.classList.add("reveal");
+    });
+    // Anything in view or already scrolled past shows, so a jump to #languages never leaves gaps.
+    function sweep() {
+      var edge = window.innerHeight * 0.92;
+      pending = pending.filter(function (el) {
+        if (el.getBoundingClientRect().top < edge) { el.classList.add("in"); return false; }
+        return true;
+      });
+      if (!pending.length) { window.removeEventListener("scroll", sweep); window.removeEventListener("resize", sweep); }
+    }
+    document.documentElement.classList.add("js");
+    sweep();
+    // Only a few dozen elements, so checking on every scroll event is cheap.
+    window.addEventListener("scroll", sweep, { passive: true });
+    window.addEventListener("resize", sweep, { passive: true });
+  })();
   // The hero lock screen: answer like in the app, the hint gives one more letter each tap.
   (function () {
     var form = document.getElementById("try"), field = document.getElementById("try-answer");
