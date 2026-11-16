@@ -638,7 +638,7 @@
         fetch(endpoint, { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify({ email: email, lang: lang, website: trap.value }) })
           .then(function (r) { return r.json().then(function (b) { return { ok: r.ok, status: b.status }; }); })
           .then(function (r) {
-            if (r.ok) { form.classList.add("done"); say("Almost done: we sent a link to " + email + ". Tap it to confirm, and we'll write once VocLock is out.", "ok"); return; }
+            if (r.ok) { form.classList.add("done"); say("Almost done: if " + email + " isn't on the list yet, we sent it a link. Tap it to confirm, and we'll write once VocLock is out. Already confirmed before? Then you're all set. Thank you for your support!", "ok"); return; }
             button.disabled = false;
             if (r.status === "bad_email") { field.setAttribute("aria-invalid", "true"); say("That email address doesn't look right.", "error"); field.focus(); }
             else say("That didn't work just now. Please try again in a minute.", "error");

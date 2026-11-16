@@ -147,9 +147,9 @@
           button.disabled = false; msg.textContent = "";
           if (b.status === "confirmed" || b.status === "removed") { show(doneId); return; }
           if (b.status === "unknown") {
-            msg.className = "msg error";
+            msg.className = action === "confirm" ? "msg ok" : "msg error";
             msg.textContent = action === "confirm"
-              ? "This link has expired (after 7 days) or was used to leave. Please sign up again on the home page. / Der Link ist abgelaufen; bitte trag dich auf der Startseite neu ein."
+              ? "This link is no longer valid. If you already confirmed, you're all set. Thank you for your support! Otherwise please sign up again on the home page. / Dieser Link gilt nicht mehr. Wenn du schon bestätigt hast, bist du dabei. Danke für deine Unterstützung! Sonst trag dich bitte auf der Startseite neu ein."
               : "This address isn't on the list (any more). / Diese Adresse steht nicht (mehr) auf der Liste.";
             return;
           }
