@@ -109,7 +109,7 @@
         fetch(endpoint, { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify({ email: email, lang: lang, website: trap.value }) })
           .then(function (r) { return r.json().then(function (b) { return { ok: r.ok, status: b.status }; }); })
           .then(function (r) {
-            if (r.ok) { form.classList.add("done"); say(T.ok(email), "ok"); return; }
+            if (r.ok) { form.classList.add("done"); say(T.ok(email), "ok"); window.dispatchEvent(new CustomEvent("vl:signup")); return; }
             button.disabled = false;
             if (r.status === "bad_email") { field.setAttribute("aria-invalid", "true"); say(T.badMailServer, "error"); field.focus(); }
             else say(T.retry, "error");
