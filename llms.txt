@@ -2,7 +2,7 @@
 
 > VocLock is a vocabulary app by Little Lock Studio. When you unlock your phone, it asks you one word from the language you are learning (at most one every ten minutes). Around that lock screen there is a full learning app with practice, games, ranks, friends, stories and news.
 
-Website: https://littlelockstudio.app/
+Website: https://littlelockstudio.app/ (German: https://littlelockstudio.app/de/)
 Maker: Said Erzhapov (Little Lock Studio), Germany
 Contact: support@littlelockstudio.app
 Platforms: Android (Google Play, in closed testing in November 2026, public release planned); an iPhone version is in development.

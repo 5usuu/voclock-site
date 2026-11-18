@@ -1,0 +1,337 @@
+  /* Headline font, served from this site (SIL Open Font License, see /licenses/). */
+  @font-face { font-family: "Bricolage Grotesque"; src: url("/fonts/bricolage-grotesque-latin-wght.woff2") format("woff2"); font-weight: 200 800; font-style: normal; font-display: swap; }
+  /* Layout: brand bar, a two-column hero (pitch + lock-screen mock) that stacks on phones,
+     a features grid, languages, and a footer with contact and privacy. */
+  :root {
+    --bg: #efe6d2;
+    --surface: #f7f1e3;
+    --fg: #0e2a47;
+    --muted: #4a5a6a;
+    --line: #d8c9a8;
+    --accent: #1f4e79;
+    --accent-soft: #c9d6e3;
+    --sunset: #2f6a9e;
+    --wine: #163a5c;
+    --ember: #0b1a2c;
+    --highlight: #ffd49a;
+    /* Apple-style system fonts (SF on Apple, Segoe UI Variable on Windows, Roboto on Android); Bricolage only for the wordmark. */
+    --font-brand: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI Variable Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    /* Soft, rounded cards (ui-ux-pro-max: soft 3D, 16-24px radius, double shadow). */
+    --shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset, 0 10px 24px -14px rgba(14, 42, 71, 0.35);
+    --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --error: #a8221a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0b1a2c; --surface: #13283f; --fg: #efe6d2; --muted: #a9b6c4; --line: #1c3552;
+      --accent: #7fa8d1; --accent-soft: #1c3552;
+      --shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 10px 24px -14px rgba(0, 0, 0, 0.7);
+      --error: #ffb4ab;
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.6;
+  }
+  a { color: var(--accent); text-underline-offset: 2px; }
+  a, button { touch-action: manipulation; }
+  :where(a, button, input):focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+  .wrap { max-width: 68rem; margin: 0 auto; padding-inline: 20px; }
+  /* Keyboard users can jump past the header. */
+  .skip { position: absolute; left: 12px; top: -60px; z-index: 100; padding: 10px 16px; border-radius: 10px; background: var(--fg); color: var(--bg); font-weight: 600; }
+  .skip:focus { top: 12px; }
+
+  /* Brand bar */
+  /* Sticks to the top with frosted glass; the hairline shows once the page has scrolled. */
+  .top {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg); background: color-mix(in srgb, var(--bg) 78%, transparent);
+    -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid transparent; transition: border-color 0.3s var(--ease);
+  }
+  .top.scrolled { border-bottom-color: var(--line); }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+  html { scroll-padding-top: 84px; }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+  .brand { display: flex; align-items: center; gap: 10px; color: var(--fg); text-decoration: none; }
+  .badge {
+    width: 40px; height: 40px; border-radius: 11px; flex: none;
+    background: linear-gradient(135deg, var(--sunset), var(--wine));
+    display: grid; place-items: center;
+  }
+  .badge svg { width: 22px; height: 22px; fill: #fff; }
+  .brand span { font-family: var(--font-brand); font-weight: 800; font-size: 1.35rem; letter-spacing: 0.01em; }
+  .bar nav { display: flex; gap: 6px; font-weight: 600; }
+  /* 44px tall tap targets. */
+  .bar nav a { display: inline-flex; align-items: center; min-height: 44px; padding-inline: 8px; color: var(--muted); text-decoration: none; border-radius: 10px; transition: color 0.2s var(--ease), background-color 0.2s var(--ease); }
+  .bar nav a:hover { color: var(--accent); background: var(--surface); }
+  /* Language switch (EN / DE) as a small outlined pill. */
+  .bar nav a.nav-switch { border: 1px solid var(--line); padding-inline: 12px; font-size: 0.9rem; }
+
+  /* Hero */
+  .hero {
+    display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 64px; align-items: center; padding-block: 48px 96px;
+  }
+  .eyebrow {
+    display: inline-block; font-weight: 600; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--accent); background: var(--accent-soft); padding: 5px 12px; border-radius: 999px;
+  }
+  /* Apple-style headlines: system font, semibold-bold, tight tracking. */
+  h1 {
+    font-family: var(--font-display); font-weight: 700; font-size: clamp(2.6rem, 6.2vw, 4.5rem);
+    line-height: 1.04; margin: 20px 0 20px; text-wrap: balance; letter-spacing: -0.035em;
+  }
+  h1 em { font-style: normal; color: var(--accent); }
+  .lead { font-size: clamp(1.15rem, 1.6vw, 1.35rem); line-height: 1.5; color: var(--muted); max-width: 30rem; margin: 0 0 32px; text-wrap: pretty; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .soon {
+    display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 12px 22px; border-radius: 999px;
+    background: var(--fg); color: var(--bg); font-weight: 600; text-decoration: none;
+    box-shadow: 0 10px 20px -12px rgba(14, 42, 71, 0.6);
+    transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+  }
+  .soon:hover { transform: translateY(-1px); box-shadow: 0 14px 24px -12px rgba(14, 42, 71, 0.7); }
+  .soon:active { transform: scale(0.98); }
+  .soon svg { width: 20px; height: 20px; fill: currentColor; flex: none; }
+  .ghost { display: inline-flex; align-items: center; min-height: 48px; font-weight: 600; padding: 0 8px; }
+  .facts { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 0; margin: 26px 0 0; color: var(--muted); font-size: 0.95rem; }
+  .facts li::before { content: "✓ "; content: "✓ " / ""; color: var(--accent); font-weight: 600; }
+
+  /* Lock-screen mock: what the phone shows when it turns on */
+  .phone, .shot {
+    position: relative; width: min(340px, 100%); margin-inline: auto; border-radius: 46px; padding: 11px;
+    background: #050d17; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset, 0 40px 80px -30px rgba(5, 13, 23, 0.6);
+  }
+  /* Soft light behind the phones, so they float instead of sitting on the page. */
+  .phone::before, .shot::before {
+    content: ""; position: absolute; inset: -14% -28%; z-index: -1; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(127, 168, 209, 0.32), transparent);
+  }
+  .hero, .spot { isolation: isolate; }
+  /* The glow may reach past the screen edge on phones; never let it cause sideways scrolling. */
+  body { overflow-x: clip; }
+  /* A real screenshot of the app's lock screen (img/lock-screen.jpg, 9:16). The answer field
+     and the Unlock button lie exactly over the ones in the picture, so the visitor can try it. */
+  .screen { position: relative; margin: 0; border-radius: 32px; overflow: hidden; container-type: inline-size; background: #0c1b2e; }
+  .screen img { display: block; width: 100%; height: auto; }
+  /* Measured on the 720x1280 picture: field 42..677 x 865..962, Unlock 42..677 x 992..1081. */
+  .try-field, .try-unlock, .try-hint { position: absolute; box-sizing: border-box; margin: 0; left: 5.83%; width: 88.33%; border-radius: 999px; font: inherit; }
+  .try-field {
+    top: 67.58%; height: 7.66%; padding: 0 0 0 4.6cqw; border: 0.35cqw solid transparent;
+    background: transparent; color: #fff; font-size: 4.3cqw; font-weight: 600; caret-color: #fff;
+  }
+  .try-field::placeholder { color: transparent; }
+  .try-field:focus, .try-field:not(:placeholder-shown) { background: #35506d; outline: none; border-color: #dfe5ec; }
+  /* Only while it shakes; afterwards the field looks like the app's again. */
+  .try-field.wrong { animation: shake 0.35s; }
+  .try-unlock { top: 77.5%; height: 7.03%; border: 0; background: transparent; color: transparent; cursor: pointer; }
+  .try-unlock:focus-visible, .try-hint:focus-visible, .try-again:focus-visible { outline: 3px solid #7fa8d1; outline-offset: 2px; }
+  .try-hint { top: 86.2%; height: 4.6%; left: 30%; width: 40%; border: 0; background: transparent; cursor: pointer; }
+  .try-done {
+    position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2.5cqw;
+    color: #fff; text-align: center; font-size: 5cqw; background: linear-gradient(180deg, rgba(11, 26, 44, 0.92), rgba(31, 78, 121, 0.94));
+    animation: unlocked 0.45s ease-out;
+  }
+  .try-done[hidden] { display: none; }
+  .try-done strong { font-family: var(--font-display); font-size: 9cqw; }
+  /* The app's cheering otter (tools/otter/svg/cheer.svg) with a small check badge. */
+  .try-done .otter { position: relative; width: 42cqw; animation: cheer 0.9s ease-out 0.15s both; }
+  .try-done .otter img { display: block; width: 100%; height: auto; }
+  .try-done .check {
+    position: absolute; right: -2cqw; top: 4cqw; display: grid; place-items: center; width: 11cqw; height: 11cqw;
+    border-radius: 50%; background: #3fb984; font-size: 6.5cqw; box-shadow: 0 0 0 1cqw rgba(11, 26, 44, 0.6);
+  }
+  @keyframes cheer { 0% { transform: translateY(12%) scale(0.85); opacity: 0; } 45% { transform: translateY(-6%) scale(1.04); opacity: 1; } 70% { transform: translateY(2%); } 100% { transform: none; } }
+  .try-again { margin-top: 4cqw; padding: 2.6cqw 7cqw; border: 0; border-radius: 999px; background: #fff; color: #163a5c; font: inherit; font-weight: 600; cursor: pointer; }
+  @keyframes shake { 25% { transform: translateX(-2.5%); } 75% { transform: translateX(2.5%); } }
+  @keyframes unlocked { from { opacity: 0; transform: scale(1.06); } }
+  @media (prefers-reduced-motion: reduce) { .try-field.wrong, .try-done, .try-done .otter { animation: none; } }
+
+  /* Sections */
+  section { padding-block: 96px; }
+  /* A full-width band behind one section, so the page has rhythm without rules everywhere. */
+  .band { background: var(--surface); box-shadow: 0 0 0 100vmax var(--surface); clip-path: inset(0 -100vmax); }
+  .band .card { background: var(--bg); }
+  h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 4.4vw, 3rem); line-height: 1.08; letter-spacing: -0.03em; margin: 0 0 14px; text-wrap: balance; }
+  .intro { color: var(--muted); font-size: 1.15rem; max-width: 40rem; margin: 0 0 40px; text-wrap: pretty; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 22px; box-shadow: var(--shadow); }
+  .card h3, .card h4 { margin: 12px 0 6px; font-size: 1.1rem; line-height: 1.3; }
+  .card p { margin: 0; color: var(--muted); font-size: 0.98rem; }
+
+  /* How it works: three numbered steps. */
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; counter-reset: step; }
+  .steps li { counter-increment: step; position: relative; padding-top: 62px; }
+  .steps li::before {
+    content: counter(step); position: absolute; left: 22px; top: 20px; width: 34px; height: 34px; border-radius: 50%;
+    display: grid; place-items: center; background: var(--accent); color: var(--bg);
+    font-family: var(--font-display); font-weight: 800; font-size: 1.05rem;
+  }
+
+  /* Features: two big spotlights with real app screens, a row of numbers, then a quiet list. */
+  .spot { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; align-items: center; padding-block: 24px; }
+  /* Heading and the first spotlight read as one block, not as two with a gap. */
+  #features .intro { margin-bottom: 16px; }
+  .spot.flip .spot-media { order: -1; }
+  .spot-label { margin: 0 0 10px; font-weight: 600; font-size: 0.95rem; color: var(--accent); }
+  .spot h3 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.7rem, 3.2vw, 2.4rem); line-height: 1.1; letter-spacing: -0.028em; margin: 0 0 16px; text-wrap: balance; }
+  .spot-text > p { margin: 0; color: var(--muted); font-size: 1.12rem; max-width: 30rem; text-wrap: pretty; }
+  .ticks { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 10px; }
+  .ticks li { display: flex; gap: 10px; }
+  .ticks li::before { content: "✓"; content: "✓" / ""; color: var(--accent); font-weight: 700; }
+  .shot { width: min(300px, 100%); }
+  .shot img { display: block; width: 100%; height: auto; border-radius: 36px; }
+
+  .stats { list-style: none; margin: 56px 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  .stats li { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 28px 24px; }
+  .stats b { display: block; font-family: var(--font-display); font-weight: 700; font-size: clamp(2.4rem, 4.6vw, 3.4rem); line-height: 1; letter-spacing: -0.04em; color: var(--accent); }
+  .stats span { display: block; margin-top: 10px; color: var(--muted); }
+
+  .more-title { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; margin: 24px 0 8px; }
+  .more { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 40px; }
+  .more li { border-top: 1px solid var(--line); padding-block: 22px 8px; }
+  .more h4 { margin: 14px 0 6px; font-size: 1.08rem; line-height: 1.3; }
+  .more p { margin: 0; color: var(--muted); }
+  /* The three that matter most are cards; the rest stay a quiet list. */
+  .more.hl { margin-bottom: 8px; gap: 16px; }
+  .more.hl li { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 22px; box-shadow: var(--shadow); }
+  details.more-rest > summary {
+    display: none; list-style: none; cursor: pointer; margin-top: 16px; min-height: 48px; padding: 0 22px; border-radius: 999px;
+    align-items: center; justify-content: center; font-weight: 600; color: var(--fg); border: 2px solid var(--line); background: var(--surface);
+  }
+  details.more-rest > summary::-webkit-details-marker { display: none; }
+  details.more-rest[open] > summary { display: none; }
+  details.more-rest > .more { margin-top: 8px; }
+
+  /* Closing call to action. */
+  .cta { text-align: center; border-radius: 28px; padding: 48px 24px; margin-block: 56px; background: var(--accent-soft); border: 1px solid var(--line); box-shadow: var(--shadow); }
+  .cta h2 { margin-bottom: 10px; }
+  .cta p { color: var(--muted); max-width: 34rem; margin: 0 auto 24px; }
+  .cta .actions { justify-content: center; }
+  .icon { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: var(--accent-soft); }
+  .icon svg { width: 22px; height: 22px; fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* Languages: "hello" in each one, big, with the language's name underneath. */
+  /* Six to a row on wide screens; each row stretches, so no tile is left alone at the end. */
+  .hellos { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 12px; }
+  .hellos li { flex: 1 1 150px; min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 22px 20px 18px; }
+  .hellos b { display: block; white-space: nowrap; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.5rem, 2.6vw, 1.85rem); line-height: 1.15; letter-spacing: -0.02em; }
+  /* CJK glyphs fill their box, so the same size looks bigger; a step down keeps them even. */
+  .hellos b:is([lang="ja"], [lang="ko"], [lang="zh-Hans"]) { font-size: clamp(1.25rem, 2.1vw, 1.5rem); letter-spacing: 0; }
+  .hellos span { display: block; margin-top: 6px; color: var(--muted); font-size: 0.95rem; }
+
+  /* Sections ease in once as they scroll into view; only with JavaScript and without reduced motion. */
+  @media (prefers-reduced-motion: no-preference) {
+    .js .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); transition-delay: var(--d, 0s); }
+    .js .reveal.in { opacity: 1; transform: none; }
+  }
+
+  footer { border-top: 1px solid var(--line); padding-block: 28px 40px; color: var(--muted); font-size: 0.95rem; }
+  footer .row { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; align-items: center; }
+  footer a { color: var(--muted); }
+  /* Links as 44px-tall tap targets, wrapped in rows instead of one dotted line. */
+  footer .links { display: flex; flex-wrap: wrap; gap: 0 22px; }
+  footer .links a { display: inline-flex; align-items: center; min-height: 44px; }
+
+  /* Pointer to the German page, shown only to browsers set to German. */
+  .langhint { display: block; text-align: center; padding: 10px 20px; background: var(--accent-soft); color: var(--fg); font-weight: 600; font-size: 0.95rem; text-decoration: none; }
+  .langhint[hidden] { display: none; }
+  .langhint:hover { text-decoration: underline; }
+
+  /* Caption under the hero phone: the lock screen is a live demo. */
+  .try-note { margin: 18px auto 0; max-width: 20rem; text-align: center; color: var(--muted); font-size: 0.95rem; text-wrap: balance; }
+
+  /* Menu button to the sign-up form. */
+  .bar nav a.nav-cta { background: var(--fg); color: var(--bg); padding-inline: 16px; margin-left: 6px; border-radius: 999px; }
+  .bar nav a.nav-cta:hover { background: var(--accent); color: var(--bg); }
+
+  /* Launch sign-up form, in the hero and in the closing panel. */
+  .notify { display: grid; gap: 8px; max-width: 31rem; }
+  .notify label { font-weight: 600; font-size: 0.95rem; }
+  .notify .row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .notify input[type="email"] {
+    flex: 1 1 14rem; min-width: 0; min-height: 48px; padding: 0 18px; border-radius: 999px;
+    border: 2px solid var(--line); background: var(--surface); color: var(--fg); font: inherit;
+  }
+  .notify input[type="email"]:focus-visible { border-color: var(--accent); outline-offset: 2px; }
+  .notify input[aria-invalid="true"] { border-color: var(--error); }
+  .notify button {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 22px;
+    border: 0; border-radius: 999px; background: var(--fg); color: var(--bg); font: inherit; font-weight: 600; cursor: pointer;
+    box-shadow: 0 10px 20px -12px rgba(14, 42, 71, 0.6); transition: transform 0.2s var(--ease), background-color 0.2s var(--ease);
+  }
+  .notify button:hover { background: var(--accent); }
+  .notify button:active { transform: scale(0.98); }
+  .notify button[disabled] { opacity: 0.7; cursor: progress; }
+  .notify button svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .notify .note { margin: 0; font-size: 0.9rem; color: var(--muted); }
+  .notify .msg { margin: 0; font-weight: 600; }
+  .notify .msg:empty { display: none; }
+  .notify .msg.error { color: var(--error); }
+  .notify .msg.ok { padding: 14px 18px; border-radius: 16px; background: var(--accent-soft); color: var(--fg); font-weight: 400; }
+  .notify .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .notify.done label, .notify.done .row, .notify.done .note { display: none; }
+  .cta .notify { margin: 0 auto; text-align: left; }
+  .cta .otter { display: block; width: 96px; height: 96px; margin: 0 auto 8px; }
+
+  .cta .facts { justify-content: center; margin-top: 28px; }
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; gap: 48px; padding-block: 16px 64px; }
+    .phone { width: min(300px, 100%); }
+    section { padding-block: 72px; }
+    .spot, .spot.flip { grid-template-columns: 1fr; gap: 40px; }
+    .spot.flip .spot-media { order: 0; }
+    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .more { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 680px) {
+    .steps { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .more { grid-template-columns: 1fr; }
+    .stats li { padding: 22px 18px; }
+    section { padding-block: 52px; }
+    .spot, .spot.flip { gap: 28px; padding-block: 16px; }
+    .shot { width: min(220px, 100%); padding: 9px; border-radius: 38px; }
+    .shot img { border-radius: 30px; }
+    .bar { gap: 8px; }
+    .bar nav { gap: 6px; font-size: 0.95rem; align-items: center; }
+    .brand span { font-size: 1.2rem; }
+    .cta { padding: 36px 18px; }
+    /* Phones: name, language switch and the sign-up button, which stays in reach while scrolling. */
+    .bar nav a.nav-sec { display: none; }
+    .bar nav a.nav-cta { padding-inline: 14px; margin-left: 0; }
+    /* A little tighter at the top, so the lock-screen phone peeks in under the form. */
+    .hero { gap: 28px; padding-block: 4px 40px; }
+    h1 { font-size: 2.3rem; margin: 14px 0 12px; }
+    .lead { font-size: 1.08rem; margin-bottom: 20px; }
+    .facts { margin-top: 18px; }
+    /* Languages as small chips, three to a row. */
+    .hellos { gap: 8px; }
+    .hellos li { flex: 1 1 96px; padding: 14px 10px 12px; border-radius: 16px; }
+    .hellos b { font-size: 1.2rem; }
+    .hellos b:is([lang="ja"], [lang="ko"], [lang="zh-Hans"]) { font-size: 1.02rem; }
+    .hellos span { font-size: 0.8rem; margin-top: 4px; }
+    /* Show the quieter feature list on request. */
+    details.more-rest > summary { display: flex; }
+    details.more-rest[open] > summary { display: none; }
+    .more.hl { gap: 12px; }
+    footer .links { gap: 0 18px; }
+  }
+  /* Very narrow phones: the logo alone, so the menu fits. */
+  @media (max-width: 340px) {
+    .brand span:not(.badge) { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .soon, .bar nav a, .notify button { transition: none; }
+    .soon:hover, .soon:active, .notify button:active { transform: none; }
+  }
