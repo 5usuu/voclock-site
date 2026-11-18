@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src https://identitytoolkit.googleapis.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<!-- The Firebase browser key only answers requests from this site, so the origin (never the path) goes along. -->
+<meta name="referrer" content="origin">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<title>Konto – VocLock</title>
+<meta name="robots" content="noindex">
+<style>
+  @font-face { font-family: "Bricolage Grotesque"; src: url("/fonts/bricolage-grotesque-latin-wght.woff2") format("woff2"); font-weight: 200 800; font-style: normal; font-display: swap; }
+  :root {
+    --bg: #efe6d2; --surface: #f7f1e3; --fg: #0e2a47; --muted: #4a5a6a; --line: #d8c9a8;
+    --accent: #1f4e79; --ok: #1d6b3a; --error: #a8221a;
+    --font-brand: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI Variable Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0b1a2c; --surface: #13283f; --fg: #efe6d2; --muted: #a9b6c4; --line: #1c3552;
+      --accent: #7fa8d1; --ok: #8fd6a6; --error: #ffb4ab; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0b1a2c; --surface: #13283f; --fg: #efe6d2; --muted: #a9b6c4; --line: #1c3552;
+    --accent: #7fa8d1; --ok: #8fd6a6; --error: #ffb4ab; color-scheme: dark;
+  }
+  body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 17px; line-height: 1.6; padding-inline: 16px; padding-block: 32px 64px; }
+  .page { max-width: 30rem; margin: 0 auto; display: grid; gap: 28px; grid-template-columns: minmax(0, 1fr); }
+  header { display: grid; gap: 14px; }
+  .brand { display: flex; align-items: center; gap: 12px; color: var(--fg); text-decoration: none; width: fit-content; min-height: 44px; }
+  .badge { width: 44px; height: 44px; border-radius: 12px; flex: none; background: linear-gradient(135deg, #2f6a9e, #163a5c); display: grid; place-items: center; }
+  .badge svg { width: 24px; height: 24px; }
+  .app { font-family: var(--font-brand); font-weight: 700; font-size: 1.15rem; letter-spacing: 0.01em; }
+  h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.9rem, 6vw, 2.4rem); line-height: 1.1; letter-spacing: -0.025em; margin: 0; }
+  p { margin: 0; }
+  a { color: var(--accent); text-underline-offset: 2px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 22px; box-shadow: 0 10px 24px -14px rgba(14, 42, 71, 0.35); display: grid; gap: 16px; }
+  .who { color: var(--muted); overflow-wrap: anywhere; }
+  label { font-weight: 600; display: block; margin-bottom: 6px; }
+  .field { display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 14px; background: var(--bg); padding-left: 14px; }
+  .field:focus-within { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .field input { flex: 1; min-width: 0; min-height: 48px; border: 0; background: transparent; color: var(--fg); font: inherit; outline: none; }
+  .eye { min-width: 48px; min-height: 48px; border: 0; background: none; color: var(--muted); cursor: pointer; font: inherit; font-size: 0.9rem; }
+  .hint { color: var(--muted); font-size: 0.9rem; margin-top: 6px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 24px; border: 0; border-radius: 999px; background: var(--fg); color: var(--bg); font: inherit; font-weight: 600; cursor: pointer; width: fit-content; }
+  .btn:hover { background: var(--accent); }
+  .btn[disabled] { opacity: 0.7; cursor: progress; }
+  :where(a, button):focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+  .msg:empty { display: none; }
+  .error { color: var(--error); }
+  .ok { color: var(--ok); font-weight: 600; }
+  footer { color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--line); padding-top: 16px; }
+  .skip { position: absolute; left: 12px; top: -60px; padding: 10px 16px; border-radius: 10px; background: var(--fg); color: var(--bg); font-weight: 600; text-decoration: none; }
+  .skip:focus { top: 12px; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<a class="skip" href="#content" data-t="skip">Zum Inhalt</a>
+<div class="page">
+  <header>
+    <a class="brand" href="../" aria-label="VocLock">
+      <div class="badge" aria-hidden="true">
+        <svg viewBox="21 20.5 66 66"><path d="M36 50 54 80 72 50" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M52 38 64 27" stroke="#ffd166" stroke-width="8" stroke-linecap="round"/></svg>
+      </div>
+      <span class="app">VocLock</span>
+    </a>
+    <h1 id="title" data-t="title">Dein Konto</h1>
+  </header>
+  <main id="content">
+    <section class="card" aria-labelledby="title">
+      <p id="loading" data-t="loading">Einen Moment …</p>
+
+      <form id="reset" hidden novalidate>
+        <p class="who" id="who"></p>
+        <input type="email" id="user" autocomplete="username" hidden readonly>
+        <div>
+          <label for="pw" data-t="newPw">Neues Passwort</label>
+          <div class="field">
+            <input type="password" id="pw" autocomplete="new-password" minlength="6" required>
+            <button class="eye" type="button" id="eye" aria-controls="pw" data-t="show">Zeigen</button>
+          </div>
+          <p class="hint" data-t="pwHint">Mindestens 6 Zeichen.</p>
+        </div>
+        <button class="btn" type="submit" id="save" data-t="save">Passwort speichern</button>
+      </form>
+
+      <!-- Verifying waits for a tap: mail scanners open links and would use up the code. -->
+      <div id="verify" hidden>
+        <p data-t="verifyAsk">Tippe auf den Knopf, um deine E-Mail-Adresse für VocLock zu bestätigen.</p>
+        <button class="btn" type="button" id="confirm" data-t="confirm">E-Mail bestätigen</button>
+      </div>
+
+      <p id="done" class="ok" hidden></p>
+      <p id="nothing" hidden data-t="nothing">Diese Seite öffnet sich über den Link in einer VocLock-Mail.</p>
+      <p class="msg" id="msg" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+  <footer>VocLock · <a href="../privacy/" data-t="privacy">Datenschutz</a> · <a href="../impressum/">Impressum</a></footer>
+</div>
+<script>
+  (function () {
+    var T = {
+      de: {
+        skip: "Zum Inhalt", title: "Dein Konto", loading: "Einen Moment …", newPw: "Neues Passwort", show: "Zeigen", hide: "Verbergen",
+        pwHint: "Mindestens 6 Zeichen.", save: "Passwort speichern", confirm: "E-Mail bestätigen", privacy: "Datenschutz",
+        verifyAsk: "Tippe auf den Knopf, um deine E-Mail-Adresse für VocLock zu bestätigen.",
+        nothing: "Diese Seite öffnet sich über den Link in einer VocLock-Mail.",
+        resetTitle: "Neues Passwort", verifyTitle: "E-Mail bestätigen", forWho: "für ",
+        resetDone: "Dein Passwort ist geändert. Melde dich jetzt in der App damit an.",
+        verifyDone: "Deine E-Mail-Adresse ist bestätigt. Du kannst zurück in die App.",
+        expired: "Dieser Link ist abgelaufen oder wurde schon benutzt. Fordere in der App einen neuen an.",
+        weak: "Das Passwort ist zu kurz. Nimm mindestens 6 Zeichen.",
+        tooMany: "Zu viele Versuche. Bitte warte ein paar Minuten.",
+        disabled: "Dieses Konto ist gesperrt. Schreib uns an support@littlelockstudio.app.",
+        failed: "Das hat nicht geklappt. Bitte versuch es gleich noch einmal.", offline: "Keine Verbindung. Bist du online?"
+      },
+      en: {
+        skip: "Skip to content", title: "Your account", loading: "One moment …", newPw: "New password", show: "Show", hide: "Hide",
+        pwHint: "At least 6 characters.", save: "Save password", confirm: "Confirm email", privacy: "Privacy",
+        verifyAsk: "Tap the button to confirm your email address for VocLock.",
+        nothing: "This page opens from the link in a VocLock email.",
+        resetTitle: "New password", verifyTitle: "Confirm email", forWho: "for ",
+        resetDone: "Your password is changed. Sign in with it in the app now.",
+        verifyDone: "Your email address is confirmed. You can go back to the app.",
+        expired: "This link has expired or was already used. Request a new one in the app.",
+        weak: "That password is too short. Use at least 6 characters.",
+        tooMany: "Too many tries. Please wait a few minutes.",
+        disabled: "This account is disabled. Write to support@littlelockstudio.app.",
+        failed: "That didn't work. Please try again in a moment.", offline: "No connection. Are you online?"
+      }
+    };
+    var q = new URLSearchParams(location.search);
+    var lang = q.get("lang") === "en" ? "en" : "de", t = T[lang];
+    var mode = q.get("mode"), code = q.get("oobCode") || "", key = q.get("apiKey") || "";
+    // Read once, then take the code out of the address bar and the history.
+    if (location.search) history.replaceState(null, "", location.pathname);
+
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-t]").forEach(function (el) { el.textContent = t[el.getAttribute("data-t")]; });
+    var $ = function (id) { return document.getElementById(id); }, msg = $("msg");
+
+    function only(id) {
+      ["loading", "reset", "verify", "done", "nothing"].forEach(function (x) { $(x).hidden = x !== id; });
+    }
+    function say(text, cls) { msg.className = "msg " + (cls || ""); msg.textContent = text || ""; }
+    function errorText(code) {
+      if (/EXPIRED_OOB_CODE|INVALID_OOB_CODE/.test(code)) return t.expired;
+      if (/WEAK_PASSWORD/.test(code)) return t.weak;
+      if (/TOO_MANY_ATTEMPTS/.test(code)) return t.tooMany;
+      if (/USER_DISABLED/.test(code)) return t.disabled;
+      return t.failed;
+    }
+    // Firebase Authentication REST API; the browser key is public and limited to this site.
+    function call(method, body) {
+      return fetch("https://identitytoolkit.googleapis.com/v1/accounts:" + method + "?key=" + encodeURIComponent(key), {
+        method: "POST", referrerPolicy: "origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body)
+      }).then(function (r) {
+        return r.json().then(function (b) {
+          if (!r.ok) throw new Error((b && b.error && b.error.message) || "FAILED");
+          return b;
+        });
+      }, function () { throw new Error("OFFLINE"); });
+    }
+    function fail(e) { say(e.message === "OFFLINE" ? t.offline : errorText(e.message), "error"); }
+
+    if (!/^[A-Za-z0-9_-]{10,200}$/.test(code) || !/^[A-Za-z0-9_-]{20,60}$/.test(key) || !window.crypto || !crypto.subtle) { only("nothing"); return; }
+    // Only VocLock's own key: a link carrying another Firebase project's key could otherwise ask
+    // for a password on this page and send it there. The fingerprint (SHA-256) keeps the key
+    // itself out of this public page.
+    var VOCLOCK_KEY_SHA256 = "86c5e20bbe85dfdb7499229cc41cfe5b29e0514408a130df6dd6e985989f1741";
+    crypto.subtle.digest("SHA-256", new TextEncoder().encode(key)).then(function (buf) {
+      var hex = Array.prototype.map.call(new Uint8Array(buf), function (b) { return ("0" + b.toString(16)).slice(-2); }).join("");
+      if (hex !== VOCLOCK_KEY_SHA256) { only("nothing"); return; }
+      start();
+    }, function () { only("nothing"); });
+
+    function start() {
+    if (mode === "resetPassword") {
+      document.title = t.resetTitle + " – VocLock"; $("title").textContent = t.resetTitle;
+      // Only checks the code (and gives the address); the code stays valid.
+      call("resetPassword", { oobCode: code }).then(function (b) {
+        if (b.email) { $("who").textContent = t.forWho + b.email; $("user").value = b.email; }
+        only("reset"); $("pw").focus();
+      }).catch(function (e) { only("loading"); $("loading").hidden = true; fail(e); });
+
+      $("eye").addEventListener("click", function () {
+        var hidden = $("pw").type === "password";
+        $("pw").type = hidden ? "text" : "password";
+        this.textContent = hidden ? t.hide : t.show;
+      });
+      $("reset").addEventListener("submit", function (ev) {
+        ev.preventDefault();
+        var pw = $("pw").value;
+        if (pw.length < 6) { say(t.weak, "error"); $("pw").focus(); return; }
+        var save = $("save"); save.disabled = true; say("…");
+        call("resetPassword", { oobCode: code, newPassword: pw }).then(function () {
+          $("pw").value = ""; say(""); $("done").textContent = t.resetDone; only("done");
+        }).catch(function (e) { save.disabled = false; fail(e); });
+      });
+    } else if (mode === "verifyEmail") {
+      document.title = t.verifyTitle + " – VocLock"; $("title").textContent = t.verifyTitle;
+      only("verify");
+      $("confirm").addEventListener("click", function () {
+        var button = this; button.disabled = true; say("…");
+        call("update", { oobCode: code }).then(function () {
+          say(""); $("done").textContent = t.verifyDone; only("done");
+        }).catch(function (e) { button.disabled = false; fail(e); });
+      });
+    } else {
+      only("nothing");
+    }
+    }
+  })();
+</script>
+</body>
+</html>
