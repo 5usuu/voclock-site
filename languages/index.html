@@ -100,7 +100,7 @@
     <section class="page-intro container stage-enter">
       <div>
         <h1>Eleven languages. Say hello.</h1>
-        <p>Each course has the 2,000 to 2,800 most used words of its language, each with an example sentence, for English and for German speakers.</p>
+        <p>Each course has the 2,000 to 2,800 most used words of its language, each with an example sentence. Nine languages explained in English or German, plus English for German speakers and German for English speakers.</p>
       </div>
       <a href="https://play.google.com/store/apps/details?id=com.voclock" class="btn-primary" target="_blank" rel="noopener">Start a course</a>
     </section>
@@ -108,14 +108,14 @@
     <section class="container stage-enter" style="--stagger: 80ms;">
       <div class="lang-toolbar">
         <div class="filter-group" role="group" aria-label="Filter languages">
-          <button type="button" class="filter-pill lang-filter active" data-filter="all">All 11</button>
+          <button type="button" class="filter-pill lang-filter active" data-filter="all">All</button>
           <button type="button" class="filter-pill lang-filter" data-filter="european">Latin script</button>
           <button type="button" class="filter-pill lang-filter" data-filter="scripts">New alphabets &amp; Pinyin</button>
         </div>
 
         <div class="filter-group" role="group" aria-label="Interface speaker language">
-          <button type="button" class="filter-pill speaker-toggle-btn active" data-speaker="en">For English speakers</button>
-          <button type="button" class="filter-pill speaker-toggle-btn" data-speaker="de">Für Deutschsprachige</button>
+          <button type="button" class="filter-pill speaker-toggle-btn active" data-speaker="en" aria-pressed="true">For English speakers</button>
+          <button type="button" class="filter-pill speaker-toggle-btn" data-speaker="de" aria-pressed="false">Für Deutschsprachige</button>
         </div>
       </div>
 
@@ -148,10 +148,10 @@
           <button type="button" class="explorer-tile" data-lang-id="zh" data-group="scripts" data-spotlight>
             <b lang="zh-Hans">你好</b><span>Chinese (Mandarin)</span>
           </button>
-          <button type="button" class="explorer-tile" data-lang-id="en" data-group="european" data-spotlight>
+          <button type="button" class="explorer-tile" data-lang-id="en" data-group="european" data-base-speaker="de" data-spotlight hidden>
             <b>Hello</b><span>English</span>
           </button>
-          <button type="button" class="explorer-tile" data-lang-id="de" data-group="european" data-spotlight>
+          <button type="button" class="explorer-tile" data-lang-id="de" data-group="european" data-base-speaker="en" data-spotlight>
             <b>Hallo</b><span>German</span>
           </button>
         </div>
@@ -168,7 +168,7 @@
                 <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
                 <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
               </svg>
-              <span>Hear</span>
+              <span>Hear a sample</span>
             </button>
           </div>
 
@@ -185,7 +185,7 @@
 
           <p class="insp-note" id="insp-note"></p>
 
-          <div class="deck-label">Sample lock-screen cards (tap to flip &amp; hear)</div>
+          <div class="deck-label">Vocabulary preview. Tap a card to reveal the translation and hear the word.</div>
           <div class="flashcard-list" id="insp-deck"></div>
         </aside>
       </div>

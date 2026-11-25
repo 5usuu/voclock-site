@@ -119,9 +119,9 @@
           <h2>You stay in control of every unlock.</h2>
           <p>VocLock shows at most one word every ten minutes, respects Do Not Disturb, and lets your emergency PIN unlock immediately whenever you are in a hurry.</p>
           <ul class="feature-list">
-            <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>Reel brake (Android):</strong> after every few TikToks, Reels or Shorts, VocLock asks one word before you scroll on.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>Reel brake (Android):</strong> answer a word before you keep scrolling in recognized Instagram Reels and YouTube Shorts players.</span></li>
             <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>Emergency PIN:</strong> always gets you straight in, and lock-screen prompts can be paused anytime.</span></li>
-            <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>A picture for the word:</strong> hundreds of everyday words come with a small custom drawing so the word links to the thing.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span>Pictures for hundreds of everyday words.</span></li>
           </ul>
         </div>
 
@@ -129,27 +129,25 @@
           <div class="console-card">
             <div class="console-row">
               <div>
-                <strong>Lock-screen frequency</strong>
-                <span id="cooldown-val">At most 1 word every 10 min</span>
+                <strong>Unlock prompts: at least 10 minutes apart</strong>
               </div>
-              <input type="range" id="cooldown-slider" class="cooldown-range" min="5" max="30" step="5" value="10" style="max-width: 120px;" aria-label="Cooldown interval in minutes" />
             </div>
             <div class="console-row">
               <div>
                 <strong>Do Not Disturb</strong>
-                <span>Never interrupts focus or sleep hours</span>
+                <span>Stays quiet in Do Not Disturb (on by default)</span>
               </div>
-              <button type="button" class="switch-btn on" id="dnd-toggle-btn">Respected</button>
+              <button type="button" class="switch-btn on" id="dnd-toggle-btn" aria-pressed="true">On</button>
             </div>
             <div class="console-row">
               <div>
                 <strong>Reel brake on Android</strong>
-                <span id="reel-status-text">Asks 1 word every 5 Reels</span>
+                <span id="reel-status-text">Off by default · 1 word after 10 videos (3–30)</span>
               </div>
-              <button type="button" class="switch-btn on" id="reel-toggle-btn">Enabled</button>
+              <button type="button" class="switch-btn" id="reel-toggle-btn" aria-pressed="false">Off</button>
             </div>
             <div class="reel-preview-box">
-              <span>TikTok / Reels / Shorts</span>
+              <span>Instagram Reels / YouTube Shorts</span>
               <span class="reel-badge">Pause &amp; recall 1 word</span>
             </div>
           </div>
@@ -162,9 +160,9 @@
           <h2>A whole app for the minutes you do have.</h2>
           <p>A short challenge every day, free practice whenever you like, and a weekly quiz with example sentences that shows what really stuck. Read "Tea", a chat story with a new episode every day, or text the AI otter in your new language (Pro).</p>
           <ul class="feature-list">
-            <li><span class="feature-dot" aria-hidden="true">✓</span><span>Six word games in three levels, built from the words you have already met.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span>Six games using words you’ve already met. Difficulty adjusts pairs, crosswords, word search and sentence building.</span></li>
             <li><span class="feature-dot" aria-hidden="true">✓</span><span>20 A1 and 20 A2 mini courses with grammar, step by step.</span></li>
-            <li><span class="feature-dot" aria-hidden="true">✓</span><span>Today's news from Wikipedia, with the words you already know swapped in.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span>Wikipedia articles with familiar words in your new language. News unlocks at 50 known words. Read one article a day for free, one more with a video, or unlimited articles with Pro.</span></li>
           </ul>
         </div>
 
@@ -225,7 +223,7 @@
           <ul class="feature-list">
             <li><span class="feature-dot" aria-hidden="true">✓</span><span>Tell the app if an answer was easy or hard, and the next review date adapts automatically.</span></li>
             <li><span class="feature-dot" aria-hidden="true">✓</span><span>A little otter with a cup of tea cheers you on, with outfits to dress it up.</span></li>
-            <li><span class="feature-dot" aria-hidden="true">✓</span><span>Friends, and one learning partner for a shared daily streak.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span>Build a shared streak with each friend and send nudges.</span></li>
           </ul>
         </div>
 
@@ -263,12 +261,11 @@
               <div class="fsrs-demo">
                 <div class="fsrs-head">
                   <span>Tap FSRS rating</span>
-                  <strong id="fsrs-result">Next review: 3 days</strong>
+                  <strong id="fsrs-result">Next review depends on the word's learning history</strong>
                 </div>
                 <div class="fsrs-pills">
-                  <button type="button" class="fsrs-pill" data-interval="10 minutes">Hard · 10m</button>
-                  <button type="button" class="fsrs-pill active" data-interval="3 days">Good · 3d</button>
-                  <button type="button" class="fsrs-pill" data-interval="12 days">Easy · 12d</button>
+                  <button type="button" class="fsrs-pill" data-rating="hard" aria-pressed="false">Hard</button>
+                  <button type="button" class="fsrs-pill" data-rating="easy" aria-pressed="false">Easy</button>
                 </div>
               </div>
             </div>
@@ -279,12 +276,12 @@
       <!-- Studio Panel 4: Import, Audio & Privacy -->
       <div class="studio-panel" data-panel="tools" role="tabpanel">
         <div class="studio-copy">
-          <h2>Your own words, offline voices, zero tracking required.</h2>
-          <p>Bring word lists from Quizlet, Anki, or any spreadsheet, hear every word using your phone's built-in voice, and keep your rank or words on your home screen.</p>
+          <h2>Your own words and offline voices.</h2>
+          <p>Bring word lists from Quizlet, Anki, or any spreadsheet, hear words with your phone's voice, and keep your rank or words on your home screen.</p>
           <ul class="feature-list">
             <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>New alphabets step by step:</strong> Japanese starts with hiragana/katakana + kanji practice; Russian and Korean begin with their alphabets; Chinese shows pinyin.</span></li>
-            <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>Home-screen widgets:</strong> free rank widget, plus Pro widgets for today's words and your learning partner.</span></li>
-            <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>Private by design:</strong> no account needed to learn. Optional accounts only store your progress and can be <a href="/delete-account/#en" class="inline-link">deleted anytime</a> (<a href="/privacy/#en" class="inline-link">Privacy policy</a>).</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>Home-screen widgets:</strong> free rank and streak widgets. Pro adds widgets for today’s words and friends.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>Learning as a guest:</strong> No sign-in needed. With an account, VocLock syncs progress, settings and profile details. Your emergency PIN stays on your phone. You can <a href="/delete-account/#en" class="inline-link">delete your account anytime</a> (<a href="/privacy/#en" class="inline-link">Privacy policy</a>).</span></li>
           </ul>
         </div>
 
@@ -301,15 +298,13 @@
               <button type="button" class="import-tab-btn" data-import="apkg">Anki .apkg</button>
               <button type="button" class="import-tab-btn" data-import="paste">Paste list</button>
             </div>
-            <pre class="import-code" id="import-preview-code">front,back,example
-la fenêtre,the window,Ouvre la fenêtre s'il te plaît.
-le matin,the morning,Le matin est calme.</pre>
+            <pre class="import-code" id="import-preview-code">adaptateur USB-C,USB-C adapter,Objects</pre>
             <div class="console-row">
               <div>
                 <strong>Built-in phone pronunciation</strong>
-                <span>Hear "La bibliothèque" offline</span>
+                <span>Offline playback needs an installed voice</span>
               </div>
-              <button type="button" class="switch-btn on" id="tools-audio-btn">Play word</button>
+              <button type="button" class="switch-btn on" id="tools-audio-btn">Hear a sample</button>
             </div>
           </div>
         </div>
@@ -319,7 +314,7 @@ le matin,the morning,Le matin est calme.</pre>
       <div class="tier-grid">
         <div class="tier-card" data-spotlight>
           <h3>VocLock Free</h3>
-          <p>Full lock-screen learning, 11 courses, FSRS spaced repetition, 40 mini courses, games, the rank widget, and offline mode — supported by ads.</p>
+          <p>Full lock-screen learning, 11 courses, FSRS spaced repetition, A1 and A2 mini courses (A2 downloads once, then works offline), games, the rank widget, and offline mode — supported by ads.</p>
         </div>
         <div class="tier-card pro" data-spotlight>
           <h3>VocLock Pro</h3>

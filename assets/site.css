@@ -1366,11 +1366,6 @@ h1, h2, h3, h4 {
   color: #0b1a2c;
 }
 
-.cooldown-range {
-  width: 100%;
-  accent-color: var(--accent);
-}
-
 .reel-preview-box {
   padding: 14px;
   border-radius: 16px;
@@ -1476,7 +1471,7 @@ h1, h2, h3, h4 {
 .fsrs-demo { margin-top: auto; background: #13283f; border: 1px solid #284b70; border-radius: 14px; padding: 10px; }
 .fsrs-head { display: flex; justify-content: space-between; font-size: 0.68rem; color: #a9b6c4; margin-bottom: 7px; }
 .fsrs-head strong { color: #3fb984; }
-.fsrs-pills { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.fsrs-pills { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
 .fsrs-pill { padding: 6px 4px; border-radius: 8px; border: 1px solid #284b70; background: #0b1a2c; color: #a9b6c4; font-size: 0.66rem; font-weight: 700; cursor: pointer; }
 .fsrs-pill.active { background: #2f6a9e; border-color: #7fa8d1; color: #ffffff; }
 

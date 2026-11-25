@@ -70,20 +70,60 @@
     });
   }
 
-  function speakText(text, lang, buttonEl) {
-    if (buttonEl) {
-      buttonEl.classList.remove("speaking");
-      void buttonEl.offsetWidth;
-      buttonEl.classList.add("speaking");
-      setTimeout(() => buttonEl.classList.remove("speaking"), 750);
+  const noOfflineVoice = DE
+    ? "Auf diesem Gerät gibt es keine Offline-Stimme für diese Sprache"
+    : "No offline voice for this language on this device";
+  let initialVoicesReady;
+  let latestSpeechRequest = 0;
+
+  async function speakText(text, lang, buttonEl) {
+    const request = ++latestSpeechRequest;
+    const synth = window.speechSynthesis;
+    if (!synth) {
+      buttonEl.title = noOfflineVoice;
+      return;
     }
-    if ("speechSynthesis" in window) {
-      window.speechSynthesis.cancel();
-      const utter = new SpeechSynthesisUtterance(text);
-      utter.lang = lang;
-      utter.rate = 0.92;
-      window.speechSynthesis.speak(utter);
+
+    let voices = synth.getVoices();
+    if (!voices.length) {
+      // Some browsers populate voices asynchronously. Share a single initial wait.
+      initialVoicesReady ??= new Promise((resolve) => {
+        const finish = () => {
+          window.clearTimeout(timeout);
+          synth.removeEventListener("voiceschanged", finish);
+          resolve();
+        };
+        const timeout = window.setTimeout(finish, 1200);
+        synth.addEventListener("voiceschanged", finish, { once: true });
+      });
+      await initialVoicesReady;
+      voices = synth.getVoices();
     }
+    if (request !== latestSpeechRequest) return;
+
+    const languageTag = lang.toLowerCase();
+    const language = languageTag.split("-")[0];
+    const localVoices = voices.filter((voice) =>
+      voice.localService === true && voice.lang.toLowerCase().split("-")[0] === language
+    );
+    const voice = localVoices.find((candidate) => candidate.lang.toLowerCase() === languageTag) || localVoices[0];
+    synth.cancel();
+    if (!voice) {
+      buttonEl.title = noOfflineVoice;
+      return;
+    }
+    if (buttonEl.title === noOfflineVoice) buttonEl.removeAttribute("title");
+
+    buttonEl.classList.remove("speaking");
+    void buttonEl.offsetWidth;
+    buttonEl.classList.add("speaking");
+    setTimeout(() => buttonEl.classList.remove("speaking"), 750);
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.voice = voice;
+    utterance.lang = voice.lang;
+    utterance.rate = 0.92;
+    synth.speak(utterance);
   }
 
   /* ========================================================================
@@ -150,16 +190,16 @@
   const lockForm = document.getElementById("lock-form");
   if (lockForm) {
     const demoWords = DE ? [
-      { lang: "fr-FR", meta: "Ins Deutsche übersetzen · Personen", target: "le père", reading: "", answer: "Vater", accepted: ["vater", "papa"], summary: "le père = der Vater", hint: "„Vater“" },
+      { lang: "fr-FR", meta: "Ins Deutsche übersetzen · Personen", target: "le père", reading: "", answer: "Vater", accepted: ["vater"], summary: "le père = der Vater", hint: "„Vater“" },
       { lang: "es-ES", meta: "Ins Deutsche übersetzen · Natur", target: "la luna", reading: "", answer: "Mond", accepted: ["mond"], summary: "la luna = der Mond", hint: "„Mond“" },
-      { lang: "ja-JP", meta: "Ins Deutsche übersetzen · Grundlagen", target: "みず", reading: "mizu", answer: "Wasser", accepted: ["wasser"], summary: "みず (mizu) = das Wasser", hint: "„Wasser“" },
-      { lang: "en-US", meta: "Ins Deutsche übersetzen · Himmel", target: "the star", reading: "", answer: "Stern", accepted: ["stern"], summary: "the star = der Stern", hint: "„Stern“" },
+      { lang: "ja-JP", meta: "Ins Deutsche übersetzen · Essen", target: "水", reading: "みず · mizu", answer: "Wasser", accepted: ["wasser"], summary: "水 (みず · mizu) = das Wasser", hint: "„Wasser“" },
+      { lang: "en-US", meta: "Ins Deutsche übersetzen · Natur", target: "star", reading: "", answer: "Stern", accepted: ["stern"], summary: "star = der Stern", hint: "„Stern“" },
       { lang: "tr-TR", meta: "Ins Deutsche übersetzen · Natur", target: "güneş", reading: "", answer: "Sonne", accepted: ["sonne"], summary: "güneş = die Sonne", hint: "„Sonne“" }
     ] : [
-      { code: "FR", lang: "fr-FR", meta: "Translate to English · People", target: "le père", reading: "", answer: "father", accepted: ["father", "the father", "dad"], summary: "le père = the father", hint: '"father"' },
+      { code: "FR", lang: "fr-FR", meta: "Translate to English · People", target: "le père", reading: "", answer: "father", accepted: ["father", "the father"], summary: "le père = the father", hint: '"father"' },
       { code: "ES", lang: "es-ES", meta: "Translate to English · Nature", target: "la luna", reading: "", answer: "moon", accepted: ["moon", "the moon"], summary: "la luna = the moon", hint: '"moon"' },
-      { code: "JA", lang: "ja-JP", meta: "Translate to English · Basics", target: "みず", reading: "mizu", answer: "water", accepted: ["water"], summary: "みず (mizu) = water", hint: '"water"' },
-      { code: "DE", lang: "de-DE", meta: "Translate to English · Sky", target: "der Stern", reading: "", answer: "star", accepted: ["star", "the star"], summary: "der Stern = the star", hint: '"star"' },
+      { code: "JA", lang: "ja-JP", meta: "Translate to English · Food", target: "水", reading: "みず · mizu", answer: "water", accepted: ["water"], summary: "水 (みず · mizu) = water", hint: '"water"' },
+      { code: "DE", lang: "de-DE", meta: "Translate to English · Nature", target: "der Stern", reading: "", answer: "star", accepted: ["star", "the star"], summary: "der Stern = the star", hint: '"star"' },
       { code: "TR", lang: "tr-TR", meta: "Translate to English · Nature", target: "güneş", reading: "", answer: "sun", accepted: ["sun", "the sun"], summary: "güneş = sun", hint: '"sun"' }
     ];
 
@@ -334,10 +374,14 @@
   const reelToggle = document.getElementById("reel-toggle-btn");
   const reelStatus = document.getElementById("reel-status-text");
   if (reelToggle && reelStatus) {
+    const defaultStatus = reelStatus.textContent;
     reelToggle.addEventListener("click", () => {
       const isOn = reelToggle.classList.toggle("on");
-      reelToggle.textContent = isOn ? (DE ? "An" : "Enabled") : (DE ? "Aus" : "Off");
-      reelStatus.textContent = isOn ? (DE ? "Fragt 1 Wort nach jeweils 5 Reels" : "Asks 1 word every 5 Reels") : (DE ? "Reel-Bremse pausiert" : "Reel brake paused");
+      reelToggle.setAttribute("aria-pressed", String(isOn));
+      reelToggle.textContent = isOn ? (DE ? "An" : "On") : (DE ? "Aus" : "Off");
+      reelStatus.textContent = isOn
+        ? (DE ? "1 Wort nach 10 Videos (3–30)" : "1 word after 10 videos (3–30)")
+        : defaultStatus;
     });
   }
 
@@ -345,17 +389,8 @@
   if (dndToggle) {
     dndToggle.addEventListener("click", () => {
       const isOn = dndToggle.classList.toggle("on");
-      dndToggle.textContent = isOn ? (DE ? "Beachtet" : "Respected") : (DE ? "Ignoriert" : "Ignored");
-    });
-  }
-
-  const cooldownSlider = document.getElementById("cooldown-slider");
-  const cooldownVal = document.getElementById("cooldown-val");
-  if (cooldownSlider && cooldownVal) {
-    cooldownSlider.addEventListener("input", () => {
-      cooldownVal.textContent = DE
-        ? `Höchstens 1 Wort alle ${cooldownSlider.value} Min.`
-        : `At most 1 word every ${cooldownSlider.value} min`;
+      dndToggle.setAttribute("aria-pressed", String(isOn));
+      dndToggle.textContent = isOn ? (DE ? "An" : "On") : (DE ? "Aus" : "Off");
     });
   }
 
@@ -363,11 +398,13 @@
   const dailyStartBtn = document.getElementById("daily-start-btn");
   const appTabButtons = document.querySelectorAll(".app-tabbar .tab-item");
   const appTabMessages = {
-    Learn: DE ? "Tages-Challenge, 6 Wortspiele und 40 Minikurse" : "Daily challenge, 6 word games & 40 mini courses",
-    Discover: DE ? "Tea-Folgen und Wikipedia-Nachrichten mit Wörtern in deiner Zielsprache lesen" : "Read 'Tea' episodes & Wikipedia news with swapped words",
-    Home: DE ? "Tägliche Serie, Rangabzeichen und fällige Wiederholungen" : "Daily streak, rank badge & quick review status",
-    Me: DE ? "60+ Erfolge, Otter-Outfits und gemeinsame Serie mit deinem Lernpartner" : "60+ achievements, otter outfits & shared partner streak",
-    Settings: DE ? "Abstand zwischen Fragen, Nicht-stören-Modus und Notfall-PIN" : "Cooldown timer, Do Not Disturb & emergency PIN"
+    Learn: DE ? "Tages-Challenge, Wörter des Tages und Minikurse" : "Daily challenge, today’s words and mini courses",
+    Discover: DE
+      ? "Spiele, Tea und KI-Chat. Wikipedia-News ab 50 bekannten Wörtern: ein Artikel am Tag gratis, einer mit Video, mit Pro unbegrenzt."
+      : "Games, Tea and AI chat. Wikipedia news from 50 known words: one article a day free, one more with a video, unlimited with Pro.",
+    Home: DE ? "Serie, Rang und Fortschritt bei neuen Wörtern" : "Streak, rank and today’s new-word progress",
+    Me: DE ? "Fortschritt, Erfolge, Outfits und Freunde" : "Progress, achievements, outfits and friends",
+    Settings: DE ? "Nicht-stören-Modus, Notfall-PIN und Reel-Bremse" : "Do Not Disturb, emergency PIN and reel brake"
   };
 
   appTabButtons.forEach((btn) => {
@@ -388,22 +425,30 @@
   const fsrsResult = document.getElementById("fsrs-result");
   fsrsPills.forEach((pill) => {
     pill.addEventListener("click", () => {
-      fsrsPills.forEach((p) => p.classList.remove("active"));
-      pill.classList.add("active");
-      if (fsrsResult) fsrsResult.textContent = `${DE ? "Nächste Wiederholung" : "Next review"}: ${pill.dataset.interval}`;
+      fsrsPills.forEach((button) => {
+        const selected = button === pill;
+        button.classList.toggle("active", selected);
+        button.setAttribute("aria-pressed", String(selected));
+      });
+      if (fsrsResult) {
+        const hard = pill.dataset.rating === "hard";
+        fsrsResult.textContent = DE
+          ? (hard ? "Mit „Schwer“ kann der nächste Termin früher liegen" : "Mit „Leicht“ kann der nächste Termin später liegen")
+          : (hard ? "Hard can bring the next review sooner" : "Easy can move the next review later");
+      }
     });
   });
 
   const importTabs = document.querySelectorAll(".import-tab-btn");
   const importPreview = document.getElementById("import-preview-code");
   const importSamples = DE ? {
-    csv: "front,back,example\nla fenêtre,das Fenster,Ouvre la fenêtre s'il te plaît.\nle matin,der Morgen,Le matin est calme.",
-    apkg: "Importierter Stapel: Französischer Grundwortschatz 2.000 (.apkg)\n412 Wörter zugeordnet · Bewertung für Wiederholungen übernommen · Bereit für den Sperrbildschirm",
-    paste: "Aus Quizlet oder einer Tabelle einfügen:\nbonjour\thallo\nmerci\tdanke\nau revoir\tauf Wiedersehen"
+    csv: "adaptateur USB-C,USB-C-Adapter,Objects",
+    apkg: "Aus Anki (.apkg) importiert: Wörter und Übersetzungen · Doppelte Einträge übersprungen · Neue Wörter folgen dem Wiederholungsplan von VocLock",
+    paste: "gourde isotherme\tThermotrinkflasche\ncâble de recharge\tLadekabel"
   } : {
-    csv: "front,back,example\nla fenêtre,the window,Ouvre la fenêtre s'il te plaît.\nle matin,the morning,Le matin est calme.",
-    apkg: "Imported deck: French Core 2000 (.apkg)\nMatched 412 words · Preserved review ease · Ready on lock screen",
-    paste: "Quizlet / Spreadsheet paste:\nbonjour\thello\nmerci\tthank you\nau revoir\tgoodbye"
+    csv: "adaptateur USB-C,USB-C adapter,Objects",
+    apkg: "Imported from Anki (.apkg): words and translations · duplicates skipped · new words use VocLock’s review schedule",
+    paste: "gourde isotherme\tinsulated water bottle\ncâble de recharge\tcharging cable"
   };
 
   importTabs.forEach((btn) => {
@@ -434,9 +479,9 @@
         script: DE ? "Lateinisches Alphabet" : "Latin alphabet",
         note: DE ? "Ein A1- und ein A2-Minikurs mit Grammatik. Zu jedem Wort gibt es einen Beispielsatz." : "An A1 and an A2 mini course with grammar. Example sentences for every word.",
         cards: [
-          { w: "le père", t: "the father", tDe: "der Vater", ex: "Mon père prépare le thé." },
-          { w: "la fenêtre", t: "the window", tDe: "das Fenster", ex: "Ouvre la fenêtre ce matin." },
-          { w: "toujours", t: "always", tDe: "immer", ex: "Elle arrive toujours à l'heure." }
+          { w: "le père", t: "father", tDe: "Vater", ex: "Mon père est gentil." },
+          { w: "la fenêtre", t: "window", tDe: "Fenster", ex: "Regarde par la fenêtre." },
+          { w: "toujours", t: "always", tDe: "immer", ex: "Je t'aime toujours." }
         ]
       },
       es: {
@@ -448,9 +493,9 @@
         script: DE ? "Lateinisches Alphabet" : "Latin alphabet",
         note: DE ? "Für Gespräche im Alltag, mit häufigen Verben und Grammatik auf A1- und A2-Niveau." : "Covers everyday conversation, high-frequency verbs, and A1–A2 grammar.",
         cards: [
-          { w: "la luna", t: "the moon", tDe: "der Mond", ex: "La luna brilla esta noche." },
-          { w: "el camino", t: "the path", tDe: "der Weg", ex: "Este camino va al mar." },
-          { w: "ahora", t: "now", tDe: "jetzt", ex: "Empezamos ahora mismo." }
+          { w: "la luna", t: "moon", tDe: "Mond", ex: "Esta noche hay luna llena." },
+          { w: "el camino", t: "way", tDe: "Weg", ex: "Este es el camino." },
+          { w: "ahora", t: "now", tDe: "jetzt", ex: "Ahora no." }
         ]
       },
       it: {
@@ -462,9 +507,9 @@
         script: DE ? "Lateinisches Alphabet" : "Latin alphabet",
         note: DE ? "Alltagswortschatz nach Häufigkeit sortiert, mit natürlichen Beispielsätzen." : "Frequency-ordered everyday vocabulary with natural example sentences.",
         cards: [
-          { w: "il caffè", t: "the coffee", tDe: "der Kaffee", ex: "Prendo un caffè al bar." },
-          { w: "la piazza", t: "the square", tDe: "der Platz", ex: "Ci vediamo in piazza." },
-          { w: "subito", t: "right away", tDe: "sofort", ex: "Arrivo subito." }
+          { w: "il caffè", t: "coffee", tDe: "Kaffee", ex: "Il caffè è troppo caldo." },
+          { w: "la piazza", t: "square", tDe: "Platz", ex: "Ci vediamo in piazza." },
+          { w: "subito", t: "immediately", tDe: "sofort", ex: "Vieni subito!" }
         ]
       },
       pt: {
@@ -476,9 +521,9 @@
         script: DE ? "Lateinisches Alphabet" : "Latin alphabet",
         note: DE ? "Brasilianischer Wortschatz mit Aussprache zum täglichen Wiederholen." : "Brazilian Portuguese vocabulary and audio tailored for daily recall.",
         cards: [
-          { w: "a água", t: "the water", tDe: "das Wasser", ex: "A água está bem gelada." },
-          { w: "o livro", t: "the book", tDe: "das Buch", ex: "Estou lendo um livro novo." },
-          { w: "hoje", t: "today", tDe: "heute", ex: "Hoje o dia está lindo." }
+          { w: "a água", t: "water", tDe: "Wasser", ex: "Um copo de água, por favor." },
+          { w: "o livro", t: "book", tDe: "Buch", ex: "Estou lendo um livro ótimo." },
+          { w: "hoje", t: "today", tDe: "heute", ex: "Hoje é segunda-feira." }
         ]
       },
       tr: {
@@ -490,8 +535,8 @@
         script: DE ? "Türkisches lateinisches Alphabet" : "Turkish Latin script",
         note: DE ? "Mit Minikursen zur Vokalharmonie und häufigen Wortstämmen aus dem Alltag." : "Includes vowel-harmony friendly mini courses and common everyday roots.",
         cards: [
-          { w: "güneş", t: "sun", tDe: "Sonne", ex: "Güneş erken doğuyor." },
-          { w: "çay", t: "tea", tDe: "Tee", ex: "Bir bardak çay ister misin?" },
+          { w: "güneş", t: "sun", tDe: "Sonne", ex: "Güneş çok parlak." },
+          { w: "çay", t: "tea", tDe: "Tee", ex: "Çay çok sıcak." },
           { w: "yarın", t: "tomorrow", tDe: "morgen", ex: "Yarın görüşürüz." }
         ]
       },
@@ -506,7 +551,7 @@
         cards: [
           { w: "книга", t: "book", tDe: "Buch", ex: "Эта книга очень интересная." },
           { w: "утро", t: "morning", tDe: "Morgen", ex: "Доброе утро!" },
-          { w: "вода", t: "water", tDe: "Wasser", ex: "Можно стакан воды?" }
+          { w: "вода", t: "water", tDe: "Wasser", ex: "Стакан воды, пожалуйста." }
         ]
       },
       ja: {
@@ -518,9 +563,9 @@
         script: DE ? "Hiragana, Katakana und Kanji" : "Hiragana, Katakana & Kanji",
         note: DE ? "Du beginnst mit Hiragana und Katakana. Für Kanji gibt es eigene Übungen." : "Starts with hiragana & katakana and includes dedicated kanji practice.",
         cards: [
-          { w: "みず (mizu)", t: "water", tDe: "Wasser", ex: "つめたい みず を ください。" },
-          { w: "ねこ (neko)", t: "cat", tDe: "Katze", ex: "その ねこ は ちいさい です。" },
-          { w: "あした (ashita)", t: "tomorrow", tDe: "morgen", ex: "あした また あいましょう。" }
+          { w: "水", reading: "みず · mizu", t: "water", tDe: "Wasser", ex: "水をください。" },
+          { w: "猫", reading: "ねこ · neko", t: "cat", tDe: "Katze", ex: "猫が好きです。" },
+          { w: "明日", reading: "あした · ashita", t: "tomorrow", tDe: "morgen", ex: "明日は休みです。" }
         ]
       },
       ko: {
@@ -532,9 +577,9 @@
         script: DE ? "Beginnt mit Hangul" : "Starts with Hangul",
         note: DE ? "Du lernst zuerst Hangul und seine Silbenblöcke, danach die Wörter nach Häufigkeit." : "Begins with Hangul reading & syllable blocks, then frequency-ranked words.",
         cards: [
-          { w: "별 (byeol)", t: "star", tDe: "Stern", ex: "밤하늘에 별이 많아요." },
-          { w: "물 (mul)", t: "water", tDe: "Wasser", ex: "물 한 잔 주세요." },
-          { w: "오늘 (oneul)", t: "today", tDe: "heute", ex: "오늘 날씨가 좋아요." }
+          { w: "별", reading: "byeol", t: "star", tDe: "Stern", ex: "밤하늘에 별이 많아요." },
+          { w: "물", reading: "mul", t: "water", tDe: "Wasser", ex: "물 한 잔 주세요." },
+          { w: "오늘", reading: "oneul", t: "today", tDe: "heute", ex: "오늘은 월요일이에요." }
         ]
       },
       zh: {
@@ -546,9 +591,9 @@
         script: DE ? "Schriftzeichen und Pinyin" : "Hanzi + Pinyin",
         note: DE ? "Zu den Schriftzeichen siehst du Pinyin. Hör dir an, wie die Töne ausgesprochen werden." : "Shows pinyin alongside characters with tonal pronunciation audio.",
         cards: [
-          { w: "茶 (chá)", t: "tea", tDe: "Tee", ex: "我喜欢喝热茶。" },
-          { w: "书 (shū)", t: "book", tDe: "Buch", ex: "桌子上有一本书。" },
-          { w: "明天 (míngtiān)", t: "tomorrow", tDe: "morgen", ex: "我们明天见。" }
+          { w: "茶", reading: "chá", t: "tea", tDe: "Tee", ex: "你想喝茶还是咖啡？" },
+          { w: "书", reading: "shū", t: "book", tDe: "Buch", ex: "我想买一本中文书。" },
+          { w: "明天", reading: "míngtiān", t: "tomorrow", tDe: "morgen", ex: "你明天有空吗？" }
         ]
       },
       en: {
@@ -560,9 +605,9 @@
         script: DE ? "Für Deutschsprachige" : "For German speakers",
         note: DE ? "Grundkurs mit über 2.000 Wörtern, auf Deutsch erklärt und mit Beispielsätzen." : "Core course of 2,000+ words explained in German with example sentences.",
         cards: [
-          { w: "daylight", t: "Tageslicht", ex: "We walked home in daylight." },
-          { w: "reliable", t: "zuverlässig", ex: "She is a reliable friend." },
-          { w: "meanwhile", t: "inzwischen", ex: "Meanwhile, the tea cooled down." }
+          { w: "daylight", tDe: "Tageslicht", ex: "I like working in daylight." },
+          { w: "friendly", tDe: "freundlich", ex: "The people here are friendly." },
+          { w: "meanwhile", tDe: "inzwischen", ex: "Dad cooks the rice. Meanwhile, I cut the vegetables." }
         ]
       },
       de: {
@@ -574,9 +619,9 @@
         script: DE ? "Mit Artikeln" : "Articles included",
         note: DE ? "Zu jedem Substantiv gibt es den Artikel (der, die, das) und alltagstaugliche Beispielsätze." : "Every noun comes with der/die/das and practical everyday sentences.",
         cards: [
-          { w: "der Stern", t: "the star", tDe: "der Stern", ex: "Ein heller Stern steht am Himmel." },
-          { w: "die Zeit", t: "the time", tDe: "die Zeit", ex: "Wir haben heute genug Zeit." },
-          { w: "ruhig", t: "calm / quiet", tDe: "still / leise", ex: "Der Morgen ist ruhig." }
+          { w: "der Stern", t: "star", ex: "Heute sieht man viele Sterne." },
+          { w: "die Zeit", t: "time", ex: "Ich habe keine Zeit." },
+          { w: "ruhig", t: "quiet", ex: "Das Dorf ist sehr ruhig." }
         ]
       }
     };
@@ -589,6 +634,9 @@
     const inspSpeakBtn = document.getElementById("insp-speak-btn");
     const inspDeck = document.getElementById("insp-deck");
     const speakerToggleBtns = document.querySelectorAll(".speaker-toggle-btn");
+    const explorerTiles = Array.from(explorerGrid.querySelectorAll(".explorer-tile"));
+    const langFilters = document.querySelectorAll(".lang-filter");
+    let currentFilter = "all";
     let currentLangKey = "fr";
     let baseSpeaker = DE ? "de" : "en";
 
@@ -597,14 +645,14 @@
       if (!data) return;
       currentLangKey = key;
 
-      explorerGrid.querySelectorAll(".explorer-tile").forEach((t) => {
+      explorerTiles.forEach((t) => {
         t.classList.toggle("active", t.dataset.langId === key);
       });
 
       if (inspGreeting) inspGreeting.textContent = data.greeting;
       if (inspName) {
         const suffix = baseSpeaker === "de"
-          ? "Für Deutschsprachige erklärt"
+          ? (DE ? "Für Deutschsprachige erklärt" : "Explained in German")
           : (DE ? "Für Englischsprachige erklärt" : "Explained in English");
         inspName.textContent = `${data.name} · ${suffix}`;
       }
@@ -620,11 +668,11 @@
           btn.className = "mini-flashcard";
           btn.innerHTML = `
             <div class="fc-front">
-              <span>${c.w}</span>
+              <span>${c.w}${c.reading ? " (" + c.reading + ")" : ""}</span>
               <span class="fc-hint">${DE ? "Aufdecken und anhören" : "Reveal &amp; hear"}</span>
             </div>
             <div class="fc-back" hidden>
-              <strong>${DE && baseSpeaker === "de" ? c.tDe || c.t : c.t}</strong> — ${c.ex}
+              <strong>${baseSpeaker === "de" ? c.tDe : c.t}</strong> — ${c.ex}
             </div>
           `;
           btn.addEventListener("click", () => {
@@ -633,20 +681,22 @@
             const isHidden = back.hasAttribute("hidden");
             if (isHidden) {
               back.removeAttribute("hidden");
-              hint.textContent = DE ? "Wird vorgelesen" : "Playing audio";
+              hint.textContent = DE ? "Zum Einklappen antippen" : "Tap to hide";
+              speakText(c.w, data.speechLang, btn);
             } else {
               back.setAttribute("hidden", "");
               hint.textContent = DE ? "Aufdecken und anhören" : "Reveal & hear";
             }
-            speakText(c.w.replace(/\s*\([^)]*\)/g, ""), data.speechLang);
           });
           inspDeck.appendChild(btn);
         });
       }
     }
 
-    explorerGrid.querySelectorAll(".explorer-tile").forEach((tile) => {
-      tile.addEventListener("click", () => renderInspector(tile.dataset.langId));
+    explorerTiles.forEach((tile) => {
+      tile.addEventListener("click", () => {
+        if (!tile.hidden) renderInspector(tile.dataset.langId);
+      });
     });
 
     if (inspSpeakBtn) {
@@ -656,29 +706,38 @@
       });
     }
 
-    document.querySelectorAll(".lang-filter").forEach((pill) => {
+    function refreshExplorer() {
+      explorerTiles.forEach((tile) => {
+        const canLearn = !tile.dataset.baseSpeaker || tile.dataset.baseSpeaker === baseSpeaker;
+        const matchesFilter = currentFilter === "all" || currentFilter === tile.dataset.group;
+        tile.hidden = !canLearn || !matchesFilter;
+      });
+      const available = explorerTiles.filter((tile) => !tile.hidden);
+      const selected = available.find((tile) => tile.dataset.langId === currentLangKey) || available[0];
+      if (selected) renderInspector(selected.dataset.langId);
+    }
+
+    langFilters.forEach((pill) => {
       pill.addEventListener("click", () => {
-        document.querySelectorAll(".lang-filter").forEach((p) => p.classList.remove("active"));
-        pill.classList.add("active");
-        const filter = pill.dataset.filter;
-        explorerGrid.querySelectorAll(".explorer-tile").forEach((tile) => {
-          const group = tile.dataset.group;
-          const visible = filter === "all" || filter === group;
-          tile.hidden = !visible;
-        });
+        langFilters.forEach((p) => p.classList.toggle("active", p === pill));
+        currentFilter = pill.dataset.filter;
+        refreshExplorer();
       });
     });
 
     speakerToggleBtns.forEach((btn) => {
       btn.addEventListener("click", () => {
-        speakerToggleBtns.forEach((b) => b.classList.remove("active"));
-        btn.classList.add("active");
-        baseSpeaker = btn.dataset.speaker || "en";
-        renderInspector(currentLangKey);
+        speakerToggleBtns.forEach((b) => {
+          const selected = b === btn;
+          b.classList.toggle("active", selected);
+          b.setAttribute("aria-pressed", String(selected));
+        });
+        baseSpeaker = btn.dataset.speaker;
+        refreshExplorer();
       });
     });
 
-    renderInspector("fr");
+    refreshExplorer();
   }
 
   /* ========================================================================

@@ -101,7 +101,7 @@
     <section class="page-intro container stage-enter">
       <div>
         <h1>Elf Sprachen. Sag Hallo.</h1>
-        <p>Jeder Kurs hat die 2.000–2.800 häufigsten Wörter seiner Sprache, jeweils mit Beispielsatz, für Deutsch- und Englischsprachige.</p>
+        <p>Jeder Kurs hat die 2.000–2.800 häufigsten Wörter seiner Sprache, jeweils mit Beispielsatz. Neun Sprachen mit Erklärungen auf Deutsch oder Englisch, dazu Englisch für Deutschsprachige und Deutsch für Englischsprachige.</p>
       </div>
       <a href="https://play.google.com/store/apps/details?id=com.voclock" class="btn-primary" target="_blank" rel="noopener">Kurs starten</a>
     </section>
@@ -109,14 +109,14 @@
     <section class="container stage-enter" style="--stagger: 80ms;">
       <div class="lang-toolbar">
         <div class="filter-group" role="group" aria-label="Sprachen filtern">
-          <button type="button" class="filter-pill lang-filter active" data-filter="all">Alle 11</button>
+          <button type="button" class="filter-pill lang-filter active" data-filter="all">Alle</button>
           <button type="button" class="filter-pill lang-filter" data-filter="european">Lateinische Schrift</button>
           <button type="button" class="filter-pill lang-filter" data-filter="scripts">Neue Schriften und Pinyin</button>
         </div>
 
         <div class="filter-group" role="group" aria-label="Sprache der Kurserklärungen">
-          <button type="button" class="filter-pill speaker-toggle-btn" data-speaker="en">Für Englischsprachige</button>
-          <button type="button" class="filter-pill speaker-toggle-btn active" data-speaker="de">Für Deutschsprachige</button>
+          <button type="button" class="filter-pill speaker-toggle-btn" data-speaker="en" aria-pressed="false">Für Englischsprachige</button>
+          <button type="button" class="filter-pill speaker-toggle-btn active" data-speaker="de" aria-pressed="true">Für Deutschsprachige</button>
         </div>
       </div>
 
@@ -149,10 +149,10 @@
           <button type="button" class="explorer-tile" data-lang-id="zh" data-group="scripts" data-spotlight>
             <b lang="zh-Hans">你好</b><span>Chinesisch (Mandarin)</span>
           </button>
-          <button type="button" class="explorer-tile" data-lang-id="en" data-group="european" data-spotlight>
+          <button type="button" class="explorer-tile" data-lang-id="en" data-group="european" data-base-speaker="de" data-spotlight>
             <b>Hello</b><span>Englisch</span>
           </button>
-          <button type="button" class="explorer-tile" data-lang-id="de" data-group="european" data-spotlight>
+          <button type="button" class="explorer-tile" data-lang-id="de" data-group="european" data-base-speaker="en" data-spotlight hidden>
             <b>Hallo</b><span>Deutsch</span>
           </button>
         </div>
@@ -169,7 +169,7 @@
                 <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
                 <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
               </svg>
-              <span>Anhören</span>
+              <span>Hörbeispiel abspielen</span>
             </button>
           </div>
 
@@ -186,7 +186,7 @@
 
           <p class="insp-note" id="insp-note"></p>
 
-          <div class="deck-label">Lernkarten vom Sperrbildschirm (zum Aufdecken und Anhören antippen)</div>
+          <div class="deck-label">Wortschatz-Vorschau. Tippe auf eine Karte, um die Übersetzung zu sehen und das Wort zu hören.</div>
           <div class="flashcard-list" id="insp-deck"></div>
         </aside>
       </div>

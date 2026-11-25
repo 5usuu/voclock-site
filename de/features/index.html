@@ -120,9 +120,9 @@
           <h2>Du behältst die Kontrolle.</h2>
           <p>VocLock zeigt höchstens alle zehn Minuten ein Wort und bleibt im Nicht-stören-Modus ruhig. Wenn du es eilig hast, entsperrst du dein Handy sofort mit deiner Notfall-PIN.</p>
           <ul class="feature-list">
-            <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>Reel-Bremse (Android):</strong> Nach ein paar TikToks, Reels oder Shorts fragt VocLock ein Wort, bevor du weiterscrollst.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>Reel-Bremse (Android):</strong> In erkannten Instagram-Reels- und YouTube-Shorts-Playern fragt VocLock ein Wort ab, bevor du weiterscrollst.</span></li>
             <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>Notfall-PIN:</strong> Damit kommst du immer sofort rein. Die Wörter am Sperrbildschirm kannst du jederzeit abschalten.</span></li>
-            <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>Ein Bild zum Wort:</strong> Hunderte Alltagswörter haben ein kleines, extra für VocLock gezeichnetes Bild, damit sich das Wort mit der Sache verbindet.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span>Bilder zu Hunderten Alltagswörtern.</span></li>
           </ul>
         </div>
 
@@ -130,27 +130,25 @@
           <div class="console-card">
             <div class="console-row">
               <div>
-                <strong>Abstand zwischen Sperrbildschirmfragen</strong>
-                <span id="cooldown-val">Höchstens 1 Wort alle 10 Min.</span>
+                <strong>Fragen beim Entsperren: mindestens 10 Minuten Abstand</strong>
               </div>
-              <input type="range" id="cooldown-slider" class="cooldown-range" min="5" max="30" step="5" value="10" style="max-width: 120px;" aria-label="Abstand zwischen den Fragen in Minuten" />
             </div>
             <div class="console-row">
               <div>
                 <strong>Nicht-stören-Modus</strong>
-                <span>Bleibt während Fokus- und Schlafzeiten ruhig</span>
+                <span>Bleibt bei „Nicht stören“ ruhig (standardmäßig an)</span>
               </div>
-              <button type="button" class="switch-btn on" id="dnd-toggle-btn">Beachtet</button>
+              <button type="button" class="switch-btn on" id="dnd-toggle-btn" aria-pressed="true">An</button>
             </div>
             <div class="console-row">
               <div>
                 <strong>Reel-Bremse für Android</strong>
-                <span id="reel-status-text">Fragt 1 Wort nach jeweils 5 Reels</span>
+                <span id="reel-status-text">Standardmäßig aus · 1 Wort nach 10 Videos (3–30)</span>
               </div>
-              <button type="button" class="switch-btn on" id="reel-toggle-btn">An</button>
+              <button type="button" class="switch-btn" id="reel-toggle-btn" aria-pressed="false">Aus</button>
             </div>
             <div class="reel-preview-box">
-              <span>TikTok / Reels / Shorts</span>
+              <span>Instagram Reels / YouTube Shorts</span>
               <span class="reel-badge">Kurz pausieren und 1 Wort abrufen</span>
             </div>
           </div>
@@ -163,9 +161,9 @@
           <h2>Eine ganze App für die Minuten, die du hast.</h2>
           <p>Jeden Tag eine kurze Challenge, freies Üben, wann du willst, und ein Wochenquiz mit Beispielsätzen, das zeigt, was wirklich hängen geblieben ist. Lies „Tea“, eine Chat-Geschichte mit jeden Tag einer neuen Folge. Mit Pro kannst du auch mit dem KI-Otter in deiner neuen Sprache schreiben.</p>
           <ul class="feature-list">
-            <li><span class="feature-dot" aria-hidden="true">✓</span><span>Sechs Wortspiele in drei Stufen, mit Wörtern, die du schon kennst.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span>Sechs Spiele mit Wörtern, denen du schon begegnet bist. Die Schwierigkeit passt Paare finden, Kreuzworträtsel, Wortsuche und Satzbau an.</span></li>
             <li><span class="feature-dot" aria-hidden="true">✓</span><span>20 A1- und 20 A2-Minikurse mit Grammatik, Schritt für Schritt.</span></li>
-            <li><span class="feature-dot" aria-hidden="true">✓</span><span>Aktuelle Nachrichten von Wikipedia, in denen die Wörter, die du kennst, schon in der neuen Sprache stehen.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span>Wikipedia-Artikel mit vertrauten Wörtern in deiner Lernsprache. News öffnen ab 50 bekannten Wörtern. Lies kostenlos einen Artikel am Tag, einen weiteren mit Video oder beliebig viele mit Pro.</span></li>
           </ul>
         </div>
 
@@ -209,7 +207,7 @@
               <div class="app-tabbar" role="tablist" aria-label="Tabs der App-Vorschau">
                 <button type="button" class="tab-item active" data-tab="Learn">Lernen</button>
                 <button type="button" class="tab-item" data-tab="Discover">Entdecken</button>
-                <button type="button" class="tab-item" data-tab="Home">Startseite</button>
+                <button type="button" class="tab-item" data-tab="Home">Start</button>
                 <button type="button" class="tab-item" data-tab="Me">Ich</button>
                 <button type="button" class="tab-item" data-tab="Settings">Einstellungen</button>
               </div>
@@ -226,7 +224,7 @@
           <ul class="feature-list">
             <li><span class="feature-dot" aria-hidden="true">✓</span><span>Sag der App, ob eine Antwort leicht oder schwer war. Der nächste Termin richtet sich automatisch danach.</span></li>
             <li><span class="feature-dot" aria-hidden="true">✓</span><span>Ein kleiner Otter mit einer Tasse Tee feuert dich an, mit Outfits zum Anziehen.</span></li>
-            <li><span class="feature-dot" aria-hidden="true">✓</span><span>Freunde und ein Lernpartner für eine gemeinsame tägliche Serie.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span>Für jede Freundschaft gibt es eine gemeinsame Serie. Du kannst auch Erinnerungen schicken.</span></li>
           </ul>
         </div>
 
@@ -264,12 +262,11 @@
               <div class="fsrs-demo">
                 <div class="fsrs-head">
                   <span>Wähle eine FSRS-Bewertung</span>
-                  <strong id="fsrs-result">Nächste Wiederholung: in 3 Tagen</strong>
+                  <strong id="fsrs-result">Der nächste Termin hängt vom Lernverlauf des Worts ab</strong>
                 </div>
                 <div class="fsrs-pills">
-                  <button type="button" class="fsrs-pill" data-interval="in 10 Minuten">Schwer · 10 Min.</button>
-                  <button type="button" class="fsrs-pill active" data-interval="in 3 Tagen">Gut · 3 Tage</button>
-                  <button type="button" class="fsrs-pill" data-interval="in 12 Tagen">Leicht · 12 Tage</button>
+                  <button type="button" class="fsrs-pill" data-rating="hard" aria-pressed="false">Schwer</button>
+                  <button type="button" class="fsrs-pill" data-rating="easy" aria-pressed="false">Leicht</button>
                 </div>
               </div>
             </div>
@@ -280,12 +277,12 @@
       <!-- Studio Panel 4: Import, Audio & Privacy -->
       <div class="studio-panel" data-panel="tools" role="tabpanel">
         <div class="studio-copy">
-          <h2>Eigene Wörter, Offline-Aussprache und Lernen ohne Tracking.</h2>
-          <p>Übernimm Wortlisten aus Quizlet, Anki oder einer Tabelle, hör dir jedes Wort mit der eingebauten Stimme deines Handys an und zeig deinen Rang oder deine Wörter auf dem Startbildschirm an.</p>
+          <h2>Eigene Wörter und Offline-Aussprache.</h2>
+          <p>Übernimm Wortlisten aus Quizlet, Anki oder einer Tabelle, hör dir Wörter mit der Stimme deines Handys an und zeig deinen Rang oder deine Wörter auf dem Startbildschirm an.</p>
           <ul class="feature-list">
             <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>Neue Schriften, Schritt für Schritt:</strong> Japanisch beginnt mit Hiragana und Katakana und hat eigene Kanji-Übungen. Russisch und Koreanisch starten mit ihren Alphabeten, und bei Chinesisch siehst du Pinyin.</span></li>
-            <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>Widgets für den Startbildschirm:</strong> Das Rang-Widget ist kostenlos. Mit Pro siehst du auch die Wörter des Tages und deinen Lernpartner auf einen Blick.</span></li>
-            <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>Datenschutz von Anfang an:</strong> Zum Lernen brauchst du kein Konto. Ein optionales Konto speichert nur deinen Fortschritt. Du kannst es <a href="/delete-account/#de" class="inline-link">jederzeit löschen</a> (<a href="/privacy/#de" class="inline-link">Datenschutzerklärung</a>).</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>Widgets für den Startbildschirm:</strong> Rang und Serie sind kostenlos. Pro ergänzt Widgets für Wörter des Tages und Freunde.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>Als Gast lernen:</strong> Zum Lernen brauchst du keine Anmeldung. Mit einem Konto synchronisiert VocLock Fortschritt, Einstellungen und Profildaten. Deine Notfall-PIN bleibt auf deinem Handy. Du kannst es <a href="/delete-account/#de" class="inline-link">jederzeit löschen</a> (<a href="/privacy/#de" class="inline-link">Datenschutzerklärung</a>).</span></li>
           </ul>
         </div>
 
@@ -302,15 +299,13 @@
               <button type="button" class="import-tab-btn" data-import="apkg">Anki .apkg</button>
               <button type="button" class="import-tab-btn" data-import="paste">Liste einfügen</button>
             </div>
-            <pre class="import-code" id="import-preview-code">front,back,example
-la fenêtre,das Fenster,Ouvre la fenêtre s'il te plaît.
-le matin,der Morgen,Le matin est calme.</pre>
+            <pre class="import-code" id="import-preview-code">adaptateur USB-C,USB-C-Adapter,Objects</pre>
             <div class="console-row">
               <div>
                 <strong>Aussprache mit der Stimme deines Handys</strong>
-                <span>Hör dir „La bibliothèque“ offline an</span>
+                <span>Für die Offline-Aussprache brauchst du eine installierte Stimme</span>
               </div>
-              <button type="button" class="switch-btn on" id="tools-audio-btn">Wort abspielen</button>
+              <button type="button" class="switch-btn on" id="tools-audio-btn">Hörbeispiel abspielen</button>
             </div>
           </div>
         </div>
@@ -320,7 +315,7 @@ le matin,der Morgen,Le matin est calme.</pre>
       <div class="tier-grid">
         <div class="tier-card" data-spotlight>
           <h3>VocLock kostenlos</h3>
-          <p>Lernen am Sperrbildschirm, 11 Kurse, Spaced Repetition (FSRS), 40 Minikurse, Spiele, das Rang-Widget und Offline-Modus. Die kostenlose Version enthält Werbung.</p>
+          <p>Lernen am Sperrbildschirm, 11 Kurse, Spaced Repetition (FSRS), A1- und A2-Minikurse (A2 einmal laden, dann offline nutzen), Spiele, das Rang-Widget und Offline-Modus. Die kostenlose Version enthält Werbung.</p>
         </div>
         <div class="tier-card pro" data-spotlight>
           <h3>VocLock Pro</h3>
