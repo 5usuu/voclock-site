@@ -24,7 +24,7 @@ Price: free with ads; VocLock Pro (optional) removes ads and adds extras. Everyo
 - Mini courses with grammar: short units; 20 A1 and 20 A2 courses, one per language pair. Japanese, Korean and Chinese courses have an optional reading aid.
 - Reading: news from Wikipedia with the words you know swapped into the language you are learning; "Tea", a chat story with one episode a day.
 - Chat partner (Pro): text with the otter in the language you are learning. It is an AI and answers at your level.
-- Motivation: an otter companion with outfits, daily streaks, ranks with an exam for each rank, more than 50 achievements.
+- Motivation: an otter companion with outfits, daily streaks, ranks with an exam for each rank, more than 60 achievements.
 - Social: friends who see each other's progress; one learning partner with a shared streak and nudges.
 - Widgets (Pro): today's words, streak, rank and partner on the home screen.
 - Offline: learning needs no internet.
