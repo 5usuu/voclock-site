@@ -71,7 +71,7 @@
     var form = document.getElementById("try"), field = document.getElementById("try-answer");
     if (!form || !field) return;
     var done = form.querySelector(".try-done"), note = document.getElementById("try-note");
-    var defaultNote = note ? note.textContent : "", answer = "the man", shown = 0;
+    var defaultNote = note ? note.textContent : "", answer = "the father", shown = 0;
     function resetNote() {
       if (note && note.classList.contains("wrong")) {
         note.textContent = defaultNote; note.classList.remove("wrong");
@@ -81,7 +81,7 @@
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       var v = field.value.trim().toLowerCase().replace(/\s+/g, " ");
-      if (v === answer || v === "man" || v === "a man") {
+      if (v === answer || v === "father" || v === "a father" || v === "dad" || v === "the dad") {
         resetNote();
         done.hidden = false; field.blur();
         done.querySelector(".try-again").focus({ preventScroll: true });
