@@ -128,7 +128,7 @@
 
   // Footer link to change the choice later.
   function footerLink() {
-    var foot = document.querySelector("footer .links") || document.querySelector("footer");
+    var foot = document.querySelector("footer .links, footer .footer-links") || document.querySelector("footer");
     if (!foot) return;
     var a = document.createElement("a");
     a.href = "#"; a.textContent = T.settings;

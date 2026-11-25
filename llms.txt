@@ -45,6 +45,8 @@ VocLock brings words to the moment you unlock your phone, so no study time has t
 ## Pages
 
 - [Home](https://littlelockstudio.app/): what the app does
+- [Features](https://littlelockstudio.app/features/): everything the app does, by area
+- [Languages](https://littlelockstudio.app/languages/): the eleven courses with sample words
 - [Compare](https://littlelockstudio.app/compare/): VocLock, Duolingo and Anki side by side
 - [Privacy policy](https://littlelockstudio.app/privacy/)
 - [Terms of use](https://littlelockstudio.app/terms/)

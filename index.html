@@ -1,31 +1,31 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; connect-src https://voclock-chat.voclock.workers.dev https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<title>VocLock – learn new words when you unlock your phone</title>
-<meta name="description" content="VocLock asks you one word from your target language when you unlock your phone. 11 languages, FSRS spaced repetition, works offline. Free on Android.">
-<meta name="theme-color" content="#efe6d2" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0b1a2c" media="(prefers-color-scheme: dark)">
+<title>VocLock – Learn new words when you unlock your phone</title>
+<meta name="description" content="One quick word from the language you're learning, at most once every ten minutes. Your emergency PIN always gets you in, and new words stick without setting time aside.">
+<meta name="theme-color" content="#0b1a2c" id="meta-theme-color">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="VocLock">
 <meta property="og:locale" content="en_US">
-<meta property="og:locale:alternate" content="de_DE">
-<meta property="og:title" content="VocLock – learn new words when you unlock your phone">
-<meta property="og:description" content="A quick word from the language you're learning when you unlock your phone, at most one every ten minutes. French, Spanish, Japanese, Korean, Chinese and more.">
+<meta property="og:title" content="VocLock – Learn new words when you unlock your phone">
+<meta property="og:description" content="One quick word from the language you're learning, at most once every ten minutes. Your emergency PIN always gets you in, and new words stick without setting time aside.">
 <meta property="og:url" content="https://littlelockstudio.app/">
 <meta property="og:image" content="https://littlelockstudio.app/og.png?v=3">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="VocLock: learn new words when you unlock your phone. A lock screen asks for the English word for maison.">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="canonical" href="https://littlelockstudio.app/">
-<link rel="alternate" hreflang="en" href="https://littlelockstudio.app/">
-<link rel="alternate" hreflang="de" href="https://littlelockstudio.app/de/">
-<link rel="alternate" hreflang="x-default" href="https://littlelockstudio.app/">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="/">
+<meta property="og:locale:alternate" content="de_DE">
+<link rel="alternate" hreflang="en" href="/">
+<link rel="alternate" hreflang="de" href="/de/">
+<link rel="alternate" hreflang="x-default" href="/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/bricolage-grotesque-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/site.css">
 <!-- Structured data, so search engines and AI answers can tell what VocLock is. -->
 <script type="application/ld+json">
 {
@@ -65,239 +65,283 @@
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" }
 }
 </script>
-<link rel="stylesheet" href="/assets/home.css">
-<script>if(/^de\b/i.test(navigator.language||""))document.documentElement.classList.add("de-hint");</script>
+<script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('voclock-theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = saved || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+        var meta = document.getElementById('meta-theme-color');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#0b1a2c' : '#efe6d2');
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
-  <a class="langhint" href="de/" hreflang="de" lang="de" hidden>Diese Seite gibt es auch auf Deutsch →</a>
-  <header class="top">
-    <div class="wrap bar">
-      <a class="brand" href="./" aria-label="VocLock home">
-        <span class="badge" aria-hidden="true">
-          <svg viewBox="21 20.5 66 66"><path d="M36 50 54 80 72 50" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M52 38 64 27" stroke="#ffd166" stroke-width="8" stroke-linecap="round"/></svg>
+  <div class="ambient-layer" aria-hidden="true">
+    <div class="orb-primary aurora-orb"></div>
+    <div class="orb-secondary aurora-orb"></div>
+  </div>
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <div class="lang-strip">
+    <div class="container lang-strip-inner">
+      <span>Eleven languages · English &amp; German interface</span>
+      <a href="/de/" hreflang="de">Diese Seite gibt es auch auf Deutsch</a>
+    </div>
+  </div>
+
+  <header class="site-header" id="site-header">
+    <div class="nav-shell">
+      <a href="/" class="brand" aria-label="VocLock home">
+        <span class="brand-badge" aria-hidden="true">
+          <svg viewBox="21 20.5 66 66"><path d="M36 50 54 80 72 50" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"></path><path d="M52 38 64 27" stroke="#ffd166" stroke-width="8" stroke-linecap="round"></path></svg>
         </span>
         <span>VocLock</span>
       </a>
-      <nav aria-label="Main">
-        <a class="nav-sec" href="#features">Features</a>
-        <a class="nav-sec" href="#languages">Languages</a>
-        <a class="nav-sec" href="compare/">Compare</a>
-        <a class="nav-switch" href="de/" hreflang="de" lang="de" aria-label="Auf Deutsch lesen">DE</a>
-        <a class="nav-cta" href="https://play.google.com/store/apps/details?id=com.voclock" rel="noopener">Get the app</a>
+
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="/" class="nav-link active" aria-current="page">Home</a>
+        <a href="/features/" class="nav-link">Features</a>
+        <a href="/languages/" class="nav-link">Languages</a>
+        <a href="/compare/" class="nav-link">Compare</a>
       </nav>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch color theme" title="Switch light or dark theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        <a href="https://play.google.com/store/apps/details?id=com.voclock" class="nav-cta" target="_blank" rel="noopener">Get the app</a>
+        <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-drawer">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="mobile-drawer" id="mobile-drawer" hidden>
+      <div class="drawer-links">
+        <a href="/" class="drawer-link active">Home</a>
+        <a href="/features/" class="drawer-link">Features</a>
+        <a href="/languages/" class="drawer-link">Languages</a>
+        <a href="/compare/" class="drawer-link">Compare</a>
+        <a href="https://play.google.com/store/apps/details?id=com.voclock" class="drawer-link" target="_blank" rel="noopener">Get it on Google Play</a>
+      </div>
     </div>
   </header>
-  <div class="wrap">
 
-    <main id="main">
-      <div class="hero">
-        <div>
-          <span class="eyebrow">Free on Google Play</span>
-          <h1>Learn new words when you <em>unlock your phone</em>.</h1>
-          <p class="lead">One quick word from the language you're learning, at most once every ten minutes. Your emergency PIN always gets you in, and new words stick without setting time aside.</p>
-          <div class="actions">
-            <a class="soon" href="https://play.google.com/store/apps/details?id=com.voclock" rel="noopener">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4.2a1.4 1.4 0 0 1 2.1-1.2l12.4 7.8a1.4 1.4 0 0 1 0 2.4L8.1 21A1.4 1.4 0 0 1 6 19.8V4.2Z"/></svg>
-              Get it on Google Play
-            </a>
-          </div>
-          <ul class="facts">
-            <li>Free, or Pro without ads</li>
-            <li>Works offline</li>
-            <li>No account needed</li>
-          </ul>
+  <main id="main">
+    <!-- Viewport-Fit Split Hero -->
+    <section class="home-hero container">
+      <div>
+        <div class="status-pill stage-enter" style="--stagger: 0ms;">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span>Live on Google Play</span>
         </div>
 
-        <div>
-          <div class="phone">
-            <form class="screen" id="try" autocomplete="off" novalidate>
-              <img src="img/lock-screen.jpg" width="720" height="1280" fetchpriority="high" alt="VocLock's real lock screen asking to translate the French word le père (the father) to English">
-              <input class="try-field" id="try-answer" aria-label="Try it: translate le père to English" placeholder="Your answer or PIN" spellcheck="false" autocapitalize="off" enterkeyhint="go">
-              <button class="try-unlock" type="submit"><span class="sr-only">Unlock</span></button>
-              <button class="try-hint" type="button" aria-label="Need a hint?"></button>
-              <div class="try-done" role="status" aria-live="polite" hidden>
-                <span class="otter" aria-hidden="true"><img src="img/otter-cheer.svg" width="200" height="200" loading="lazy" decoding="async" alt=""><span class="check">✓</span></span>
-                <strong>Unlocked</strong>
-                <span>le père = the father</span>
-                <button class="try-again" type="button">Try again</button>
-              </div>
-            </form>
-          </div>
-          <p class="try-note" id="try-note" aria-live="polite">Try it: type the English word, or tap "Need a hint?".</p>
-        </div>
-      </div>
+        <h1 class="stage-enter" style="--stagger: 70ms;">Learn new words when you unlock your phone.</h1>
 
-      <section id="how" class="band" aria-labelledby="how-title">
-        <h2 id="how-title">How it works</h2>
-        <p class="intro">Learning a language usually needs time you don't have. VocLock uses the seconds you already spend on your phone.</p>
-        <ol class="steps">
-          <li class="card">
-            <h3>Unlock your phone</h3>
-            <p>A word from your course shows up, at most one every ten minutes and never on Do Not Disturb.</p>
-          </li>
-          <li class="card">
-            <h3>Answer in a few seconds</h3>
-            <p>Type the word, or take a letter hint. Your emergency PIN always gets you in.</p>
-          </li>
-          <li class="card">
-            <h3>It comes back at the right time</h3>
-            <p>Words you know wait longer, words you missed come back sooner, until they stick.</p>
-          </li>
-        </ol>
-      </section>
+        <p class="hero-lead stage-enter" style="--stagger: 140ms;">
+          One quick word from the language you're learning, at most once every ten minutes. Your emergency PIN always gets you in, and new words stick without setting time aside.
+        </p>
 
-      <section id="features" aria-labelledby="features-title">
-        <h2 id="features-title">Small moments, real progress</h2>
-        <p class="intro">A few new words a day, asked again until you know them, with the most common words first. <a href="compare/">How VocLock compares to Duolingo and Anki</a>.</p>
-
-        <div class="spot">
-          <div class="spot-text">
-            <p class="spot-label">Around the lock screen</p>
-            <h3>A whole app for the minutes you do have.</h3>
-            <p>A short challenge every day, free practice whenever you like, and a weekly quiz with example sentences that shows what really stuck. Read "Tea", a chat story with a new episode every day. With Pro you can also text the otter in your new language; it answers at your level (the chat partner is an AI).</p>
-            <ul class="ticks">
-              <li>Six word games in three levels, with the words you've already met</li>
-              <li>20 A1 and 20 A2 mini courses with grammar</li>
-              <li>Today's news from Wikipedia, with the words you know swapped in</li>
-            </ul>
-          </div>
-          <div class="spot-media">
-            <div class="shot"><img src="img/app-learn.jpg" width="540" height="991" loading="lazy" decoding="async" alt="VocLock's Learn screen: today's daily challenge with 5 new and 5 review words, practice, weekly quiz, vocabulary and the starter course"></div>
-          </div>
-        </div>
-
-        <div class="spot flip">
-          <div class="spot-text">
-            <p class="spot-label">Remember what you learn</p>
-            <h3>Words that stay. Progress you can see.</h3>
-            <p>Words come back at adaptive intervals (FSRS), timed to when you're about to forget them. Keep a daily streak, climb through ranks by passing a short exam for each one, and collect more than 60 achievements along the way.</p>
-            <ul class="ticks">
-              <li>Tell the app if an answer was easy or hard, and the next date follows</li>
-              <li>A little otter with a cup of tea that cheers you on, with outfits to dress it up</li>
-              <li>Friends, and one learning partner for a shared streak</li>
-            </ul>
-          </div>
-          <div class="spot-media">
-            <div class="shot"><img src="img/app-achievements.jpg" width="540" height="991" loading="lazy" decoding="async" alt="VocLock's achievements screen: 1 of 62 unlocked, with progress toward a 3-day streak, 10 words, 10 days learned and Early bird"></div>
-          </div>
-        </div>
-
-        <ul class="stats">
-          <li><b>11</b><span>languages, for English and German speakers</span></li>
-          <li><b>2,000+</b><span>most used words in every course</span></li>
-          <li><b>40</b><span>mini courses, A1 and A2</span></li>
-          <li><b>50+</b><span>achievements</span></li>
-        </ul>
-
-        <h3 class="more-title">And there's more</h3>
-        <ul class="more hl">
-          <li>
-            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
-            <h4>You stay in control</h4>
-            <p>Your emergency PIN always gets you in, and lock-screen words can be switched off any time.</p>
-          </li>
-          <li>
-            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="2.500"/><path d="m10.500 9.500 4 2.500-4 2.500z"/></svg></div>
-            <h4>Reel brake</h4>
-            <p>Optional on Android: after every few TikToks, Reels or Shorts, VocLock asks one word before you scroll on.</p>
-          </li>
-          <li>
-            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 3 2.600 5.600 6 .700-4.400 4.200 1.100 6-5.300-3-5.300 3 1.100-6L3.400 9.300l6-.700L12 3Z"/></svg></div>
-            <h4>Free, or VocLock Pro</h4>
-            <p>Learning is free, with ads. Pro removes the ads and adds more new words a day, every Tea episode, the Pro widgets, streak freezes and the chat partner. Everyone gets a free Pro test week that ends by itself.</p>
-          </li>
-        </ul>
-        <details class="more-rest" open>
-          <summary>Show more</summary>
-          <ul class="more">
-            <li>
-              <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M19 6a8 8 0 0 1 0 12"/></svg></div>
-              <h4>Hear every word</h4>
-              <p>Tap the speaker to hear how a word sounds, using your phone's built-in voice.</p>
-            </li>
-            <li>
-              <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.500" cy="9.500" r="1.800"/><path d="m4 18 5-5 3 3 3-4 5 6"/></svg></div>
-              <h4>A picture for the word</h4>
-              <p>Hundreds of everyday words come with a small picture drawn for VocLock, so the word links to the thing.</p>
-            </li>
-            <li>
-              <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 7h14M12 4v3M8 7c0 5 3 9 9 11M16 7c0 5-4 9-10 11"/></svg></div>
-              <h4>New alphabets, step by step</h4>
-              <p>Japanese starts with hiragana and katakana and has its own kanji practice. Russian and Korean begin with their alphabets, and Chinese shows pinyin.</p>
-            </li>
-            <li>
-              <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"/><path d="M12 10v6M9 13h6"/></svg></div>
-              <h4>Your own words</h4>
-              <p>Add words yourself, paste a list from Quizlet, Anki or a spreadsheet, or import CSV and Anki .apkg files.</p>
-            </li>
-            <li>
-              <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="18" height="8" rx="2"/></svg></div>
-              <h4>Home-screen widgets</h4>
-              <p>Today's words with example sentences and your learning partner at a glance (both Pro). The rank widget is free.</p>
-            </li>
-            <li>
-              <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></div>
-              <h4>Private by design</h4>
-              <p>No account needed to learn. If you make one, only your progress goes into it (plus what you share with friends), and you can <a href="delete-account/#en">delete it</a> any time. <a href="privacy/#en">Privacy policy</a>.</p>
-            </li>
-          </ul>
-        </details>
-      </section>
-
-      <section id="languages" aria-labelledby="languages-title">
-        <h2 id="languages-title">Eleven languages. Say hello.</h2>
-        <p class="intro">Each course has the 2,000 to 2,800 most used words of its language, each with an example sentence, for English and for German speakers. Japanese, Russian and Korean start with their alphabets; Chinese comes with pinyin. The app itself is in English and German.</p>
-        <ul class="hellos">
-          <li><b lang="fr">Bonjour</b><span>French</span></li>
-          <li><b lang="es">Hola</b><span>Spanish</span></li>
-          <li><b lang="it">Ciao</b><span>Italian</span></li>
-          <li><b lang="pt-BR">Olá</b><span>Portuguese (Brazil)</span></li>
-          <li><b lang="tr">Merhaba</b><span>Turkish</span></li>
-          <li><b lang="ru">Привет</b><span>Russian</span></li>
-          <li><b lang="ja">こんにちは</b><span>Japanese</span></li>
-          <li><b lang="ko">안녕하세요</b><span>Korean</span></li>
-          <li><b lang="zh-Hans">你好</b><span>Chinese (Mandarin)</span></li>
-          <li><b lang="en">Hello</b><span>English</span></li>
-          <li><b lang="de">Hallo</b><span>German</span></li>
-        </ul>
-      </section>
-
-      <section class="cta" id="download" aria-labelledby="cta-title">
-        <img class="otter" src="img/otter-cheer.svg" width="96" height="96" alt="" loading="lazy" decoding="async">
-        <h2 id="cta-title">Start learning on your lock screen</h2>
-        <p>VocLock is live on Google Play. Pick one of eleven languages and learn a few words a day without setting time aside.</p>
-        <div class="actions">
-          <a class="soon" href="https://play.google.com/store/apps/details?id=com.voclock" rel="noopener">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4.2a1.4 1.4 0 0 1 2.1-1.2l12.4 7.8a1.4 1.4 0 0 1 0 2.4L8.1 21A1.4 1.4 0 0 1 6 19.8V4.2Z"/></svg>
-            Get it on Google Play
+        <div class="hero-cta-row stage-enter" style="--stagger: 200ms;">
+          <a href="https://play.google.com/store/apps/details?id=com.voclock" class="btn-primary magnetic" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M5.5 3.6a1.4 1.4 0 0 1 2.1-.1l12 7.2a1.4 1.4 0 0 1 0 2.4l-12 7.2A1.4 1.4 0 0 1 5.5 19V3.6z" />
+            </svg>
+            <span>Get it on Google Play</span>
           </a>
+          <a href="/features/" class="btn-secondary">Explore the studio</a>
         </div>
-        <ul class="facts">
-          <li>Free, or Pro without ads</li>
-          <li>Learning works offline</li>
-          <li>Optional account: switch phones, keep your progress</li>
-        </ul>
-      </section>
-    </main>
 
-    <footer>
-      <div class="row">
-        <span>© 2026 VocLock · Said Erzhapov</span>
-        <nav class="links" aria-label="Footer">
-          <a href="compare/">Compare</a>
-          <a href="privacy/#en">Privacy policy</a>
-          <a href="delete-account/#en">Delete account</a>
-          <a href="terms/#en">Terms</a>
-          <a href="licenses/">Licenses</a>
-          <a href="impressum/" hreflang="de">Impressum</a>
-          <a href="de/" hreflang="de" lang="de">Deutsch</a>
-          <a href="mailto:support@littlelockstudio.app">support@littlelockstudio.app</a>
-        </nav>
+        <ul class="hero-facts stage-enter" style="--stagger: 260ms;">
+          <li><span class="check-mark" aria-hidden="true">✓</span><span>Free, or Pro without ads</span></li>
+          <li><span class="check-mark" aria-hidden="true">✓</span><span>Works offline</span></li>
+          <li><span class="check-mark" aria-hidden="true">✓</span><span>No account needed</span></li>
+        </ul>
+
+        <!-- Inline 3-Step Interactive Switcher (No infinite scroll band) -->
+        <div class="inline-steps stage-enter" style="--stagger: 320ms;">
+          <div class="step-pills" id="step-switcher" role="tablist" aria-label="How VocLock works">
+            <button type="button" class="step-pill active" data-step="0" role="tab" aria-selected="true"><span>01</span>Unlock</button>
+            <button type="button" class="step-pill" data-step="1" role="tab" aria-selected="false"><span>02</span>Answer</button>
+            <button type="button" class="step-pill" data-step="2" role="tab" aria-selected="false"><span>03</span>Remember</button>
+          </div>
+          <div class="step-panel" role="tabpanel">
+            <h3 id="step-panel-title">Unlock your phone</h3>
+            <p id="step-panel-desc">A word from your course shows up, at most one every ten minutes and never on Do Not Disturb.</p>
+          </div>
+        </div>
       </div>
-    </footer>
-  </div>
-<script src="/assets/home.js" defer></script>
-<script src="/assets/consent.js" defer></script>
+
+      <!-- Interactive 3D Phone Lock Screen -->
+      <div class="hero-stage stage-enter" style="--stagger: 160ms;">
+        <div class="phone-glow" aria-hidden="true"></div>
+        <div class="phone-tilt-wrap" id="hero-phone-wrap">
+          <div class="phone" id="hero-phone" role="region" aria-label="Interactive VocLock lock screen demo">
+            <div class="phone-notch" aria-hidden="true">
+              <span class="speaker-slot"></span>
+              <span class="camera-dot"></span>
+            </div>
+
+            <div class="phone-screen lock-app">
+              <div class="lock-topbar">
+                <div class="lock-brand-mini">
+                  <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <rect x="4" y="9" width="12" height="8" rx="2.5" stroke="#7fa8d1" stroke-width="1.8" />
+                    <path d="M7 9V6.5a3 3 0 0 1 6 0V9" stroke="#ffd166" stroke-width="1.8" stroke-linecap="round" />
+                  </svg>
+                  <span>VocLock</span>
+                </div>
+                <div class="lock-time" id="lock-clock">09:41</div>
+                <div class="streak-pill" id="streak-count">1 day streak</div>
+              </div>
+
+              <div class="lock-progress">
+                <div class="progress-dots" id="progress-dots" aria-hidden="true">
+                  <span class="dot done"></span>
+                  <span class="dot done"></span>
+                  <span class="dot active"></span>
+                  <span class="dot"></span>
+                  <span class="dot"></span>
+                </div>
+                <span class="progress-label" id="progress-label">Word 3 of 5 today</span>
+              </div>
+
+              <div class="lock-mascot">
+                <img class="otter-svg" src="/img/otter-cheer.svg" width="84" height="84" alt="" decoding="async">
+              </div>
+
+              <div class="word-card" id="word-card">
+                <div class="word-meta" id="word-meta">Translate to English · People</div>
+                <div class="word-target" id="word-target">le père</div>
+                <div class="word-reading" id="word-reading" hidden></div>
+                <button class="speak-btn" id="speak-btn" type="button" aria-label="Pronounce word">
+                  <span class="speak-ripple" aria-hidden="true"></span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                  </svg>
+                </button>
+              </div>
+
+              <form class="lock-form" id="lock-form" autocomplete="off">
+                <input type="text" id="lock-input" class="try-field" placeholder="Your answer or PIN" aria-label="Type translation or emergency PIN 1234" />
+                <div class="lock-actions">
+                  <button type="submit" class="unlock-btn">Unlock</button>
+                  <button type="button" class="hint-btn" id="hint-btn">Need a hint?</button>
+                </div>
+                <p class="try-feedback" id="try-feedback" aria-live="polite"></p>
+              </form>
+
+              <div class="unlocked-overlay" id="unlocked-overlay" aria-hidden="true">
+                <div class="confetti-burst" id="confetti-burst" aria-hidden="true"></div>
+                <svg class="check-draw" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+                  <circle cx="20" cy="20" r="18" fill="#3fb984" />
+                  <path class="check-path" d="M12.5 20.5L17.8 25.8L28 15" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <img class="otter-cheer-mini" src="/img/otter-cheer.svg" width="96" height="96" alt="" decoding="async">
+                <div class="unlocked-title">Unlocked</div>
+                <div class="unlocked-meaning" id="unlocked-meaning">le père = the father</div>
+                <button type="button" class="try-again-btn" id="next-word-btn">Next word</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-controls">
+          <div class="lang-chips" role="group" aria-label="Switch demo word language">
+            <button type="button" class="lang-chip active" data-word-index="0">FR</button>
+            <button type="button" class="lang-chip" data-word-index="1">ES</button>
+            <button type="button" class="lang-chip" data-word-index="2">JA</button>
+            <button type="button" class="lang-chip" data-word-index="3">DE</button>
+            <button type="button" class="lang-chip" data-word-index="4">TR</button>
+          </div>
+          <p class="try-note" id="try-note">Type <strong>"father"</strong> or PIN <code>1234</code>, or tap "Need a hint?".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Compact Bento Portal to Dedicated Pages -->
+    <section class="portal-section container" aria-label="Explore VocLock">
+      <div class="portal-grid">
+        <a href="/features/" class="portal-card featured" data-spotlight>
+          <div>
+            <div class="portal-head">
+              <span class="portal-tag">Features studio</span>
+              <span class="portal-arrow" aria-hidden="true">↗</span>
+            </div>
+            <h2>A whole app for the minutes you do have.</h2>
+            <p>Explore the lock-screen cooldown, Android Reel Brake, 6 word games, FSRS memory intervals, Tea daily story, and Anki .apkg import.</p>
+          </div>
+          <div class="mini-metrics">
+            <div class="mini-metric"><b>11</b><span>Languages</span></div>
+            <div class="mini-metric"><b>2,000+</b><span>Words each</span></div>
+            <div class="mini-metric"><b>40</b><span>Mini courses</span></div>
+            <div class="mini-metric"><b>60+</b><span>Achievements</span></div>
+          </div>
+        </a>
+
+        <a href="/languages/" class="portal-card" data-spotlight>
+          <div>
+            <div class="portal-head">
+              <span class="portal-tag">Language explorer</span>
+              <span class="portal-arrow" aria-hidden="true">↗</span>
+            </div>
+            <h2>Eleven languages. Say hello.</h2>
+            <p>Hear pronunciations and flip sample flashcards for English and German speakers.</p>
+          </div>
+          <div class="greeting-strip" aria-hidden="true">
+            <span class="greeting-pill">Bonjour</span>
+            <span class="greeting-pill">Hola</span>
+            <span class="greeting-pill">こんにちは</span>
+            <span class="greeting-pill">Привет</span>
+            <span class="greeting-pill">你好</span>
+          </div>
+        </a>
+
+        <a href="/compare/" class="portal-card" data-spotlight>
+          <div>
+            <div class="portal-head">
+              <span class="portal-tag">Honest comparison</span>
+              <span class="portal-arrow" aria-hidden="true">↗</span>
+            </div>
+            <h2>VocLock vs Duolingo &amp; Anki</h2>
+            <p>Where each tool is stronger, who VocLock is built for, and when they pair well together.</p>
+          </div>
+          <div class="compare-mini-bars" aria-hidden="true">
+            <div class="cmp-mini-row"><span>Study time needed</span><strong>Seconds per unlock</strong></div>
+            <div class="cmp-mini-row"><span>Works offline</span><strong>100% ready</strong></div>
+          </div>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© 2026 VocLock · Said Erzhapov</div>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="/features/">Features</a>
+        <a href="/languages/">Languages</a>
+        <a href="/compare/">Compare</a>
+        <a href="/privacy/#en">Privacy policy</a>
+        <a href="/terms/#en">Terms</a>
+        <a href="/impressum/">Impressum</a>
+        <a href="mailto:support@littlelockstudio.app">support@littlelockstudio.app</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="/assets/site.js" defer></script>
+  <script src="/assets/consent.js" defer></script>
 </body>
 </html>

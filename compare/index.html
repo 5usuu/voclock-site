@@ -1,176 +1,272 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; connect-src https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; connect-src https://voclock-chat.voclock.workers.dev https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<link rel="icon" href="../favicon.svg" type="image/svg+xml">
-<link rel="canonical" href="https://littlelockstudio.app/compare/">
 <title>VocLock compared to Duolingo and Anki</title>
 <meta name="description" content="An honest comparison: what VocLock does differently from Duolingo and Anki, where each one is stronger, and who VocLock is for.">
-<style>
-  /* Headline font, served from this site (SIL Open Font License, see /licenses/). */
-  @font-face { font-family: "Bricolage Grotesque"; src: url("/fonts/bricolage-grotesque-latin-wght.woff2") format("woff2"); font-weight: 200 800; font-style: normal; font-display: swap; }
-  /* Same look as the terms page: one readable column, an "in short" panel, then sections and one table. */
-  :root {
-    --bg: #efe6d2;
-    --surface: #f7f1e3;
-    --fg: #0e2a47;
-    --muted: #4a5a6a;
-    --line: #d8c9a8;
-    --accent: #1f4e79;
-    --accent-soft: #c9d6e3;
-    /* Apple-style system fonts (SF on Apple, Segoe UI Variable on Windows, Roboto on Android); Bricolage only for the wordmark. */
-    --font-brand: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
-    --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI Variable Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #0b1a2c; --surface: #13283f; --fg: #efe6d2; --muted: #a9b6c4; --line: #1c3552;
-      --accent: #7fa8d1; --accent-soft: #1c3552;
-      color-scheme: dark;
-    }
-  }
-  body {
-    margin: 0; background: var(--bg); color: var(--fg);
-    font-family: var(--font-body); font-size: 17px; line-height: 1.6;
-    padding-inline: 20px; padding-block: 32px 64px;
-  }
-  .page { max-width: 46rem; margin: 0 auto; display: grid; gap: 28px; }
-  header { display: grid; gap: 14px; }
-  .brand { display: flex; align-items: center; gap: 12px; color: var(--fg); text-decoration: none; width: fit-content; }
-  .badge {
-    width: 44px; height: 44px; border-radius: 12px; flex: none;
-    background: linear-gradient(135deg, #2f6a9e, #163a5c); display: grid; place-items: center;
-  }
-  .badge svg { width: 24px; height: 24px; }
-  .app { font-family: var(--font-brand); font-weight: 700; font-size: 1.15rem; letter-spacing: 0.01em; }
-  h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 6vw, 2.6rem); line-height: 1.1; letter-spacing: -0.025em; margin: 0; text-wrap: balance; }
-  .meta { color: var(--muted); margin: 0; font-size: 0.95rem; }
-  .short { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; }
-  h2 { font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; line-height: 1.25; margin: 0 0 6px; text-wrap: balance; }
-  p, ul { margin: 0 0 10px; }
-  ul { padding-left: 1.2em; }
-  li { margin-bottom: 6px; }
-  a { color: var(--accent); text-underline-offset: 2px; }
-  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
-  strong { font-weight: 600; }
-  /* The table scrolls sideways inside its own box on narrow phones; the page itself never does. */
-  .scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
-  table { border-collapse: collapse; width: 100%; min-width: 34rem; font-size: 0.95rem; }
-  th, td { text-align: left; vertical-align: top; padding: 10px 14px; border-bottom: 1px solid var(--line); }
-  tr:last-child td { border-bottom: 0; }
-  thead th { font-family: var(--font-display); font-weight: 600; }
-  tbody th { font-weight: 600; width: 24%; }
-  td:nth-child(2) { background: color-mix(in srgb, var(--accent-soft) 45%, transparent); }
-  footer { border-top: 1px solid var(--line); padding-top: 20px; color: var(--muted); font-size: 0.95rem; }
-  footer a { color: var(--muted); }
-
-  /* Shared polish (ui-ux-pro-max checklist): skip link, visible focus, 44px controls, soft cards. */
-  a, button { touch-action: manipulation; }
-  :where(a, button):focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
-  .skip { position: absolute; left: 12px; top: -60px; z-index: 100; padding: 10px 16px; border-radius: 10px; background: var(--fg); color: var(--bg); font-weight: 600; text-decoration: none; }
-  .skip:focus { top: 12px; }
-  .page-main { display: grid; gap: 28px; }
-  /* Columns never grow past the screen; wide tables scroll inside their own box. */
-  .page, .page-main { grid-template-columns: minmax(0, 1fr); }
-  .brand { min-height: 44px; }
-  .langs button { min-height: 44px; padding-inline: 18px; transition: background-color 0.2s ease, color 0.2s ease; }
-  .langs button:hover { color: var(--accent); }
-  .short, .card { border-radius: 20px; box-shadow: 0 10px 24px -14px rgba(14, 42, 71, 0.35); }
-  @media (prefers-reduced-motion: reduce) { .langs button { transition: none; } }
-</style>
+<meta name="theme-color" content="#0b1a2c" id="meta-theme-color">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VocLock">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="VocLock compared to Duolingo and Anki">
+<meta property="og:description" content="An honest comparison: what VocLock does differently from Duolingo and Anki, where each one is stronger, and who VocLock is for.">
+<meta property="og:url" content="https://littlelockstudio.app/compare/">
+<meta property="og:image" content="https://littlelockstudio.app/og.png?v=3">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="/compare/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/bricolage-grotesque-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/site.css">
+<script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('voclock-theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = saved || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+        var meta = document.getElementById('meta-theme-color');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#0b1a2c' : '#efe6d2');
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
-<a class="skip" href="#content">Skip to content</a>
-  <div class="page">
-    <header>
-      <a class="brand" href="../" aria-label="VocLock home">
-        <span class="badge" aria-hidden="true">
-          <svg viewBox="21 20.5 66 66"><path d="M36 50 54 80 72 50" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M52 38 64 27" stroke="#ffd166" stroke-width="8" stroke-linecap="round"/></svg>
-        </span>
-        <span class="app">VocLock</span>
-      </a>
-      <h1>VocLock compared to Duolingo and Anki</h1>
-      <p class="meta">Written by the maker of VocLock, as fairly as he can. Last updated November 2026.</p>
-    </header>
-  <main id="content" class="page-main">
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="ambient-layer" aria-hidden="true">
+    <div class="orb-primary aurora-orb"></div>
+    <div class="orb-secondary aurora-orb"></div>
+  </div>
+  <div class="noise-overlay" aria-hidden="true"></div>
 
-    <div class="short">
-      <h2>In short</h2>
-      <ul>
-        <li><strong>VocLock</strong> brings the words to you: one word when you unlock your phone. You don't need to open an app or find time. Best for building and keeping vocabulary without a study routine.</li>
-        <li><strong>Duolingo</strong> is a full course you sit down for: lessons with grammar, listening and speaking, in many languages. Best if you want to be led through a language from zero.</li>
-        <li><strong>Anki</strong> is a flashcard tool you build yourself: any subject, any card layout, very fine control over review. Best if you like to set things up your own way.</li>
-      </ul>
+  <header class="site-header" id="site-header">
+    <div class="nav-shell">
+      <a href="/" class="brand" aria-label="VocLock home">
+        <span class="brand-badge" aria-hidden="true">
+          <svg viewBox="21 20.5 66 66"><path d="M36 50 54 80 72 50" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"></path><path d="M52 38 64 27" stroke="#ffd166" stroke-width="8" stroke-linecap="round"></path></svg>
+        </span>
+        <span>VocLock</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/features/" class="nav-link">Features</a>
+        <a href="/languages/" class="nav-link">Languages</a>
+        <a href="/compare/" class="nav-link active" aria-current="page">Compare</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch color theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        <a href="https://play.google.com/store/apps/details?id=com.voclock" class="nav-cta" target="_blank" rel="noopener">Get the app</a>
+        <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-drawer">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
 
-    <section>
-      <h2>Side by side</h2>
-      <div class="scroll">
-        <table>
+    <div class="mobile-drawer" id="mobile-drawer" hidden>
+      <div class="drawer-links">
+        <a href="/" class="drawer-link">Home</a>
+        <a href="/features/" class="drawer-link">Features</a>
+        <a href="/languages/" class="drawer-link">Languages</a>
+        <a href="/compare/" class="drawer-link active">Compare</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-intro container stage-enter">
+      <div>
+        <h1>VocLock compared to Duolingo and Anki.</h1>
+        <p>Written by the maker of VocLock, as fairly as he can. Last updated November 2026.</p>
+      </div>
+      <a href="https://play.google.com/store/apps/details?id=com.voclock" class="btn-primary" target="_blank" rel="noopener">Try VocLock free</a>
+    </section>
+
+    <!-- In Short Summary Cards -->
+    <section class="container stage-enter" style="--stagger: 80ms;">
+      <div class="verdict-grid">
+        <div class="verdict-card highlight" data-spotlight>
+          <h2>VocLock</h2>
+          <p>Brings the words to you: one word when you unlock your phone. You don't need to open an app or find time. Best for building and keeping vocabulary without a study routine.</p>
+        </div>
+        <div class="verdict-card" data-spotlight>
+          <h2>Duolingo</h2>
+          <p>A full course you sit down for: lessons with grammar, listening and speaking, in many languages. Best if you want to be led through a language from zero.</p>
+        </div>
+        <div class="verdict-card" data-spotlight>
+          <h2>Anki</h2>
+          <p>A flashcard tool you build yourself: any subject, any card layout, very fine control over review. Best if you like to set things up your own way.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filterable Side-by-Side Comparison Matrix -->
+    <section class="matrix-section container stage-enter" style="--stagger: 140ms;">
+      <div class="matrix-controls">
+        <div class="filter-group" role="group" aria-label="Filter comparison categories">
+          <button type="button" class="filter-pill cmp-filter active" data-cat="all">All 10 rows</button>
+          <button type="button" class="filter-pill cmp-filter" data-cat="flow">Daily flow</button>
+          <button type="button" class="filter-pill cmp-filter" data-cat="content">Words &amp; review</button>
+          <button type="button" class="filter-pill cmp-filter" data-cat="privacy">Offline &amp; account</button>
+        </div>
+
+        <div class="filter-group" role="group" aria-label="Highlight column">
+          <button type="button" class="filter-pill cmp-focus active" data-focus="none">No highlight</button>
+          <button type="button" class="filter-pill cmp-focus" data-focus="voclock">VocLock</button>
+          <button type="button" class="filter-pill cmp-focus" data-focus="duolingo">Duolingo</button>
+          <button type="button" class="filter-pill cmp-focus" data-focus="anki">Anki</button>
+        </div>
+      </div>
+
+      <div class="matrix-scroll">
+        <table class="cmp-table" id="compare-table">
           <thead>
-            <tr><th scope="col"></th><th scope="col">VocLock</th><th scope="col">Duolingo</th><th scope="col">Anki</th></tr>
+            <tr>
+              <th>Feature</th>
+              <th class="col-voclock">VocLock</th>
+              <th class="col-duolingo">Duolingo</th>
+              <th class="col-anki">Anki</th>
+            </tr>
           </thead>
-          <tbody>
-            <tr><th scope="row">How you learn</th><td>A word as you unlock your phone, at most one every ten minutes; plus practice, games and a daily challenge in the app</td><td>Lessons you open and work through</td><td>Flashcard sessions you open and work through</td></tr>
-            <tr><th scope="row">Time you set aside</th><td>None needed; a few seconds per unlock</td><td>A few minutes or more per day</td><td>As long as your due cards take</td></tr>
-            <tr><th scope="row">Words</th><td>The most common 2,000 to 2,800 words per course, ready to go, each with an example sentence; add your own, paste lists or import CSV and Anki .apkg files</td><td>Words come with the course units</td><td>You make cards or download shared decks</td></tr>
-            <tr><th scope="row">Review</th><td>Adaptive spaced repetition (FSRS), automatic; mark answers easy or hard</td><td>Practice chosen by the course</td><td>Spaced repetition with many settings</td></tr>
-            <tr><th scope="row">Grammar</th><td>20 A1 and 20 A2 mini courses with grammar, one per language pair</td><td>Built into the courses</td><td>Only if you make cards for it</td></tr>
-            <tr><th scope="row">Listening and speaking</th><td>Hear every word; a chat partner to write with (Pro)</td><td>Listening and speaking exercises</td><td>Audio if the deck has it</td></tr>
-            <tr><th scope="row">Languages</th><td>Eleven, explained in English or German</td><td>Many more</td><td>Anything you have cards for</td></tr>
-            <tr><th scope="row">Motivation</th><td>Otter, streaks, ranks with exams, friends, a learning partner, widgets</td><td>Streaks, leagues, friends</td><td>Statistics</td></tr>
-            <tr><th scope="row">Works offline</th><td>Yes, learning needs no internet</td><td>Mostly needs internet</td><td>Yes</td></tr>
-            <tr><th scope="row">Account</th><td>Optional</td><td>Needed to keep progress</td><td>Optional, for syncing</td></tr>
+          <tbody id="compare-tbody">
+            <tr data-cat="flow">
+              <td>How you learn</td>
+              <td class="col-voclock">A word as you unlock your phone, at most one every ten minutes; plus practice, games and a daily challenge in the app</td>
+              <td class="col-duolingo">Lessons you open and work through</td>
+              <td class="col-anki">Flashcard sessions you open and work through</td>
+            </tr>
+            <tr data-cat="flow">
+              <td>Time you set aside</td>
+              <td class="col-voclock">None needed; a few seconds per unlock</td>
+              <td class="col-duolingo">A few minutes or more per day</td>
+              <td class="col-anki">As long as your due cards take</td>
+            </tr>
+            <tr data-cat="content">
+              <td>Words</td>
+              <td class="col-voclock">The most common 2,000 to 2,800 words per course, ready to go, each with an example sentence; add your own, paste lists or import CSV and Anki .apkg files</td>
+              <td class="col-duolingo">Words come with the course units</td>
+              <td class="col-anki">You make cards or download shared decks</td>
+            </tr>
+            <tr data-cat="content">
+              <td>Review</td>
+              <td class="col-voclock">Adaptive spaced repetition (FSRS), automatic; mark answers easy or hard</td>
+              <td class="col-duolingo">Practice chosen by the course</td>
+              <td class="col-anki">Spaced repetition with many settings</td>
+            </tr>
+            <tr data-cat="content">
+              <td>Grammar</td>
+              <td class="col-voclock">20 A1 and 20 A2 mini courses with grammar, one per language pair</td>
+              <td class="col-duolingo">Built into the courses</td>
+              <td class="col-anki">Only if you make cards for it</td>
+            </tr>
+            <tr data-cat="content">
+              <td>Listening &amp; speaking</td>
+              <td class="col-voclock">Hear every word; a chat partner to write with (Pro)</td>
+              <td class="col-duolingo">Listening and speaking exercises</td>
+              <td class="col-anki">Audio if the deck has it</td>
+            </tr>
+            <tr data-cat="content">
+              <td>Languages</td>
+              <td class="col-voclock">Eleven, explained in English or German</td>
+              <td class="col-duolingo">Many more</td>
+              <td class="col-anki">Anything you have cards for</td>
+            </tr>
+            <tr data-cat="flow">
+              <td>Motivation</td>
+              <td class="col-voclock">Otter, streaks, ranks with exams, friends, a learning partner, widgets</td>
+              <td class="col-duolingo">Streaks, leagues, friends</td>
+              <td class="col-anki">Statistics</td>
+            </tr>
+            <tr data-cat="privacy">
+              <td>Works offline</td>
+              <td class="col-voclock">Yes, learning needs no internet</td>
+              <td class="col-duolingo">Mostly needs internet</td>
+              <td class="col-anki">Yes</td>
+            </tr>
+            <tr data-cat="privacy">
+              <td>Account</td>
+              <td class="col-voclock">Optional</td>
+              <td class="col-duolingo">Needed to keep progress</td>
+              <td class="col-anki">Optional, for syncing</td>
+            </tr>
           </tbody>
         </table>
       </div>
-      <p class="meta" style="margin-top:10px">Duolingo and Anki change over time; this table describes them in general terms. Check their own websites for the details.</p>
+      <p class="matrix-note">Duolingo and Anki change over time; this table describes them in general terms. Check their own websites for the details.</p>
     </section>
 
-    <section>
-      <h2>Where VocLock is stronger</h2>
-      <ul>
-        <li><strong>You can't forget to study.</strong> The word shows up when you pick up your phone. No reminder to ignore, no app to open.</li>
-        <li><strong>It asks little of you.</strong> One word, a few seconds, and an emergency PIN when you're in a hurry.</li>
-        <li><strong>Ready from the first minute.</strong> The word lists are already there, sorted by how often words are used, with example sentences and pictures.</li>
-        <li><strong>It doesn't need an account or a connection.</strong> Without an account, everything stays on your phone.</li>
-      </ul>
-    </section>
+    <!-- Compact 4-Tab Honest Breakdown -->
+    <section class="breakdown-section container">
+      <div class="breakdown-box">
+        <div class="filter-group" role="tablist" aria-label="Detailed comparison breakdown">
+          <button type="button" class="filter-pill breakdown-tab active" data-b="stronger">Where VocLock is stronger</button>
+          <button type="button" class="filter-pill breakdown-tab" data-b="others">Where the others are stronger</button>
+          <button type="button" class="filter-pill breakdown-tab" data-b="replace">Can VocLock replace them?</button>
+          <button type="button" class="filter-pill breakdown-tab" data-b="who">Who VocLock is for</button>
+        </div>
 
-    <section>
-      <h2>Where the others are stronger</h2>
-      <ul>
-        <li><strong>Duolingo</strong> teaches whole sentences, grammar, listening and speaking in long, guided courses, and offers far more languages. VocLock's grammar courses are only beginning.</li>
-        <li><strong>Anki</strong> can hold anything, from medicine to music theory, with your own card layouts, images and audio, and review settings you can tune in detail. VocLock is made for words of a language and keeps the settings simple.</li>
-      </ul>
-    </section>
+        <div class="breakdown-panel active" data-bp="stronger">
+          <ul>
+            <li><strong>You can't forget to study.</strong> The word shows up when you pick up your phone. No reminder to ignore, no app to open.</li>
+            <li><strong>It asks little of you.</strong> One word, a few seconds, and an emergency PIN when you're in a hurry.</li>
+            <li><strong>Ready from the first minute.</strong> The word lists are already there, sorted by how often words are used, with example sentences and pictures.</li>
+            <li><strong>It doesn't need an account or a connection.</strong> Without an account, everything stays on your phone.</li>
+          </ul>
+        </div>
 
-    <section>
-      <h2>Can VocLock replace them?</h2>
-      <p>For <strong>vocabulary</strong>: yes. VocLock introduces new words, repeats them until they stick, takes your own words and lists, and adds games, a weekly quiz and news to read. You don't need a second app for words.</p>
-      <p>For a <strong>whole language</strong>, with grammar and speaking practice: not yet in every course. VocLock is growing in that direction, with more mini courses and listening and speaking exercises on the way. Until then it works well next to a course, a class or a tutor: they explain, VocLock makes sure the words are there when you need them.</p>
-    </section>
+        <div class="breakdown-panel" data-bp="others">
+          <ul>
+            <li><strong>Duolingo</strong> teaches whole sentences, grammar, listening and speaking in long, guided courses, and offers far more languages. VocLock's grammar courses are only beginning.</li>
+            <li><strong>Anki</strong> can hold anything, from medicine to music theory, with your own card layouts, images and audio, and review settings you can tune in detail. VocLock is made for words of a language and keeps the settings simple.</li>
+          </ul>
+        </div>
 
-    <section>
-      <h2>Who VocLock is for</h2>
-      <ul>
-        <li>You've tried learning apps and stopped opening them after a few weeks.</li>
-        <li>You're in a class or with a tutor and the vocabulary doesn't stick.</li>
-        <li>You want to pick up a language slowly, in the background, without a study plan.</li>
-        <li>You want to spend less time scrolling and get something out of picking up your phone.</li>
-      </ul>
-      <p><a href="../">Back to the VocLock page</a></p>
-    </section>
+        <div class="breakdown-panel" data-bp="replace">
+          <ul>
+            <li><strong>For vocabulary: yes.</strong> VocLock introduces new words, repeats them until they stick, takes your own words and lists, and adds games, a weekly quiz and news to read. You don't need a second app for words.</li>
+            <li><strong>For a whole language,</strong> with grammar and speaking practice: not yet in every course. VocLock is growing in that direction, with more mini courses and listening and speaking exercises on the way. Until then it works well next to a course, a class or a tutor: they explain, VocLock makes sure the words are there when you need them.</li>
+          </ul>
+        </div>
 
+        <div class="breakdown-panel" data-bp="who">
+          <ul>
+            <li>You've tried learning apps and stopped opening them after a few weeks.</li>
+            <li>You're in a class or with a tutor and the vocabulary doesn't stick.</li>
+            <li>You want to pick up a language slowly, in the background, without a study plan.</li>
+            <li>You want to spend less time scrolling and get something out of picking up your phone.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
   </main>
-    <footer>
-      <p>VocLock is not affiliated with Duolingo or Anki. Duolingo is a trademark of Duolingo, Inc.; Anki is a trademark of Ankitects Pty Ltd. · <a href="../privacy/">Privacy policy</a> · <a href="../impressum/">Impressum</a></p>
-    </footer>
-  </div>
-<script src="/assets/consent.js" defer></script>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>VocLock is not affiliated with Duolingo or Anki. Duolingo is a trademark of Duolingo, Inc.; Anki is a trademark of Ankitects Pty Ltd.</div>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="/">Home</a>
+        <a href="/features/">Features</a>
+        <a href="/languages/">Languages</a>
+        <a href="/privacy/">Privacy policy</a>
+        <a href="/impressum/">Impressum</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="/assets/site.js" defer></script>
+  <script src="/assets/consent.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; connect-src https://voclock-chat.voclock.workers.dev https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Features – VocLock</title>
+<meta name="description" content="Explore VocLock's interactive lock screen, Reel Brake, daily challenges, FSRS spaced repetition, games, and CSV/Anki import.">
+<meta name="theme-color" content="#0b1a2c" id="meta-theme-color">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VocLock">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Features – VocLock">
+<meta property="og:description" content="Explore VocLock's interactive lock screen, Reel Brake, daily challenges, FSRS spaced repetition, games, and CSV/Anki import.">
+<meta property="og:url" content="https://littlelockstudio.app/features/">
+<meta property="og:image" content="https://littlelockstudio.app/og.png?v=3">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="/features/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/bricolage-grotesque-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/site.css">
+<script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('voclock-theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = saved || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+        var meta = document.getElementById('meta-theme-color');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#0b1a2c' : '#efe6d2');
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="ambient-layer" aria-hidden="true">
+    <div class="orb-primary aurora-orb"></div>
+    <div class="orb-secondary aurora-orb"></div>
+  </div>
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <header class="site-header" id="site-header">
+    <div class="nav-shell">
+      <a href="/" class="brand" aria-label="VocLock home">
+        <span class="brand-badge" aria-hidden="true">
+          <svg viewBox="21 20.5 66 66"><path d="M36 50 54 80 72 50" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"></path><path d="M52 38 64 27" stroke="#ffd166" stroke-width="8" stroke-linecap="round"></path></svg>
+        </span>
+        <span>VocLock</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/features/" class="nav-link active" aria-current="page">Features</a>
+        <a href="/languages/" class="nav-link">Languages</a>
+        <a href="/compare/" class="nav-link">Compare</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch color theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        <a href="https://play.google.com/store/apps/details?id=com.voclock" class="nav-cta" target="_blank" rel="noopener">Get the app</a>
+        <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-drawer">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="mobile-drawer" id="mobile-drawer" hidden>
+      <div class="drawer-links">
+        <a href="/" class="drawer-link">Home</a>
+        <a href="/features/" class="drawer-link active">Features</a>
+        <a href="/languages/" class="drawer-link">Languages</a>
+        <a href="/compare/" class="drawer-link">Compare</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-intro container stage-enter">
+      <div>
+        <h1>Small moments, real progress.</h1>
+        <p>A few new words a day, asked again until you know them, with the most common words first. Switch between each area of VocLock below.</p>
+      </div>
+      <a href="https://play.google.com/store/apps/details?id=com.voclock" class="btn-primary" target="_blank" rel="noopener">Get it on Google Play</a>
+    </section>
+
+    <section class="studio-wrap container stage-enter" style="--stagger: 90ms;">
+      <div class="studio-tabs" role="tablist" aria-label="VocLock feature areas">
+        <button type="button" class="studio-tab active" data-studio="lock" role="tab" aria-selected="true">Lock Screen &amp; Reel Brake</button>
+        <button type="button" class="studio-tab" data-studio="app" role="tab" aria-selected="false">Daily App &amp; Games</button>
+        <button type="button" class="studio-tab" data-studio="fsrs" role="tab" aria-selected="false">FSRS &amp; Achievements</button>
+        <button type="button" class="studio-tab" data-studio="tools" role="tab" aria-selected="false">Import, Audio &amp; Privacy</button>
+      </div>
+
+      <!-- Studio Panel 1: Lock Screen & Reel Brake -->
+      <div class="studio-panel active" data-panel="lock" role="tabpanel">
+        <div class="studio-copy">
+          <h2>You stay in control of every unlock.</h2>
+          <p>VocLock shows at most one word every ten minutes, respects Do Not Disturb, and lets your emergency PIN unlock immediately whenever you are in a hurry.</p>
+          <ul class="feature-list">
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>Reel brake (Android):</strong> after every few TikToks, Reels or Shorts, VocLock asks one word before you scroll on.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>Emergency PIN:</strong> always gets you straight in, and lock-screen prompts can be paused anytime.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>A picture for the word:</strong> hundreds of everyday words come with a small custom drawing so the word links to the thing.</span></li>
+          </ul>
+        </div>
+
+        <div class="studio-stage">
+          <div class="console-card">
+            <div class="console-row">
+              <div>
+                <strong>Lock-screen frequency</strong>
+                <span id="cooldown-val">At most 1 word every 10 min</span>
+              </div>
+              <input type="range" id="cooldown-slider" class="cooldown-range" min="5" max="30" step="5" value="10" style="max-width: 120px;" aria-label="Cooldown interval in minutes" />
+            </div>
+            <div class="console-row">
+              <div>
+                <strong>Do Not Disturb</strong>
+                <span>Never interrupts focus or sleep hours</span>
+              </div>
+              <button type="button" class="switch-btn on" id="dnd-toggle-btn">Respected</button>
+            </div>
+            <div class="console-row">
+              <div>
+                <strong>Reel brake on Android</strong>
+                <span id="reel-status-text">Asks 1 word every 5 Reels</span>
+              </div>
+              <button type="button" class="switch-btn on" id="reel-toggle-btn">Enabled</button>
+            </div>
+            <div class="reel-preview-box">
+              <span>TikTok / Reels / Shorts</span>
+              <span class="reel-badge">Pause &amp; recall 1 word</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Studio Panel 2: Daily App & Games -->
+      <div class="studio-panel" data-panel="app" role="tabpanel">
+        <div class="studio-copy">
+          <h2>A whole app for the minutes you do have.</h2>
+          <p>A short challenge every day, free practice whenever you like, and a weekly quiz with example sentences that shows what really stuck. Read "Tea", a chat story with a new episode every day, or text the AI otter in your new language (Pro).</p>
+          <ul class="feature-list">
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span>Six word games in three levels, built from the words you have already met.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span>20 A1 and 20 A2 mini courses with grammar, step by step.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span>Today's news from Wikipedia, with the words you already know swapped in.</span></li>
+          </ul>
+        </div>
+
+        <div class="studio-stage">
+          <div class="phone phone-compact">
+            <div class="phone-notch" aria-hidden="true">
+              <span class="speaker-slot"></span>
+              <span class="camera-dot"></span>
+            </div>
+            <div class="phone-screen app-ui">
+              <div class="app-header-row">
+                <h4>Learn</h4>
+                <span class="app-pill-mini">French · A1</span>
+              </div>
+              <div class="learn-hero-grid">
+                <div class="daily-card">
+                  <span class="daily-kicker">Today</span>
+                  <strong>Daily challenge</strong>
+                  <span class="daily-sub">5 new · 5 to review</span>
+                  <button type="button" class="daily-start-btn" id="daily-start-btn">Start</button>
+                </div>
+                <div class="today-count-card">
+                  <strong class="today-num">10</strong>
+                  <span class="today-title">Today's words</span>
+                  <span class="today-sub">5 new · 5 review</span>
+                </div>
+              </div>
+              <div class="practise-grid">
+                <div class="practise-tile">Practice</div>
+                <div class="practise-tile">Weekly quiz</div>
+                <div class="practise-tile">Vocabulary</div>
+              </div>
+              <div class="starter-row">
+                <div>
+                  <strong>Starter course</strong>
+                  <span>Step by step with grammar</span>
+                </div>
+                <span aria-hidden="true">›</span>
+              </div>
+              <div class="tab-toast" id="learn-tab-toast" aria-live="polite">Tap any tab below to preview</div>
+              <div class="app-tabbar" role="tablist" aria-label="App preview tabs">
+                <button type="button" class="tab-item active" data-tab="Learn">Learn</button>
+                <button type="button" class="tab-item" data-tab="Discover">Discover</button>
+                <button type="button" class="tab-item" data-tab="Home">Home</button>
+                <button type="button" class="tab-item" data-tab="Me">Me</button>
+                <button type="button" class="tab-item" data-tab="Settings">Settings</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Studio Panel 3: FSRS & Achievements -->
+      <div class="studio-panel" data-panel="fsrs" role="tabpanel">
+        <div class="studio-copy">
+          <h2>Words that stay. Progress you can see.</h2>
+          <p>Words return at adaptive FSRS intervals timed right before you forget them. Keep a daily streak, climb ranks by passing a short exam for each one, and collect more than 60 achievements.</p>
+          <ul class="feature-list">
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span>Tell the app if an answer was easy or hard, and the next review date adapts automatically.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span>A little otter with a cup of tea cheers you on, with outfits to dress it up.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span>Friends, and one learning partner for a shared daily streak.</span></li>
+          </ul>
+        </div>
+
+        <div class="studio-stage">
+          <div class="phone phone-compact">
+            <div class="phone-notch" aria-hidden="true">
+              <span class="speaker-slot"></span>
+              <span class="camera-dot"></span>
+            </div>
+            <div class="phone-screen app-ui achievements-ui">
+              <div class="ach-topbar">Achievements</div>
+              <div class="ach-banner">
+                <div>
+                  <div class="ach-score">1 of 62 unlocked</div>
+                  <div class="ach-banner-track"><div class="ach-banner-fill"></div></div>
+                </div>
+              </div>
+              <div class="ach-list">
+                <div class="ach-card">
+                  <div class="ach-row"><strong>3-day streak</strong><span>1 / 3</span></div>
+                  <p>Learn 3 days in a row · 3, 7, 14, 30, 60, 100, 365</p>
+                  <div class="ach-track"><div class="ach-fill" style="width: 33%;"></div></div>
+                </div>
+                <div class="ach-card">
+                  <div class="ach-row"><strong>10 words</strong><span>2 / 10</span></div>
+                  <p>Know 10 words · 10, 50, 100, 250, 500, 1000, 2000</p>
+                  <div class="ach-track"><div class="ach-fill" style="width: 20%;"></div></div>
+                </div>
+                <div class="ach-card">
+                  <div class="ach-row"><strong>Early bird</strong><span>1 / 10</span></div>
+                  <p>Answer 10 questions right before 8 in the morning</p>
+                  <div class="ach-track"><div class="ach-fill" style="width: 10%;"></div></div>
+                </div>
+              </div>
+              <div class="fsrs-demo">
+                <div class="fsrs-head">
+                  <span>Tap FSRS rating</span>
+                  <strong id="fsrs-result">Next review: 3 days</strong>
+                </div>
+                <div class="fsrs-pills">
+                  <button type="button" class="fsrs-pill" data-interval="10 minutes">Hard · 10m</button>
+                  <button type="button" class="fsrs-pill active" data-interval="3 days">Good · 3d</button>
+                  <button type="button" class="fsrs-pill" data-interval="12 days">Easy · 12d</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Studio Panel 4: Import, Audio & Privacy -->
+      <div class="studio-panel" data-panel="tools" role="tabpanel">
+        <div class="studio-copy">
+          <h2>Your own words, offline voices, zero tracking required.</h2>
+          <p>Bring word lists from Quizlet, Anki, or any spreadsheet, hear every word using your phone's built-in voice, and keep your rank or words on your home screen.</p>
+          <ul class="feature-list">
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>New alphabets step by step:</strong> Japanese starts with hiragana/katakana + kanji practice; Russian and Korean begin with their alphabets; Chinese shows pinyin.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>Home-screen widgets:</strong> free rank widget, plus Pro widgets for today's words and your learning partner.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>Private by design:</strong> no account needed to learn. Optional accounts only store your progress and can be <a href="/delete-account/#en" class="inline-link">deleted anytime</a> (<a href="/privacy/#en" class="inline-link">Privacy policy</a>).</span></li>
+          </ul>
+        </div>
+
+        <div class="studio-stage">
+          <div class="console-card">
+            <div class="console-row">
+              <div>
+                <strong>Bring your own vocabulary</strong>
+                <span>Preview supported import formats</span>
+              </div>
+            </div>
+            <div class="import-tabs">
+              <button type="button" class="import-tab-btn active" data-import="csv">CSV</button>
+              <button type="button" class="import-tab-btn" data-import="apkg">Anki .apkg</button>
+              <button type="button" class="import-tab-btn" data-import="paste">Paste list</button>
+            </div>
+            <pre class="import-code" id="import-preview-code">front,back,example
+la fenêtre,the window,Ouvre la fenêtre s'il te plaît.
+le matin,the morning,Le matin est calme.</pre>
+            <div class="console-row">
+              <div>
+                <strong>Built-in phone pronunciation</strong>
+                <span>Hear "La bibliothèque" offline</span>
+              </div>
+              <button type="button" class="switch-btn on" id="tools-audio-btn">Play word</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Free vs Pro Strip -->
+      <div class="tier-grid">
+        <div class="tier-card" data-spotlight>
+          <h3>VocLock Free</h3>
+          <p>Full lock-screen learning, 11 courses, FSRS spaced repetition, 40 mini courses, games, the rank widget, and offline mode — supported by ads.</p>
+        </div>
+        <div class="tier-card pro" data-spotlight>
+          <h3>VocLock Pro</h3>
+          <p>Removes all ads and adds more new words per day, every Tea story episode, Pro home-screen widgets, streak freezes, and the AI chat otter. Everyone gets a free Pro test week that ends by itself.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© 2026 VocLock · Said Erzhapov</div>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="/">Home</a>
+        <a href="/languages/">Languages</a>
+        <a href="/compare/">Compare</a>
+        <a href="/privacy/#en">Privacy policy</a>
+        <a href="/terms/#en">Terms</a>
+        <a href="mailto:support@littlelockstudio.app">support@littlelockstudio.app</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="/assets/site.js" defer></script>
+  <script src="/assets/consent.js" defer></script>
+</body>
+</html>
