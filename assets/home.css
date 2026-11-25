@@ -43,7 +43,7 @@
   }
   a { color: var(--accent); text-underline-offset: 2px; }
   a, button { touch-action: manipulation; }
-  :where(a, button, input):focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+  :where(a, button, input, summary):focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
   .wrap { max-width: 68rem; margin: 0 auto; padding-inline: 20px; }
   /* Keyboard users can jump past the header. */
   .skip { position: absolute; left: 12px; top: -60px; z-index: 100; padding: 10px 16px; border-radius: 10px; background: var(--fg); color: var(--bg); font-weight: 600; }
@@ -71,7 +71,7 @@
   .brand span { font-family: var(--font-brand); font-weight: 800; font-size: 1.35rem; letter-spacing: 0.01em; }
   .bar nav { display: flex; gap: 6px; font-weight: 600; }
   /* 44px tall tap targets. */
-  .bar nav a { display: inline-flex; align-items: center; min-height: 44px; padding-inline: 8px; color: var(--muted); text-decoration: none; border-radius: 10px; transition: color 0.2s var(--ease), background-color 0.2s var(--ease); }
+  .bar nav a { display: inline-flex; align-items: center; min-height: 44px; padding-inline: 8px; white-space: nowrap; color: var(--muted); text-decoration: none; border-radius: 10px; transition: color 0.2s var(--ease), background-color 0.2s var(--ease); }
   .bar nav a:hover { color: var(--accent); background: var(--surface); }
   /* Language switch (EN / DE) as a small outlined pill. */
   .bar nav a.nav-switch { border: 1px solid var(--line); padding-inline: 12px; font-size: 0.9rem; }
@@ -127,16 +127,17 @@
   /* Measured on the 720x1280 picture: field 42..677 x 865..962, Unlock 42..677 x 992..1081. */
   .try-field, .try-unlock, .try-hint { position: absolute; box-sizing: border-box; margin: 0; left: 5.83%; width: 88.33%; border-radius: 999px; font: inherit; }
   .try-field {
-    top: 67.58%; height: 7.66%; padding: 0 0 0 4.6cqw; border: 0.35cqw solid transparent;
-    background: transparent; color: #fff; font-size: 4.3cqw; font-weight: 600; caret-color: #fff;
+    top: 67.58%; height: 7.66%; padding: 0 4.6cqw; border: 0.35cqw solid transparent;
+    background: transparent; color: #fff; font-size: max(16px, 4.3cqw); font-weight: 600; caret-color: #fff;
   }
   .try-field::placeholder { color: transparent; }
   .try-field:focus, .try-field:not(:placeholder-shown) { background: #35506d; outline: none; border-color: #dfe5ec; }
+  .try-field:focus-visible { outline: 3px solid #7fa8d1; outline-offset: 2px; }
   /* Only while it shakes; afterwards the field looks like the app's again. */
   .try-field.wrong { animation: shake 0.35s; }
   .try-unlock { top: 77.5%; height: 7.03%; border: 0; background: transparent; color: transparent; cursor: pointer; }
   .try-unlock:focus-visible, .try-hint:focus-visible, .try-again:focus-visible { outline: 3px solid #7fa8d1; outline-offset: 2px; }
-  .try-hint { top: 86.2%; height: 4.6%; left: 30%; width: 40%; border: 0; background: transparent; cursor: pointer; }
+  .try-hint { top: 84.8%; height: 9%; left: 30%; width: 40%; border: 0; background: transparent; cursor: pointer; }
   .try-done {
     position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2.5cqw;
     color: #fff; text-align: center; font-size: 5cqw; background: linear-gradient(180deg, rgba(11, 26, 44, 0.92), rgba(31, 78, 121, 0.94));
@@ -152,7 +153,7 @@
     border-radius: 50%; background: #3fb984; font-size: 6.5cqw; box-shadow: 0 0 0 1cqw rgba(11, 26, 44, 0.6);
   }
   @keyframes cheer { 0% { transform: translateY(12%) scale(0.85); opacity: 0; } 45% { transform: translateY(-6%) scale(1.04); opacity: 1; } 70% { transform: translateY(2%); } 100% { transform: none; } }
-  .try-again { margin-top: 4cqw; padding: 2.6cqw 7cqw; border: 0; border-radius: 999px; background: #fff; color: #163a5c; font: inherit; font-weight: 600; cursor: pointer; }
+  .try-again { margin-top: 4cqw; min-height: 44px; padding: 2.6cqw 7cqw; display: inline-flex; align-items: center; justify-content: center; border: 0; border-radius: 999px; background: #fff; color: #163a5c; font: inherit; font-weight: 600; cursor: pointer; }
   @keyframes shake { 25% { transform: translateX(-2.5%); } 75% { transform: translateX(2.5%); } }
   @keyframes unlocked { from { opacity: 0; transform: scale(1.06); } }
   @media (prefers-reduced-motion: reduce) { .try-field.wrong, .try-done, .try-done .otter { animation: none; } }
@@ -165,7 +166,7 @@
   h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 4.4vw, 3rem); line-height: 1.08; letter-spacing: -0.03em; margin: 0 0 14px; text-wrap: balance; }
   .intro { color: var(--muted); font-size: 1.15rem; max-width: 40rem; margin: 0 0 40px; text-wrap: pretty; }
   .card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 22px; box-shadow: var(--shadow); }
-  .card h3, .card h4 { margin: 12px 0 6px; font-size: 1.1rem; line-height: 1.3; }
+  .card h3, .card h4 { margin: 12px 0 6px; font-family: var(--font-display); font-size: 1.15rem; line-height: 1.25; letter-spacing: -0.015em; }
   .card p { margin: 0; color: var(--muted); font-size: 0.98rem; }
 
   /* How it works: three numbered steps. */
@@ -178,7 +179,7 @@
   }
 
   /* Features: two big spotlights with real app screens, a row of numbers, then a quiet list. */
-  .spot { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; align-items: center; padding-block: 24px; }
+  .spot { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; align-items: center; padding-block: 40px; }
   /* Heading and the first spotlight read as one block, not as two with a gap. */
   #features .intro { margin-bottom: 16px; }
   .spot.flip .spot-media { order: -1; }
@@ -199,8 +200,8 @@
   .more-title { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; margin: 24px 0 8px; }
   .more { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 40px; }
   .more li { border-top: 1px solid var(--line); padding-block: 22px 8px; }
-  .more h4 { margin: 14px 0 6px; font-size: 1.08rem; line-height: 1.3; }
-  .more p { margin: 0; color: var(--muted); }
+  .more h4 { margin: 14px 0 6px; font-family: var(--font-display); font-size: 1.15rem; line-height: 1.25; letter-spacing: -0.015em; }
+  .more p { margin: 0; color: var(--muted); font-size: 0.98rem; }
   /* The three that matter most are cards; the rest stay a quiet list. */
   .more.hl { margin-bottom: 8px; gap: 16px; }
   .more.hl li { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 22px; box-shadow: var(--shadow); }
@@ -213,7 +214,7 @@
   details.more-rest > .more { margin-top: 8px; }
 
   /* Closing call to action. */
-  .cta { text-align: center; border-radius: 28px; padding: 48px 24px; margin-block: 56px; background: var(--accent-soft); border: 1px solid var(--line); box-shadow: var(--shadow); }
+  section.cta { text-align: center; border-radius: 28px; padding: 48px 24px; margin-block: 56px; background: var(--accent-soft); border: 1px solid var(--line); box-shadow: var(--shadow); }
   .cta h2 { margin-bottom: 10px; }
   .cta p { color: var(--muted); max-width: 34rem; margin: 0 auto 24px; }
   .cta .actions { justify-content: center; }
@@ -245,10 +246,12 @@
   /* Pointer to the German page, shown only to browsers set to German. */
   .langhint { display: block; text-align: center; padding: 10px 20px; background: var(--accent-soft); color: var(--fg); font-weight: 600; font-size: 0.95rem; text-decoration: none; }
   .langhint[hidden] { display: none; }
+  .de-hint .langhint[hidden] { display: block; }
   .langhint:hover { text-decoration: underline; }
 
   /* Caption under the hero phone: the lock screen is a live demo. */
   .try-note { margin: 18px auto 0; max-width: 20rem; text-align: center; color: var(--muted); font-size: 0.95rem; text-wrap: balance; }
+  .try-note.wrong { color: var(--error); font-weight: 600; }
 
   /* Menu button to the sign-up form. */
   .bar nav a.nav-cta { background: var(--fg); color: var(--bg); padding-inline: 16px; margin-left: 6px; border-radius: 999px; }
@@ -287,11 +290,15 @@
   @media (max-width: 860px) {
     .hero { grid-template-columns: 1fr; gap: 48px; padding-block: 16px 64px; }
     .phone { width: min(300px, 100%); }
-    section { padding-block: 72px; }
+    section:not(.cta) { padding-block: 72px; }
     .spot, .spot.flip { grid-template-columns: 1fr; gap: 40px; }
     .spot.flip .spot-media { order: 0; }
     .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .more { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 760px) {
+    .bar nav a.nav-sec { display: none; }
+    .bar nav a.nav-cta { margin-left: 0; }
   }
   @media (max-width: 680px) {
     .steps { grid-template-columns: 1fr; }
@@ -299,18 +306,18 @@
   @media (max-width: 560px) {
     .more { grid-template-columns: 1fr; }
     .stats li { padding: 22px 18px; }
-    section { padding-block: 52px; }
+    section:not(.cta) { padding-block: 52px; }
     .spot, .spot.flip { gap: 28px; padding-block: 16px; }
     .shot { width: min(220px, 100%); padding: 9px; border-radius: 38px; }
     .shot img { border-radius: 30px; }
     .bar { gap: 8px; }
     .bar nav { gap: 6px; font-size: 0.95rem; align-items: center; }
     .brand span { font-size: 1.2rem; }
-    .cta { padding: 36px 18px; }
-    /* Phones: name, language switch and the sign-up button, which stays in reach while scrolling. */
-    .bar nav a.nav-sec { display: none; }
-    .bar nav a.nav-cta { padding-inline: 14px; margin-left: 0; }
-    /* A little tighter at the top, so the lock-screen phone peeks in under the form. */
+    section.cta { padding: 36px 18px; }
+    /* Phones: name, language switch and the store button, which stays in reach while scrolling. */
+    .bar nav a.nav-switch { padding-inline: 10px; }
+    .bar nav a.nav-cta { padding-inline: 12px; font-size: 0.9rem; }
+    /* A little tighter at the top, so the lock-screen phone peeks in under the CTA. */
     .hero { gap: 28px; padding-block: 4px 40px; }
     h1 { font-size: 2.3rem; margin: 14px 0 12px; }
     .lead { font-size: 1.08rem; margin-bottom: 20px; }
@@ -318,9 +325,9 @@
     /* Languages as small chips, three to a row. */
     .hellos { gap: 8px; }
     .hellos li { flex: 1 1 96px; padding: 14px 10px 12px; border-radius: 16px; }
-    .hellos b { font-size: 1.2rem; }
-    .hellos b:is([lang="ja"], [lang="ko"], [lang="zh-Hans"]) { font-size: 1.02rem; }
-    .hellos span { font-size: 0.8rem; margin-top: 4px; }
+    .hellos b { font-size: 1.12rem; }
+    .hellos b:is([lang="ja"], [lang="ko"], [lang="zh-Hans"]) { font-size: 0.94rem; }
+    .hellos span { font-size: 0.8rem; margin-top: 4px; overflow-wrap: break-word; }
     /* Show the quieter feature list on request. */
     details.more-rest > summary { display: flex; }
     details.more-rest[open] > summary { display: none; }

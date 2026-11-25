@@ -2,19 +2,9 @@
 (function () {
   var de = /^de\b/i.test(document.documentElement.lang || "");
   var T = de ? {
-    badMail: "Bitte gib eine E-Mail-Adresse wie name@beispiel.de ein.",
-    sending: "Wird gesendet …",
-    ok: function (email) { return "Fast geschafft: Falls " + email + " noch nicht auf der Liste steht, haben wir einen Link geschickt. Tippe darauf, um zu bestätigen, dann schreiben wir dir, sobald VocLock da ist. Schon bestätigt? Dann ist alles erledigt. Danke für deine Unterstützung!"; },
-    badMailServer: "Diese E-Mail-Adresse sieht nicht richtig aus.",
-    retry: "Das hat gerade nicht geklappt. Bitte versuche es in einer Minute noch einmal.",
-    offline: "Keine Verbindung. Bitte versuche es in einer Minute noch einmal."
+    tryWrong: "Nicht ganz – tippe das englische Wort ein oder tippe auf „Need a hint?“."
   } : {
-    badMail: "Please enter an email address like name@example.com.",
-    sending: "Sending …",
-    ok: function (email) { return "Almost done: if " + email + " isn't on the list yet, we sent it a link. Tap it to confirm, and we'll write once VocLock is out. Already confirmed before? Then you're all set. Thank you for your support!"; },
-    badMailServer: "That email address doesn't look right.",
-    retry: "That didn't work just now. Please try again in a minute.",
-    offline: "No connection. Please try again in a minute."
+    tryWrong: "Not quite — type the English word, or tap \"Need a hint?\"."
   };
 
   // Menu bar hairline after scrolling, and a soft fade-in for sections below the hero.
@@ -51,12 +41,25 @@
     var rest = document.querySelector("details.more-rest");
     if (!rest || !window.matchMedia) return;
     var narrow = window.matchMedia("(max-width: 560px)");
+    var userToggled = false;
     function sync() { rest.open = !narrow.matches; }
     sync();
     if (narrow.addEventListener) narrow.addEventListener("change", sync);
+    var summary = rest.querySelector("summary");
+    if (summary) summary.addEventListener("click", function () { userToggled = true; });
+    rest.addEventListener("toggle", function () {
+      if (!userToggled) return;
+      userToggled = false;
+      if (rest.open && narrow.matches) {
+        var first = rest.querySelector("h4");
+        if (first) { first.setAttribute("tabindex", "-1"); first.focus({ preventScroll: true }); }
+      }
+    });
   })();
 
   // German visitors on the English page get a quiet pointer to the German one.
+  // The inline head script reveals it before first paint (via .de-hint) to avoid CLS;
+  // removing [hidden] here ensures assistive tech also sees it as visible.
   (function () {
     var hint = document.querySelector(".langhint");
     if (!hint || de || !/^de\b/i.test(navigator.language || "")) return;
@@ -67,55 +70,37 @@
   (function () {
     var form = document.getElementById("try"), field = document.getElementById("try-answer");
     if (!form || !field) return;
-    var done = form.querySelector(".try-done"), answer = "the man", shown = 0;
+    var done = form.querySelector(".try-done"), note = document.getElementById("try-note");
+    var defaultNote = note ? note.textContent : "", answer = "the man", shown = 0;
+    function resetNote() {
+      if (note && note.classList.contains("wrong")) {
+        note.textContent = defaultNote; note.classList.remove("wrong");
+      }
+    }
+    field.addEventListener("input", resetNote);
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       var v = field.value.trim().toLowerCase().replace(/\s+/g, " ");
       if (v === answer || v === "man" || v === "a man") {
+        resetNote();
         done.hidden = false; field.blur();
         done.querySelector(".try-again").focus({ preventScroll: true });
       } else {
         field.classList.remove("wrong"); void field.offsetWidth; field.classList.add("wrong");
+        if (note) { note.textContent = T.tryWrong; note.classList.add("wrong"); }
         field.focus();
       }
     });
     field.addEventListener("animationend", function () { field.classList.remove("wrong"); });
     form.querySelector(".try-hint").addEventListener("click", function () {
+      resetNote();
       shown = Math.min(shown + 1, answer.length);
       field.value = answer.slice(0, shown); field.focus();
     });
     form.querySelector(".try-again").addEventListener("click", function () {
       done.hidden = true; field.value = ""; shown = 0; field.classList.remove("wrong");
-    });
-  })();
-
-  // Launch sign-up: sent straight to our Worker, which mails a confirmation link. No third party.
-  (function () {
-    var endpoint = "https://voclock-chat.voclock.workers.dev/waitlist";
-    var lang = de || /^de\b/i.test(navigator.language || "") ? "de" : "en";
-    var valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    document.querySelectorAll("form.notify").forEach(function (form) {
-      var field = form.querySelector('input[type="email"]'), button = form.querySelector("button");
-      var msg = form.querySelector(".msg"), trap = form.querySelector('input[name="website"]');
-      function say(text, kind) { msg.textContent = text; msg.className = "msg" + (kind ? " " + kind : ""); }
-      field.addEventListener("input", function () { field.removeAttribute("aria-invalid"); if (msg.classList.contains("error")) say(""); });
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        var email = field.value.trim();
-        if (!valid.test(email)) {
-          field.setAttribute("aria-invalid", "true"); say(T.badMail, "error"); field.focus(); return;
-        }
-        button.disabled = true; say(T.sending);
-        fetch(endpoint, { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify({ email: email, lang: lang, website: trap.value }) })
-          .then(function (r) { return r.json().then(function (b) { return { ok: r.ok, status: b.status }; }); })
-          .then(function (r) {
-            if (r.ok) { form.classList.add("done"); say(T.ok(email), "ok"); window.dispatchEvent(new CustomEvent("vl:signup")); return; }
-            button.disabled = false;
-            if (r.status === "bad_email") { field.setAttribute("aria-invalid", "true"); say(T.badMailServer, "error"); field.focus(); }
-            else say(T.retry, "error");
-          })
-          .catch(function () { button.disabled = false; say(T.offline, "error"); });
-      });
+      resetNote();
+      field.focus();
     });
   })();
 })();
