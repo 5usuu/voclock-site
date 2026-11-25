@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="de" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; connect-src https://voclock-chat.voclock.workers.dev https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Elf Sprachen – VocLock</title>
+<meta name="description" content="Entdecke alle 11 Sprachen in VocLock mit je 2.000–2.800 häufigen Wörtern, Beispielsätzen, Schrifthilfen und Aussprache.">
+<meta name="theme-color" content="#0b1a2c" id="meta-theme-color">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VocLock">
+<meta property="og:locale" content="de_DE">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:title" content="Elf Sprachen – VocLock">
+<meta property="og:description" content="Entdecke alle 11 Sprachen in VocLock mit je 2.000–2.800 häufigen Wörtern, Beispielsätzen, Schrifthilfen und Aussprache.">
+<meta property="og:url" content="https://littlelockstudio.app/de/languages/">
+<meta property="og:image" content="https://littlelockstudio.app/og.png?v=3">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://littlelockstudio.app/de/languages/">
+<link rel="alternate" hreflang="en" href="https://littlelockstudio.app/languages/">
+<link rel="alternate" hreflang="de" href="https://littlelockstudio.app/de/languages/">
+<link rel="alternate" hreflang="x-default" href="https://littlelockstudio.app/languages/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/bricolage-grotesque-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/site.css">
+<script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('voclock-theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = saved || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+        var meta = document.getElementById('meta-theme-color');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#0b1a2c' : '#efe6d2');
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Zum Inhalt springen</a>
+  <div class="ambient-layer" aria-hidden="true">
+    <div class="orb-primary aurora-orb"></div>
+    <div class="orb-secondary aurora-orb"></div>
+  </div>
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <div class="lang-strip">
+    <div class="container lang-strip-inner">
+      <span>Elf Sprachen · Oberfläche auf Deutsch und Englisch</span>
+      <a href="/languages/" hreflang="en" lang="en">This page is also in English</a>
+    </div>
+  </div>
+
+  <header class="site-header" id="site-header">
+    <div class="nav-shell">
+      <a href="/de/" class="brand" aria-label="VocLock Startseite">
+        <span class="brand-badge" aria-hidden="true">
+          <svg viewBox="21 20.5 66 66"><path d="M36 50 54 80 72 50" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"></path><path d="M52 38 64 27" stroke="#ffd166" stroke-width="8" stroke-linecap="round"></path></svg>
+        </span>
+        <span>VocLock</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Hauptmenü">
+        <a href="/de/" class="nav-link">Startseite</a>
+        <a href="/de/features/" class="nav-link">Funktionen</a>
+        <a href="/de/languages/" class="nav-link active" aria-current="page">Sprachen</a>
+        <a href="/de/compare/" class="nav-link">Vergleich</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Farbschema wechseln">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        <a href="https://play.google.com/store/apps/details?id=com.voclock" class="nav-cta" target="_blank" rel="noopener">App laden</a>
+        <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobile-drawer">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="mobile-drawer" id="mobile-drawer" hidden>
+      <div class="drawer-links">
+        <a href="/de/" class="drawer-link">Startseite</a>
+        <a href="/de/features/" class="drawer-link">Funktionen</a>
+        <a href="/de/languages/" class="drawer-link active">Sprachen</a>
+        <a href="/de/compare/" class="drawer-link">Vergleich</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-intro container stage-enter">
+      <div>
+        <h1>Elf Sprachen. Sag Hallo.</h1>
+        <p>Jeder Kurs hat die 2.000–2.800 häufigsten Wörter seiner Sprache, jeweils mit Beispielsatz, für Deutsch- und Englischsprachige.</p>
+      </div>
+      <a href="https://play.google.com/store/apps/details?id=com.voclock" class="btn-primary" target="_blank" rel="noopener">Kurs starten</a>
+    </section>
+
+    <section class="container stage-enter" style="--stagger: 80ms;">
+      <div class="lang-toolbar">
+        <div class="filter-group" role="group" aria-label="Sprachen filtern">
+          <button type="button" class="filter-pill lang-filter active" data-filter="all">Alle 11</button>
+          <button type="button" class="filter-pill lang-filter" data-filter="european">Lateinische Schrift</button>
+          <button type="button" class="filter-pill lang-filter" data-filter="scripts">Neue Schriften und Pinyin</button>
+        </div>
+
+        <div class="filter-group" role="group" aria-label="Sprache der Kurserklärungen">
+          <button type="button" class="filter-pill speaker-toggle-btn" data-speaker="en">Für Englischsprachige</button>
+          <button type="button" class="filter-pill speaker-toggle-btn active" data-speaker="de">Für Deutschsprachige</button>
+        </div>
+      </div>
+
+      <div class="explorer-layout">
+        <div class="explorer-grid" id="lang-explorer-grid">
+          <button type="button" class="explorer-tile active" data-lang-id="fr" data-group="european" data-spotlight>
+            <b>Bonjour</b><span>Französisch</span>
+          </button>
+          <button type="button" class="explorer-tile" data-lang-id="es" data-group="european" data-spotlight>
+            <b>Hola</b><span>Spanisch</span>
+          </button>
+          <button type="button" class="explorer-tile" data-lang-id="it" data-group="european" data-spotlight>
+            <b>Ciao</b><span>Italienisch</span>
+          </button>
+          <button type="button" class="explorer-tile" data-lang-id="pt" data-group="european" data-spotlight>
+            <b>Olá</b><span>Portugiesisch (Brasilien)</span>
+          </button>
+          <button type="button" class="explorer-tile" data-lang-id="tr" data-group="european" data-spotlight>
+            <b>Merhaba</b><span>Türkisch</span>
+          </button>
+          <button type="button" class="explorer-tile" data-lang-id="ru" data-group="scripts" data-spotlight>
+            <b>Привет</b><span>Russisch</span>
+          </button>
+          <button type="button" class="explorer-tile" data-lang-id="ja" data-group="scripts" data-spotlight>
+            <b lang="ja">こんにちは</b><span>Japanisch</span>
+          </button>
+          <button type="button" class="explorer-tile" data-lang-id="ko" data-group="scripts" data-spotlight>
+            <b lang="ko">안녕하세요</b><span>Koreanisch</span>
+          </button>
+          <button type="button" class="explorer-tile" data-lang-id="zh" data-group="scripts" data-spotlight>
+            <b lang="zh-Hans">你好</b><span>Chinesisch (Mandarin)</span>
+          </button>
+          <button type="button" class="explorer-tile" data-lang-id="en" data-group="european" data-spotlight>
+            <b>Hello</b><span>Englisch</span>
+          </button>
+          <button type="button" class="explorer-tile" data-lang-id="de" data-group="european" data-spotlight>
+            <b>Hallo</b><span>Deutsch</span>
+          </button>
+        </div>
+
+        <!-- Sticky Live Course Inspector -->
+        <aside class="inspector-card" aria-live="polite">
+          <div class="insp-top">
+            <div>
+              <h2 id="insp-greeting">Bonjour</h2>
+              <div class="insp-sub" id="insp-name">Französisch · Für Deutschsprachige erklärt</div>
+            </div>
+            <button type="button" class="insp-speak" id="insp-speak-btn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              </svg>
+              <span>Anhören</span>
+            </button>
+          </div>
+
+          <div class="insp-meta">
+            <div class="insp-stat">
+              <strong id="insp-course-size">2.400+ Wörter</strong>
+              <span>Nach Häufigkeit sortiert</span>
+            </div>
+            <div class="insp-stat">
+              <strong id="insp-script-badge">Lateinisches Alphabet</strong>
+              <span>Schritt für Schritt</span>
+            </div>
+          </div>
+
+          <p class="insp-note" id="insp-note"></p>
+
+          <div class="deck-label">Lernkarten vom Sperrbildschirm (zum Aufdecken und Anhören antippen)</div>
+          <div class="flashcard-list" id="insp-deck"></div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© 2026 VocLock · Said Erzhapov</div>
+      <nav class="footer-links" aria-label="Fußzeile">
+        <a href="/de/">Startseite</a>
+        <a href="/de/features/">Funktionen</a>
+        <a href="/de/compare/">Vergleich</a>
+        <a href="/privacy/#de">Datenschutz</a>
+        <a href="/terms/#de">Nutzungsbedingungen</a>
+        <a href="/impressum/">Impressum</a>
+        <a href="mailto:support@littlelockstudio.app">support@littlelockstudio.app</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="/assets/site.js" defer></script>
+  <script src="/assets/consent.js" defer></script>
+</body>
+</html>

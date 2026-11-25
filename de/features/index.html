@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="de" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; connect-src https://voclock-chat.voclock.workers.dev https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Funktionen – VocLock</title>
+<meta name="description" content="Entdecke den interaktiven Sperrbildschirm von VocLock, die Reel-Bremse, die Tages-Challenge, Wiederholungen mit FSRS, Wortspiele und den Import aus CSV und Anki.">
+<meta name="theme-color" content="#0b1a2c" id="meta-theme-color">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VocLock">
+<meta property="og:locale" content="de_DE">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:title" content="Funktionen – VocLock">
+<meta property="og:description" content="Entdecke den interaktiven Sperrbildschirm von VocLock, die Reel-Bremse, die Tages-Challenge, Wiederholungen mit FSRS, Wortspiele und den Import aus CSV und Anki.">
+<meta property="og:url" content="https://littlelockstudio.app/de/features/">
+<meta property="og:image" content="https://littlelockstudio.app/og.png?v=3">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://littlelockstudio.app/de/features/">
+<link rel="alternate" hreflang="en" href="https://littlelockstudio.app/features/">
+<link rel="alternate" hreflang="de" href="https://littlelockstudio.app/de/features/">
+<link rel="alternate" hreflang="x-default" href="https://littlelockstudio.app/features/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/bricolage-grotesque-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/site.css">
+<script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('voclock-theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = saved || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+        var meta = document.getElementById('meta-theme-color');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#0b1a2c' : '#efe6d2');
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Zum Inhalt springen</a>
+  <div class="ambient-layer" aria-hidden="true">
+    <div class="orb-primary aurora-orb"></div>
+    <div class="orb-secondary aurora-orb"></div>
+  </div>
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <div class="lang-strip">
+    <div class="container lang-strip-inner">
+      <span>Elf Sprachen · Oberfläche auf Deutsch und Englisch</span>
+      <a href="/features/" hreflang="en" lang="en">This page is also in English</a>
+    </div>
+  </div>
+
+  <header class="site-header" id="site-header">
+    <div class="nav-shell">
+      <a href="/de/" class="brand" aria-label="VocLock Startseite">
+        <span class="brand-badge" aria-hidden="true">
+          <svg viewBox="21 20.5 66 66"><path d="M36 50 54 80 72 50" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"></path><path d="M52 38 64 27" stroke="#ffd166" stroke-width="8" stroke-linecap="round"></path></svg>
+        </span>
+        <span>VocLock</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Hauptmenü">
+        <a href="/de/" class="nav-link">Startseite</a>
+        <a href="/de/features/" class="nav-link active" aria-current="page">Funktionen</a>
+        <a href="/de/languages/" class="nav-link">Sprachen</a>
+        <a href="/de/compare/" class="nav-link">Vergleich</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Farbschema wechseln">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        <a href="https://play.google.com/store/apps/details?id=com.voclock" class="nav-cta" target="_blank" rel="noopener">App laden</a>
+        <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobile-drawer">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="mobile-drawer" id="mobile-drawer" hidden>
+      <div class="drawer-links">
+        <a href="/de/" class="drawer-link">Startseite</a>
+        <a href="/de/features/" class="drawer-link active">Funktionen</a>
+        <a href="/de/languages/" class="drawer-link">Sprachen</a>
+        <a href="/de/compare/" class="drawer-link">Vergleich</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-intro container stage-enter">
+      <div>
+        <h1>Kleine Momente, echter Fortschritt.</h1>
+        <p>Jeden Tag ein paar neue Wörter, so lange gefragt, bis du sie kannst, die häufigsten zuerst. Hier kannst du die einzelnen Bereiche von VocLock ausprobieren.</p>
+      </div>
+      <a href="https://play.google.com/store/apps/details?id=com.voclock" class="btn-primary" target="_blank" rel="noopener">Bei Google Play laden</a>
+    </section>
+
+    <section class="studio-wrap container stage-enter" style="--stagger: 90ms;">
+      <div class="studio-tabs" role="tablist" aria-label="Funktionsbereiche von VocLock">
+        <button type="button" class="studio-tab active" data-studio="lock" role="tab" aria-selected="true">Sperrbildschirm und Reel-Bremse</button>
+        <button type="button" class="studio-tab" data-studio="app" role="tab" aria-selected="false">Lernen und Wortspiele</button>
+        <button type="button" class="studio-tab" data-studio="fsrs" role="tab" aria-selected="false">FSRS und Erfolge</button>
+        <button type="button" class="studio-tab" data-studio="tools" role="tab" aria-selected="false">Import, Aussprache und Datenschutz</button>
+      </div>
+
+      <!-- Studio Panel 1: Lock Screen & Reel Brake -->
+      <div class="studio-panel active" data-panel="lock" role="tabpanel">
+        <div class="studio-copy">
+          <h2>Du behältst die Kontrolle.</h2>
+          <p>VocLock zeigt höchstens alle zehn Minuten ein Wort und bleibt im Nicht-stören-Modus ruhig. Wenn du es eilig hast, entsperrst du dein Handy sofort mit deiner Notfall-PIN.</p>
+          <ul class="feature-list">
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>Reel-Bremse (Android):</strong> Nach ein paar TikToks, Reels oder Shorts fragt VocLock ein Wort, bevor du weiterscrollst.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>Notfall-PIN:</strong> Damit kommst du immer sofort rein. Die Wörter am Sperrbildschirm kannst du jederzeit abschalten.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>Ein Bild zum Wort:</strong> Hunderte Alltagswörter haben ein kleines, extra für VocLock gezeichnetes Bild, damit sich das Wort mit der Sache verbindet.</span></li>
+          </ul>
+        </div>
+
+        <div class="studio-stage">
+          <div class="console-card">
+            <div class="console-row">
+              <div>
+                <strong>Abstand zwischen Sperrbildschirmfragen</strong>
+                <span id="cooldown-val">Höchstens 1 Wort alle 10 Min.</span>
+              </div>
+              <input type="range" id="cooldown-slider" class="cooldown-range" min="5" max="30" step="5" value="10" style="max-width: 120px;" aria-label="Abstand zwischen den Fragen in Minuten" />
+            </div>
+            <div class="console-row">
+              <div>
+                <strong>Nicht-stören-Modus</strong>
+                <span>Bleibt während Fokus- und Schlafzeiten ruhig</span>
+              </div>
+              <button type="button" class="switch-btn on" id="dnd-toggle-btn">Beachtet</button>
+            </div>
+            <div class="console-row">
+              <div>
+                <strong>Reel-Bremse für Android</strong>
+                <span id="reel-status-text">Fragt 1 Wort nach jeweils 5 Reels</span>
+              </div>
+              <button type="button" class="switch-btn on" id="reel-toggle-btn">An</button>
+            </div>
+            <div class="reel-preview-box">
+              <span>TikTok / Reels / Shorts</span>
+              <span class="reel-badge">Kurz pausieren und 1 Wort abrufen</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Studio Panel 2: Daily App & Games -->
+      <div class="studio-panel" data-panel="app" role="tabpanel">
+        <div class="studio-copy">
+          <h2>Eine ganze App für die Minuten, die du hast.</h2>
+          <p>Jeden Tag eine kurze Challenge, freies Üben, wann du willst, und ein Wochenquiz mit Beispielsätzen, das zeigt, was wirklich hängen geblieben ist. Lies „Tea“, eine Chat-Geschichte mit jeden Tag einer neuen Folge. Mit Pro kannst du auch mit dem KI-Otter in deiner neuen Sprache schreiben.</p>
+          <ul class="feature-list">
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span>Sechs Wortspiele in drei Stufen, mit Wörtern, die du schon kennst.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span>20 A1- und 20 A2-Minikurse mit Grammatik, Schritt für Schritt.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span>Aktuelle Nachrichten von Wikipedia, in denen die Wörter, die du kennst, schon in der neuen Sprache stehen.</span></li>
+          </ul>
+        </div>
+
+        <div class="studio-stage">
+          <div class="phone phone-compact">
+            <div class="phone-notch" aria-hidden="true">
+              <span class="speaker-slot"></span>
+              <span class="camera-dot"></span>
+            </div>
+            <div class="phone-screen app-ui">
+              <div class="app-header-row">
+                <h4>Lernen</h4>
+                <span class="app-pill-mini">Französisch · A1</span>
+              </div>
+              <div class="learn-hero-grid">
+                <div class="daily-card">
+                  <span class="daily-kicker">Heute</span>
+                  <strong>Tages-Challenge</strong>
+                  <span class="daily-sub">5 neue · 5 zum Wiederholen</span>
+                  <button type="button" class="daily-start-btn" id="daily-start-btn">Starten</button>
+                </div>
+                <div class="today-count-card">
+                  <strong class="today-num">10</strong>
+                  <span class="today-title">Wörter des Tages</span>
+                  <span class="today-sub">5 neue · 5 zur Wiederholung</span>
+                </div>
+              </div>
+              <div class="practise-grid">
+                <div class="practise-tile">Üben</div>
+                <div class="practise-tile">Wochenquiz</div>
+                <div class="practise-tile">Vokabeln</div>
+              </div>
+              <div class="starter-row">
+                <div>
+                  <strong>Einstiegskurs</strong>
+                  <span>Schritt für Schritt mit Grammatik</span>
+                </div>
+                <span aria-hidden="true">›</span>
+              </div>
+              <div class="tab-toast" id="learn-tab-toast" aria-live="polite">Tippe unten auf einen Tab für eine Vorschau</div>
+              <div class="app-tabbar" role="tablist" aria-label="Tabs der App-Vorschau">
+                <button type="button" class="tab-item active" data-tab="Learn">Lernen</button>
+                <button type="button" class="tab-item" data-tab="Discover">Entdecken</button>
+                <button type="button" class="tab-item" data-tab="Home">Startseite</button>
+                <button type="button" class="tab-item" data-tab="Me">Ich</button>
+                <button type="button" class="tab-item" data-tab="Settings">Einstellungen</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Studio Panel 3: FSRS & Achievements -->
+      <div class="studio-panel" data-panel="fsrs" role="tabpanel">
+        <div class="studio-copy">
+          <h2>Wörter, die bleiben. Fortschritt, den du siehst.</h2>
+          <p>Wörter kommen in angepassten Abständen (FSRS) wieder, kurz bevor du sie vergisst. Sammle eine tägliche Serie, steige Ränge auf, indem du für jeden eine kurze Prüfung bestehst, und schalte mehr als 60 Erfolge frei.</p>
+          <ul class="feature-list">
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span>Sag der App, ob eine Antwort leicht oder schwer war. Der nächste Termin richtet sich automatisch danach.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span>Ein kleiner Otter mit einer Tasse Tee feuert dich an, mit Outfits zum Anziehen.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span>Freunde und ein Lernpartner für eine gemeinsame tägliche Serie.</span></li>
+          </ul>
+        </div>
+
+        <div class="studio-stage">
+          <div class="phone phone-compact">
+            <div class="phone-notch" aria-hidden="true">
+              <span class="speaker-slot"></span>
+              <span class="camera-dot"></span>
+            </div>
+            <div class="phone-screen app-ui achievements-ui">
+              <div class="ach-topbar">Erfolge</div>
+              <div class="ach-banner">
+                <div>
+                  <div class="ach-score">1 von 62 freigeschaltet</div>
+                  <div class="ach-banner-track"><div class="ach-banner-fill"></div></div>
+                </div>
+              </div>
+              <div class="ach-list">
+                <div class="ach-card">
+                  <div class="ach-row"><strong>3-Tage-Serie</strong><span>1 / 3</span></div>
+                  <p>Lerne 3 Tage in Folge · 3, 7, 14, 30, 60, 100, 365</p>
+                  <div class="ach-track"><div class="ach-fill" style="width: 33%;"></div></div>
+                </div>
+                <div class="ach-card">
+                  <div class="ach-row"><strong>10 Wörter</strong><span>2 / 10</span></div>
+                  <p>Kenne 10 Wörter · 10, 50, 100, 250, 500, 1.000, 2.000</p>
+                  <div class="ach-track"><div class="ach-fill" style="width: 20%;"></div></div>
+                </div>
+                <div class="ach-card">
+                  <div class="ach-row"><strong>Frühaufsteher</strong><span>1 / 10</span></div>
+                  <p>Beantworte 10 Fragen vor 8 Uhr morgens richtig</p>
+                  <div class="ach-track"><div class="ach-fill" style="width: 10%;"></div></div>
+                </div>
+              </div>
+              <div class="fsrs-demo">
+                <div class="fsrs-head">
+                  <span>Wähle eine FSRS-Bewertung</span>
+                  <strong id="fsrs-result">Nächste Wiederholung: in 3 Tagen</strong>
+                </div>
+                <div class="fsrs-pills">
+                  <button type="button" class="fsrs-pill" data-interval="in 10 Minuten">Schwer · 10 Min.</button>
+                  <button type="button" class="fsrs-pill active" data-interval="in 3 Tagen">Gut · 3 Tage</button>
+                  <button type="button" class="fsrs-pill" data-interval="in 12 Tagen">Leicht · 12 Tage</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Studio Panel 4: Import, Audio & Privacy -->
+      <div class="studio-panel" data-panel="tools" role="tabpanel">
+        <div class="studio-copy">
+          <h2>Eigene Wörter, Offline-Aussprache und Lernen ohne Tracking.</h2>
+          <p>Übernimm Wortlisten aus Quizlet, Anki oder einer Tabelle, hör dir jedes Wort mit der eingebauten Stimme deines Handys an und zeig deinen Rang oder deine Wörter auf dem Startbildschirm an.</p>
+          <ul class="feature-list">
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>Neue Schriften, Schritt für Schritt:</strong> Japanisch beginnt mit Hiragana und Katakana und hat eigene Kanji-Übungen. Russisch und Koreanisch starten mit ihren Alphabeten, und bei Chinesisch siehst du Pinyin.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>Widgets für den Startbildschirm:</strong> Das Rang-Widget ist kostenlos. Mit Pro siehst du auch die Wörter des Tages und deinen Lernpartner auf einen Blick.</span></li>
+            <li><span class="feature-dot" aria-hidden="true">✓</span><span><strong>Datenschutz von Anfang an:</strong> Zum Lernen brauchst du kein Konto. Ein optionales Konto speichert nur deinen Fortschritt. Du kannst es <a href="/delete-account/#de" class="inline-link">jederzeit löschen</a> (<a href="/privacy/#de" class="inline-link">Datenschutzerklärung</a>).</span></li>
+          </ul>
+        </div>
+
+        <div class="studio-stage">
+          <div class="console-card">
+            <div class="console-row">
+              <div>
+                <strong>Deine eigenen Wörter</strong>
+                <span>Vorschau der unterstützten Importformate</span>
+              </div>
+            </div>
+            <div class="import-tabs">
+              <button type="button" class="import-tab-btn active" data-import="csv">CSV</button>
+              <button type="button" class="import-tab-btn" data-import="apkg">Anki .apkg</button>
+              <button type="button" class="import-tab-btn" data-import="paste">Liste einfügen</button>
+            </div>
+            <pre class="import-code" id="import-preview-code">front,back,example
+la fenêtre,das Fenster,Ouvre la fenêtre s'il te plaît.
+le matin,der Morgen,Le matin est calme.</pre>
+            <div class="console-row">
+              <div>
+                <strong>Aussprache mit der Stimme deines Handys</strong>
+                <span>Hör dir „La bibliothèque“ offline an</span>
+              </div>
+              <button type="button" class="switch-btn on" id="tools-audio-btn">Wort abspielen</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Free vs Pro Strip -->
+      <div class="tier-grid">
+        <div class="tier-card" data-spotlight>
+          <h3>VocLock kostenlos</h3>
+          <p>Lernen am Sperrbildschirm, 11 Kurse, Spaced Repetition (FSRS), 40 Minikurse, Spiele, das Rang-Widget und Offline-Modus. Die kostenlose Version enthält Werbung.</p>
+        </div>
+        <div class="tier-card pro" data-spotlight>
+          <h3>VocLock Pro</h3>
+          <p>Pro entfernt die Werbung und bringt mehr neue Wörter am Tag, jede Tea-Folge, die Pro-Widgets, Serienschutz und den KI-Chatpartner. Alle bekommen eine kostenlose Pro-Testwoche, die von selbst endet.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© 2026 VocLock · Said Erzhapov</div>
+      <nav class="footer-links" aria-label="Fußzeile">
+        <a href="/de/">Startseite</a>
+        <a href="/de/languages/">Sprachen</a>
+        <a href="/de/compare/">Vergleich</a>
+        <a href="/privacy/#de">Datenschutzerklärung</a>
+        <a href="/terms/#de">Nutzungsbedingungen</a>
+        <a href="/impressum/">Impressum</a>
+        <a href="mailto:support@littlelockstudio.app">support@littlelockstudio.app</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="/assets/site.js" defer></script>
+  <script src="/assets/consent.js" defer></script>
+</body>
+</html>

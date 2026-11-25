@@ -1,4 +1,5 @@
 (() => {
+  const DE = document.documentElement.lang === "de";
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ========================================================================
@@ -92,7 +93,20 @@
   const stepTitle = document.getElementById("step-panel-title");
   const stepDesc = document.getElementById("step-panel-desc");
 
-  const stepData = [
+  const stepData = DE ? [
+    {
+      title: "Handy entsperren",
+      desc: "Ein Wort aus deinem Kurs erscheint, höchstens alle zehn Minuten und nie im Nicht-stören-Modus."
+    },
+    {
+      title: "In ein paar Sekunden antworten",
+      desc: "Tippe das Wort ein oder nimm einen Buchstabenhinweis. Mit deiner Notfall-PIN kommst du immer rein."
+    },
+    {
+      title: "Es kommt zur richtigen Zeit wieder",
+      desc: "Gewusste Wörter kommen später, verpasste früher, bis sie sitzen."
+    }
+  ] : [
     {
       title: "Unlock your phone",
       desc: "A word from your course shows up, at most one every ten minutes and never on Do Not Disturb."
@@ -135,7 +149,13 @@
 
   const lockForm = document.getElementById("lock-form");
   if (lockForm) {
-    const demoWords = [
+    const demoWords = DE ? [
+      { lang: "fr-FR", meta: "Ins Deutsche übersetzen · Personen", target: "le père", reading: "", answer: "Vater", accepted: ["vater", "papa"], summary: "le père = der Vater", hint: "„Vater“" },
+      { lang: "es-ES", meta: "Ins Deutsche übersetzen · Natur", target: "la luna", reading: "", answer: "Mond", accepted: ["mond"], summary: "la luna = der Mond", hint: "„Mond“" },
+      { lang: "ja-JP", meta: "Ins Deutsche übersetzen · Grundlagen", target: "みず", reading: "mizu", answer: "Wasser", accepted: ["wasser"], summary: "みず (mizu) = das Wasser", hint: "„Wasser“" },
+      { lang: "en-US", meta: "Ins Deutsche übersetzen · Himmel", target: "the star", reading: "", answer: "Stern", accepted: ["stern"], summary: "the star = der Stern", hint: "„Stern“" },
+      { lang: "tr-TR", meta: "Ins Deutsche übersetzen · Natur", target: "güneş", reading: "", answer: "Sonne", accepted: ["sonne"], summary: "güneş = die Sonne", hint: "„Sonne“" }
+    ] : [
       { code: "FR", lang: "fr-FR", meta: "Translate to English · People", target: "le père", reading: "", answer: "father", accepted: ["father", "the father", "dad"], summary: "le père = the father", hint: '"father"' },
       { code: "ES", lang: "es-ES", meta: "Translate to English · Nature", target: "la luna", reading: "", answer: "moon", accepted: ["moon", "the moon"], summary: "la luna = the moon", hint: '"moon"' },
       { code: "JA", lang: "ja-JP", meta: "Translate to English · Basics", target: "みず", reading: "mizu", answer: "water", accepted: ["water"], summary: "みず (mizu) = water", hint: '"water"' },
@@ -180,7 +200,7 @@
         dot.classList.toggle("done", i < activeIdx);
         dot.classList.toggle("active", i === activeIdx);
       });
-      progressLabel.textContent = `Word ${activeIdx + 1} of 5 today`;
+      progressLabel.textContent = DE ? `Heute: Wort ${activeIdx + 1} von 5` : `Word ${activeIdx + 1} of 5 today`;
     }
 
     function loadWord(index) {
@@ -199,7 +219,9 @@
         tryFeedback.classList.remove("wrong");
       }
       if (tryNote) {
-        tryNote.innerHTML = `Type <strong>${w.hint}</strong> or PIN <code>1234</code>, or tap "Need a hint?".`;
+        tryNote.innerHTML = DE
+          ? `Tippe <strong>${w.hint}</strong> oder die PIN <code>1234</code> ein oder tippe auf „Brauchst du einen Hinweis?“.`
+          : `Type <strong>${w.hint}</strong> or PIN <code>1234</code>, or tap "Need a hint?".`;
       }
       if (unlockedOverlay) {
         unlockedOverlay.classList.remove("show");
@@ -238,9 +260,16 @@
         lockInput.focus();
         if (tryFeedback) {
           tryFeedback.classList.remove("wrong");
-          tryFeedback.textContent = `Hint: ${hintLetters} of ${w.answer.length} letters`;
+          tryFeedback.textContent = DE
+            ? `Hinweis: ${hintLetters} von ${w.answer.length} Buchstaben`
+            : `Hint: ${hintLetters} of ${w.answer.length} letters`;
         }
       });
+    }
+
+    function normalizeGermanAnswer(answer) {
+      return answer.normalize("NFC").replace(/^(der|die|das|ein|eine)\s+/, "")
+        .replaceAll("ä", "ae").replaceAll("ö", "oe").replaceAll("ü", "ue").replaceAll("ß", "ss");
     }
 
     lockForm.addEventListener("submit", (e) => {
@@ -248,13 +277,16 @@
       if (!lockInput) return;
       const raw = lockInput.value.trim().toLowerCase();
       const w = demoWords[wordIndex];
-      const normalized = raw.replace(/^the\s+/, "");
+      const normalized = DE ? normalizeGermanAnswer(raw) : raw.replace(/^the\s+/, "");
+      const isCorrect = DE
+        ? w.accepted.some((answer) => normalizeGermanAnswer(answer) === normalized)
+        : w.accepted.includes(raw) || w.accepted.includes(normalized);
 
-      if (raw === "1234" || w.accepted.includes(raw) || w.accepted.includes(normalized)) {
+      if (raw === "1234" || isCorrect) {
         solvedCount = (solvedCount + 1) % 5;
         renderDots();
         if (unlockedMeaning) {
-          unlockedMeaning.textContent = raw === "1234" ? `Emergency PIN · ${w.summary}` : w.summary;
+          unlockedMeaning.textContent = raw === "1234" ? `${DE ? "Notfall-PIN" : "Emergency PIN"} · ${w.summary}` : w.summary;
         }
         if (unlockedOverlay) {
           unlockedOverlay.classList.add("show");
@@ -269,7 +301,7 @@
         }
         if (tryFeedback) {
           tryFeedback.classList.add("wrong");
-          tryFeedback.textContent = `Try ${w.hint} or PIN 1234.`;
+          tryFeedback.textContent = DE ? `Versuch es mit ${w.hint} oder der PIN 1234.` : `Try ${w.hint} or PIN 1234.`;
         }
         lockInput.focus();
       }
@@ -304,8 +336,8 @@
   if (reelToggle && reelStatus) {
     reelToggle.addEventListener("click", () => {
       const isOn = reelToggle.classList.toggle("on");
-      reelToggle.textContent = isOn ? "Enabled" : "Off";
-      reelStatus.textContent = isOn ? "Asks 1 word every 5 Reels" : "Reel brake paused";
+      reelToggle.textContent = isOn ? (DE ? "An" : "Enabled") : (DE ? "Aus" : "Off");
+      reelStatus.textContent = isOn ? (DE ? "Fragt 1 Wort nach jeweils 5 Reels" : "Asks 1 word every 5 Reels") : (DE ? "Reel-Bremse pausiert" : "Reel brake paused");
     });
   }
 
@@ -313,7 +345,7 @@
   if (dndToggle) {
     dndToggle.addEventListener("click", () => {
       const isOn = dndToggle.classList.toggle("on");
-      dndToggle.textContent = isOn ? "Respected" : "Ignored";
+      dndToggle.textContent = isOn ? (DE ? "Beachtet" : "Respected") : (DE ? "Ignoriert" : "Ignored");
     });
   }
 
@@ -321,7 +353,9 @@
   const cooldownVal = document.getElementById("cooldown-val");
   if (cooldownSlider && cooldownVal) {
     cooldownSlider.addEventListener("input", () => {
-      cooldownVal.textContent = `At most 1 word every ${cooldownSlider.value} min`;
+      cooldownVal.textContent = DE
+        ? `Höchstens 1 Wort alle ${cooldownSlider.value} Min.`
+        : `At most 1 word every ${cooldownSlider.value} min`;
     });
   }
 
@@ -329,11 +363,11 @@
   const dailyStartBtn = document.getElementById("daily-start-btn");
   const appTabButtons = document.querySelectorAll(".app-tabbar .tab-item");
   const appTabMessages = {
-    Learn: "Daily challenge, 6 word games & 40 mini courses",
-    Discover: "Read 'Tea' episodes & Wikipedia news with swapped words",
-    Home: "Daily streak, rank badge & quick review status",
-    Me: "60+ achievements, otter outfits & shared partner streak",
-    Settings: "Cooldown timer, Do Not Disturb & emergency PIN"
+    Learn: DE ? "Tages-Challenge, 6 Wortspiele und 40 Minikurse" : "Daily challenge, 6 word games & 40 mini courses",
+    Discover: DE ? "Tea-Folgen und Wikipedia-Nachrichten mit Wörtern in deiner Zielsprache lesen" : "Read 'Tea' episodes & Wikipedia news with swapped words",
+    Home: DE ? "Tägliche Serie, Rangabzeichen und fällige Wiederholungen" : "Daily streak, rank badge & quick review status",
+    Me: DE ? "60+ Erfolge, Otter-Outfits und gemeinsame Serie mit deinem Lernpartner" : "60+ achievements, otter outfits & shared partner streak",
+    Settings: DE ? "Abstand zwischen Fragen, Nicht-stören-Modus und Notfall-PIN" : "Cooldown timer, Do Not Disturb & emergency PIN"
   };
 
   appTabButtons.forEach((btn) => {
@@ -346,7 +380,7 @@
 
   if (dailyStartBtn && learnTabToast) {
     dailyStartBtn.addEventListener("click", () => {
-      learnTabToast.textContent = "5 new + 5 review words queued for today!";
+      learnTabToast.textContent = DE ? "Heute stehen 5 neue Wörter und 5 Wörter zum Wiederholen bereit!" : "5 new + 5 review words queued for today!";
     });
   }
 
@@ -356,13 +390,17 @@
     pill.addEventListener("click", () => {
       fsrsPills.forEach((p) => p.classList.remove("active"));
       pill.classList.add("active");
-      if (fsrsResult) fsrsResult.textContent = `Next review: ${pill.dataset.interval}`;
+      if (fsrsResult) fsrsResult.textContent = `${DE ? "Nächste Wiederholung" : "Next review"}: ${pill.dataset.interval}`;
     });
   });
 
   const importTabs = document.querySelectorAll(".import-tab-btn");
   const importPreview = document.getElementById("import-preview-code");
-  const importSamples = {
+  const importSamples = DE ? {
+    csv: "front,back,example\nla fenêtre,das Fenster,Ouvre la fenêtre s'il te plaît.\nle matin,der Morgen,Le matin est calme.",
+    apkg: "Importierter Stapel: Französischer Grundwortschatz 2.000 (.apkg)\n412 Wörter zugeordnet · Bewertung für Wiederholungen übernommen · Bereit für den Sperrbildschirm",
+    paste: "Aus Quizlet oder einer Tabelle einfügen:\nbonjour\thallo\nmerci\tdanke\nau revoir\tauf Wiedersehen"
+  } : {
     csv: "front,back,example\nla fenêtre,the window,Ouvre la fenêtre s'il te plaît.\nle matin,the morning,Le matin est calme.",
     apkg: "Imported deck: French Core 2000 (.apkg)\nMatched 412 words · Preserved review ease · Ready on lock screen",
     paste: "Quizlet / Spreadsheet paste:\nbonjour\thello\nmerci\tthank you\nau revoir\tgoodbye"
@@ -388,139 +426,139 @@
   if (explorerGrid) {
     const languagesData = {
       fr: {
-        name: "French",
+        name: DE ? "Französisch" : "French",
         greeting: "Bonjour",
         speechLang: "fr-FR",
         group: "european",
-        words: "2,400+ words",
-        script: "Latin alphabet",
-        note: "40 A1 & A2 grammar mini-courses included. Example sentences for every word.",
+        words: DE ? "2.500+ Wörter" : "2,500+ words",
+        script: DE ? "Lateinisches Alphabet" : "Latin alphabet",
+        note: DE ? "Ein A1- und ein A2-Minikurs mit Grammatik. Zu jedem Wort gibt es einen Beispielsatz." : "An A1 and an A2 mini course with grammar. Example sentences for every word.",
         cards: [
-          { w: "le père", t: "the father", ex: "Mon père prépare le thé." },
-          { w: "la fenêtre", t: "the window", ex: "Ouvre la fenêtre ce matin." },
-          { w: "toujours", t: "always", ex: "Elle arrive toujours à l'heure." }
+          { w: "le père", t: "the father", tDe: "der Vater", ex: "Mon père prépare le thé." },
+          { w: "la fenêtre", t: "the window", tDe: "das Fenster", ex: "Ouvre la fenêtre ce matin." },
+          { w: "toujours", t: "always", tDe: "immer", ex: "Elle arrive toujours à l'heure." }
         ]
       },
       es: {
-        name: "Spanish",
+        name: DE ? "Spanisch" : "Spanish",
         greeting: "Hola",
         speechLang: "es-ES",
         group: "european",
-        words: "2,500+ words",
-        script: "Latin alphabet",
-        note: "Covers everyday conversation, high-frequency verbs, and A1–A2 grammar.",
+        words: DE ? "2.700+ Wörter" : "2,700+ words",
+        script: DE ? "Lateinisches Alphabet" : "Latin alphabet",
+        note: DE ? "Für Gespräche im Alltag, mit häufigen Verben und Grammatik auf A1- und A2-Niveau." : "Covers everyday conversation, high-frequency verbs, and A1–A2 grammar.",
         cards: [
-          { w: "la luna", t: "the moon", ex: "La luna brilla esta noche." },
-          { w: "el camino", t: "the path", ex: "Este camino va al mar." },
-          { w: "ahora", t: "now", ex: "Empezamos ahora mismo." }
+          { w: "la luna", t: "the moon", tDe: "der Mond", ex: "La luna brilla esta noche." },
+          { w: "el camino", t: "the path", tDe: "der Weg", ex: "Este camino va al mar." },
+          { w: "ahora", t: "now", tDe: "jetzt", ex: "Empezamos ahora mismo." }
         ]
       },
       it: {
-        name: "Italian",
+        name: DE ? "Italienisch" : "Italian",
         greeting: "Ciao",
         speechLang: "it-IT",
         group: "european",
-        words: "2,200+ words",
-        script: "Latin alphabet",
-        note: "Frequency-ordered everyday vocabulary with natural example sentences.",
+        words: DE ? "2.100+ Wörter" : "2,100+ words",
+        script: DE ? "Lateinisches Alphabet" : "Latin alphabet",
+        note: DE ? "Alltagswortschatz nach Häufigkeit sortiert, mit natürlichen Beispielsätzen." : "Frequency-ordered everyday vocabulary with natural example sentences.",
         cards: [
-          { w: "il caffè", t: "the coffee", ex: "Prendo un caffè al bar." },
-          { w: "la piazza", t: "the square", ex: "Ci vediamo in piazza." },
-          { w: "subito", t: "right away", ex: "Arrivo subito." }
+          { w: "il caffè", t: "the coffee", tDe: "der Kaffee", ex: "Prendo un caffè al bar." },
+          { w: "la piazza", t: "the square", tDe: "der Platz", ex: "Ci vediamo in piazza." },
+          { w: "subito", t: "right away", tDe: "sofort", ex: "Arrivo subito." }
         ]
       },
       pt: {
-        name: "Portuguese (Brazil)",
+        name: DE ? "Portugiesisch (Brasilien)" : "Portuguese (Brazil)",
         greeting: "Olá",
         speechLang: "pt-BR",
         group: "european",
-        words: "2,200+ words",
-        script: "Latin alphabet",
-        note: "Brazilian Portuguese vocabulary and audio tailored for daily recall.",
+        words: DE ? "2.100+ Wörter" : "2,100+ words",
+        script: DE ? "Lateinisches Alphabet" : "Latin alphabet",
+        note: DE ? "Brasilianischer Wortschatz mit Aussprache zum täglichen Wiederholen." : "Brazilian Portuguese vocabulary and audio tailored for daily recall.",
         cards: [
-          { w: "a água", t: "the water", ex: "A água está bem gelada." },
-          { w: "o livro", t: "the book", ex: "Estou lendo um livro novo." },
-          { w: "hoje", t: "today", ex: "Hoje o dia está lindo." }
+          { w: "a água", t: "the water", tDe: "das Wasser", ex: "A água está bem gelada." },
+          { w: "o livro", t: "the book", tDe: "das Buch", ex: "Estou lendo um livro novo." },
+          { w: "hoje", t: "today", tDe: "heute", ex: "Hoje o dia está lindo." }
         ]
       },
       tr: {
-        name: "Turkish",
+        name: DE ? "Türkisch" : "Turkish",
         greeting: "Merhaba",
         speechLang: "tr-TR",
         group: "european",
-        words: "2,100+ words",
-        script: "Turkish Latin script",
-        note: "Includes vowel-harmony friendly mini courses and common everyday roots.",
+        words: DE ? "2.000 Wörter" : "2,000 words",
+        script: DE ? "Türkisches lateinisches Alphabet" : "Turkish Latin script",
+        note: DE ? "Mit Minikursen zur Vokalharmonie und häufigen Wortstämmen aus dem Alltag." : "Includes vowel-harmony friendly mini courses and common everyday roots.",
         cards: [
-          { w: "güneş", t: "sun", ex: "Güneş erken doğuyor." },
-          { w: "çay", t: "tea", ex: "Bir bardak çay ister misin?" },
-          { w: "yarın", t: "tomorrow", ex: "Yarın görüşürüz." }
+          { w: "güneş", t: "sun", tDe: "Sonne", ex: "Güneş erken doğuyor." },
+          { w: "çay", t: "tea", tDe: "Tee", ex: "Bir bardak çay ister misin?" },
+          { w: "yarın", t: "tomorrow", tDe: "morgen", ex: "Yarın görüşürüz." }
         ]
       },
       ru: {
-        name: "Russian",
+        name: DE ? "Russisch" : "Russian",
         greeting: "Привет",
         speechLang: "ru-RU",
         group: "scripts",
-        words: "2,300+ words",
-        script: "Starts with Cyrillic",
-        note: "Begins with step-by-step Cyrillic alphabet mastery before core vocabulary.",
+        words: DE ? "2.300+ Wörter" : "2,300+ words",
+        script: DE ? "Beginnt mit Kyrillisch" : "Starts with Cyrillic",
+        note: DE ? "Lerne zuerst Schritt für Schritt das kyrillische Alphabet und dann den Grundwortschatz." : "Begins with step-by-step Cyrillic alphabet mastery before core vocabulary.",
         cards: [
-          { w: "книга", t: "book", ex: "Эта книга очень интересная." },
-          { w: "утро", t: "morning", ex: "Доброе утро!" },
-          { w: "вода", t: "water", ex: "Можно стакан воды?" }
+          { w: "книга", t: "book", tDe: "Buch", ex: "Эта книга очень интересная." },
+          { w: "утро", t: "morning", tDe: "Morgen", ex: "Доброе утро!" },
+          { w: "вода", t: "water", tDe: "Wasser", ex: "Можно стакан воды?" }
         ]
       },
       ja: {
-        name: "Japanese",
+        name: DE ? "Japanisch" : "Japanese",
         greeting: "こんにちは",
         speechLang: "ja-JP",
         group: "scripts",
-        words: "2,600+ words",
-        script: "Hiragana, Katakana & Kanji",
-        note: "Starts with hiragana & katakana and includes dedicated kanji practice.",
+        words: DE ? "2.200+ Wörter" : "2,200+ words",
+        script: DE ? "Hiragana, Katakana und Kanji" : "Hiragana, Katakana & Kanji",
+        note: DE ? "Du beginnst mit Hiragana und Katakana. Für Kanji gibt es eigene Übungen." : "Starts with hiragana & katakana and includes dedicated kanji practice.",
         cards: [
-          { w: "みず (mizu)", t: "water", ex: "つめたい みず を ください。" },
-          { w: "ねこ (neko)", t: "cat", ex: "その ねこ は ちいさい です。" },
-          { w: "あした (ashita)", t: "tomorrow", ex: "あした また あいましょう。" }
+          { w: "みず (mizu)", t: "water", tDe: "Wasser", ex: "つめたい みず を ください。" },
+          { w: "ねこ (neko)", t: "cat", tDe: "Katze", ex: "その ねこ は ちいさい です。" },
+          { w: "あした (ashita)", t: "tomorrow", tDe: "morgen", ex: "あした また あいましょう。" }
         ]
       },
       ko: {
-        name: "Korean",
+        name: DE ? "Koreanisch" : "Korean",
         greeting: "안녕하세요",
         speechLang: "ko-KR",
         group: "scripts",
-        words: "2,200+ words",
-        script: "Starts with Hangul",
-        note: "Begins with Hangul reading & syllable blocks, then frequency-ranked words.",
+        words: DE ? "2.000 Wörter" : "2,000 words",
+        script: DE ? "Beginnt mit Hangul" : "Starts with Hangul",
+        note: DE ? "Du lernst zuerst Hangul und seine Silbenblöcke, danach die Wörter nach Häufigkeit." : "Begins with Hangul reading & syllable blocks, then frequency-ranked words.",
         cards: [
-          { w: "별 (byeol)", t: "star", ex: "밤하늘에 별이 많아요." },
-          { w: "물 (mul)", t: "water", ex: "물 한 잔 주세요." },
-          { w: "오늘 (oneul)", t: "today", ex: "오늘 날씨가 좋아요." }
+          { w: "별 (byeol)", t: "star", tDe: "Stern", ex: "밤하늘에 별이 많아요." },
+          { w: "물 (mul)", t: "water", tDe: "Wasser", ex: "물 한 잔 주세요." },
+          { w: "오늘 (oneul)", t: "today", tDe: "heute", ex: "오늘 날씨가 좋아요." }
         ]
       },
       zh: {
-        name: "Chinese (Mandarin)",
+        name: DE ? "Chinesisch (Mandarin)" : "Chinese (Mandarin)",
         greeting: "你好",
         speechLang: "zh-CN",
         group: "scripts",
-        words: "2,400+ words",
-        script: "Hanzi + Pinyin",
-        note: "Shows pinyin alongside characters with tonal pronunciation audio.",
+        words: DE ? "2.000 Wörter" : "2,000 words",
+        script: DE ? "Schriftzeichen und Pinyin" : "Hanzi + Pinyin",
+        note: DE ? "Zu den Schriftzeichen siehst du Pinyin. Hör dir an, wie die Töne ausgesprochen werden." : "Shows pinyin alongside characters with tonal pronunciation audio.",
         cards: [
-          { w: "茶 (chá)", t: "tea", ex: "我喜欢喝热茶。" },
-          { w: "书 (shū)", t: "book", ex: "桌子上有一本书。" },
-          { w: "明天 (míngtiān)", t: "tomorrow", ex: "我们明天见。" }
+          { w: "茶 (chá)", t: "tea", tDe: "Tee", ex: "我喜欢喝热茶。" },
+          { w: "书 (shū)", t: "book", tDe: "Buch", ex: "桌子上有一本书。" },
+          { w: "明天 (míngtiān)", t: "tomorrow", tDe: "morgen", ex: "我们明天见。" }
         ]
       },
       en: {
-        name: "English",
+        name: DE ? "Englisch" : "English",
         greeting: "Hello",
         speechLang: "en-US",
         group: "european",
-        words: "2,800 words",
-        script: "For German speakers",
-        note: "Complete 2,800-word core course explained in German with example sentences.",
+        words: DE ? "2.000+ Wörter" : "2,000+ words",
+        script: DE ? "Für Deutschsprachige" : "For German speakers",
+        note: DE ? "Grundkurs mit über 2.000 Wörtern, auf Deutsch erklärt und mit Beispielsätzen." : "Core course of 2,000+ words explained in German with example sentences.",
         cards: [
           { w: "daylight", t: "Tageslicht", ex: "We walked home in daylight." },
           { w: "reliable", t: "zuverlässig", ex: "She is a reliable friend." },
@@ -528,17 +566,17 @@
         ]
       },
       de: {
-        name: "German",
+        name: DE ? "Deutsch" : "German",
         greeting: "Hallo",
         speechLang: "de-DE",
         group: "european",
-        words: "2,600+ words",
-        script: "Articles included",
-        note: "Every noun comes with der/die/das and practical everyday sentences.",
+        words: DE ? "2.000+ Wörter" : "2,000+ words",
+        script: DE ? "Mit Artikeln" : "Articles included",
+        note: DE ? "Zu jedem Substantiv gibt es den Artikel (der, die, das) und alltagstaugliche Beispielsätze." : "Every noun comes with der/die/das and practical everyday sentences.",
         cards: [
-          { w: "der Stern", t: "the star", ex: "Ein heller Stern steht am Himmel." },
-          { w: "die Zeit", t: "the time", ex: "Wir haben heute genug Zeit." },
-          { w: "ruhig", t: "calm / quiet", ex: "Der Morgen ist ruhig." }
+          { w: "der Stern", t: "the star", tDe: "der Stern", ex: "Ein heller Stern steht am Himmel." },
+          { w: "die Zeit", t: "the time", tDe: "die Zeit", ex: "Wir haben heute genug Zeit." },
+          { w: "ruhig", t: "calm / quiet", tDe: "still / leise", ex: "Der Morgen ist ruhig." }
         ]
       }
     };
@@ -552,7 +590,7 @@
     const inspDeck = document.getElementById("insp-deck");
     const speakerToggleBtns = document.querySelectorAll(".speaker-toggle-btn");
     let currentLangKey = "fr";
-    let baseSpeaker = "en";
+    let baseSpeaker = DE ? "de" : "en";
 
     function renderInspector(key) {
       const data = languagesData[key];
@@ -565,7 +603,9 @@
 
       if (inspGreeting) inspGreeting.textContent = data.greeting;
       if (inspName) {
-        const suffix = baseSpeaker === "de" ? "Für Deutschsprachige erklärt" : "Explained in English";
+        const suffix = baseSpeaker === "de"
+          ? "Für Deutschsprachige erklärt"
+          : (DE ? "Für Englischsprachige erklärt" : "Explained in English");
         inspName.textContent = `${data.name} · ${suffix}`;
       }
       if (inspWords) inspWords.textContent = data.words;
@@ -581,10 +621,10 @@
           btn.innerHTML = `
             <div class="fc-front">
               <span>${c.w}</span>
-              <span class="fc-hint">Reveal &amp; hear</span>
+              <span class="fc-hint">${DE ? "Aufdecken und anhören" : "Reveal &amp; hear"}</span>
             </div>
             <div class="fc-back" hidden>
-              <strong>${c.t}</strong> — ${c.ex}
+              <strong>${DE && baseSpeaker === "de" ? c.tDe || c.t : c.t}</strong> — ${c.ex}
             </div>
           `;
           btn.addEventListener("click", () => {
@@ -593,10 +633,10 @@
             const isHidden = back.hasAttribute("hidden");
             if (isHidden) {
               back.removeAttribute("hidden");
-              hint.textContent = "Playing audio";
+              hint.textContent = DE ? "Wird vorgelesen" : "Playing audio";
             } else {
               back.setAttribute("hidden", "");
-              hint.textContent = "Reveal & hear";
+              hint.textContent = DE ? "Aufdecken und anhören" : "Reveal & hear";
             }
             speakText(c.w.replace(/\s*\([^)]*\)/g, ""), data.speechLang);
           });
